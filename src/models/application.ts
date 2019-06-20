@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
 import { View } from '../views/view';
 
-export abstract class Application {
+export class Application {
     public subject: Subject<MouseEvent>;
     public views: View[] = [];
 
