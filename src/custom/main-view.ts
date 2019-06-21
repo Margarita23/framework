@@ -16,25 +16,26 @@ export class MainView extends View{
     }
 
     private helloButton() {
-        let but = new Button(0, 0, 150, 100, null, "rgb(0,200,0)", null, 2, null);
+        let but = new Button(0, 0, 150, 100, null, "rgb(0,200,0)", null, 2, null, this.ctx);
         but.click = this.controller.sayHi;
         this.registerControl(but);
     }
 
     private hB() {
-        let but = new Button(50, 50, 150, 100, null, "rgb(200,0,100)", null, 4, null);
+        let but = new Button(50, 50, 150, 100, null, "rgb(200,0,100)", null, 4, null, this.ctx);
         but.click = this.controller.sayHi;
         this.registerControl(but);
     }
     private hB2() {
-        let but = new Button(100, 100, 150, 100, null, "rgb(0,0,100)", null, 3, null);
+        let but = new Button(100, 100, 150, 100, null, "rgb(0,0,250)", null, 3, null, this.ctx);
         but.click = this.controller.sayBye;
         this.registerControl(but);
     }
 
     private blaButton(){
-        let but = new Button(0, 0, 400, 50, null, "rgb(255,0,0)", null, 1, null);
-        but.click = this.controller.saySome;
+        let but = new Button(0, 0, 400, 50, null, "rgb(250,0,0)", null, 1, null, this.ctx);
+        but.mouseup = this.controller.changeColorToRed.bind(this.controller, but);
+        but.mousedown = this.controller.changeColorToGrey.bind(this.controller, but);
         this.registerControl(but);
     }
 

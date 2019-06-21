@@ -1,4 +1,5 @@
 import { Controller } from "../controllers/controller";
+import { Control } from "../models/control";
 
 export class MainController extends Controller {
     public sayHi(){
@@ -11,5 +12,15 @@ export class MainController extends Controller {
 
     public saySome(){
         console.log('Blah-blah-blah');
+    }
+
+    public changeColorToRed(control: Control){
+        control.backgroundColor = "rgb(250,0,0)";
+        control.draw();
+    }
+
+    public changeColorToGrey(control: Control){
+        control.backgroundColor = "rgb(190,190,190)";
+        control.draw();
     }
 }

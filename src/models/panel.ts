@@ -1,6 +1,6 @@
 import { Control } from "./control";
 
-export class Button extends Control{
+export class Panel extends Control {
     constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
         super(x, y, width, height, backgroundImage, backgroundColor, border, zOrder, parent, ctx);
     }
@@ -22,5 +22,4 @@ export class Button extends Control{
             this.ctx.strokeRect(this.x, this.y, this.width, this.height)
         };
     }
-
 }

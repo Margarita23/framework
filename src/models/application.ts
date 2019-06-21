@@ -5,11 +5,20 @@ import { Subject } from "rxjs";
 export class Application {
 
     public views: View[] = [];
-    public subject: Subject<MouseEvent> = new Subject<MouseEvent>();
+    public subject: Subject<Event> = new Subject<Event>();
     protected static instance = new Application();
 
     private constructor() {
         document.addEventListener("click", (evt)=>{
+            this.subject.next(evt);
+        });
+        document.addEventListener("mouseup", (evt)=>{
+            this.subject.next(evt);
+        });
+        document.addEventListener("mousedown", (evt)=>{
+            this.subject.next(evt);
+        });
+        document.addEventListener("mousemove", (evt)=>{
             this.subject.next(evt);
         });
         this.registerViews();

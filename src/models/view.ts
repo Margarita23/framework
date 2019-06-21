@@ -23,12 +23,30 @@ export class View {
 
     public setSubject(globalEvent: Subject<any>){
         globalEvent.subscribe(event => {
-            switch(event.type) {
-                case 'click' :
-                    let onClickControls = this.controls.filter(control => this.onControl(control, event));
-                    (onClickControls[onClickControls.length-1]).click();
-                    return;
+            let onClickControls = this.controls.filter(control => this.onControl(control, event));
+            
+
+            if((onClickControls[onClickControls.length-1])){
+
+                switch(event.type) {
+                    case 'click' :
+                        (onClickControls[onClickControls.length-1]).click();
+                        return;
+                    case 'mousedown' :
+                        (onClickControls[onClickControls.length-1]).mousedown();
+                        return;
+                    case 'mouseup' :
+                        (onClickControls[onClickControls.length-1]).mouseup();
+                        return;
+                    case 'mousemove' :
+                        (onClickControls[onClickControls.length-1]).mousemove();
+                        
+                        return;
+                }
+
             }
+
+            
         });
     }
 
@@ -45,7 +63,7 @@ export class View {
     public draw(): void {
         this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1);
         this.controls.forEach(control => {
-            control.draw(this.ctx);
+            control.draw();
         });
     }
 }
