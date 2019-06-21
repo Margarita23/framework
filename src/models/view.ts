@@ -23,21 +23,11 @@ export class View {
 
     public setSubject(globalEvent: Subject<any>){
         globalEvent.subscribe(event => {
-            switch(event.type)
-            {
+            switch(event.type) {
                 case 'click' :
                     let onClickControls = this.controls.filter(control => this.onControl(control, event));
-
                     (onClickControls[onClickControls.length-1]).click();
-
-                //this.controls.forEach(control => {
-
-
-                            //console.log('CLIIIIIICK');
-                        //control.click();
-                        return;
-
-                //});
+                    return;
             }
         });
     }
