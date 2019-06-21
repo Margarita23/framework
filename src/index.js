@@ -1,92 +1,84 @@
-define("controllers/controller", ["require", "exports"], function (require, exports) {
-    "use strict";
-    exports.__esModule = true;
-    var Controller = /** @class */ (function () {
-        function Controller() {
-        }
-        return Controller;
-    }());
-    exports.Controller = Controller;
-});
-define("services/control", ["require", "exports"], function (require, exports) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define("models/control", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
     var Control = /** @class */ (function () {
-        function Control(x, y, width, height, parent) {
-            this.parent = parent;
-            if (this.parent != null) {
-                this.x = this.parent.x + x;
-                this.y = this.parent.y + y;
-            }
-            else {
-                this.x = x;
-                this.y = y;
-            }
-            this.width = width;
-            this.height = height;
+        function Control() {
+            this.controls = [];
         }
         return Control;
     }());
     exports.Control = Control;
 });
-define("views/view", ["require", "exports"], function (require, exports) {
+define("models/view", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.__esModule = true;
     var View = /** @class */ (function () {
         function View() {
-            this.canvas = new HTMLCanvasElement();
-            this.context = this.canvas.getContext('2d');
+            this.controls = [];
+            this.width = document.body.offsetWidth;
+            this.height = document.body.offsetHeight;
+            this.canvas = document.getElementById('canvas');
+            this.ctx = this.canvas.getContext('2d');
+            this.canvas.width = this.width;
+            this.canvas.height = this.height;
+            this.ctx.fillStyle = "rgb(0,0,250)";
+            this.ctx.fillRect(0, 0, this.width, this.height);
         }
-        View.prototype.createControl = function (control) {
-            this.controls.push(control);
-        };
         return View;
     }());
     exports.View = View;
 });
-define("models/application", ["require", "exports", "rxjs"], function (require, exports, rxjs_1) {
+define("custom/main-view", ["require", "exports", "models/view"], function (require, exports, view_1) {
+    "use strict";
+    exports.__esModule = true;
+    var MainView = /** @class */ (function (_super) {
+        __extends(MainView, _super);
+        function MainView() {
+            return _super.call(this) || this;
+        }
+        MainView.prototype.getInstance = function () {
+            return MainView.instance;
+        };
+        MainView.instance = new MainView();
+        return MainView;
+    }(view_1.View));
+    exports.MainView = MainView;
+});
+define("models/application", ["require", "exports", "custom/main-view"], function (require, exports, main_view_1) {
     "use strict";
     exports.__esModule = true;
     var Application = /** @class */ (function () {
         function Application() {
-            var _this = this;
             this.views = [];
-            this.subject = new rxjs_1.Subject();
-            document.addEventListener("click", function (evt) {
-                _this.subject.next(evt);
-            });
+            this.registerView();
         }
-        ///public static getInstance():Application {
-        //return Application.instance;
-        //}
-        Application.prototype.registerView = function (view) {
-            this.views.push(view);
+        Application.getInstance = function () {
+            return Application.instance;
         };
+        Application.prototype.registerView = function () {
+            this.views.push(main_view_1.MainView.instance);
+        };
+        Application.instance = new Application;
         return Application;
     }());
     exports.Application = Application;
 });
-define("models/my-app", ["require", "exports"], function (require, exports) {
+define("index", ["require", "exports", "models/application"], function (require, exports, application_1) {
     "use strict";
     exports.__esModule = true;
-    var MyApp = /** @class */ (function () {
-        function MyApp() {
-        }
-        MyApp.getInstance = function () {
-            return MyApp.instance;
-        };
-        MyApp.instance = new MyApp();
-        return MyApp;
-    }());
-    exports.MyApp = MyApp;
+    var app = application_1.Application.getInstance();
+    console.log(app);
 });
-define("index", ["require", "exports", "models/my-app"], function (require, exports, my_app_1) {
-    "use strict";
-    exports.__esModule = true;
-    var button = document.querySelector("button");
-    //button.addEventListener("click", () => {
-    //    console.log("Button clicked.");
-    //});
-    var myApp = my_app_1.MyApp.getInstance();
-});
-//console.log(myApp);
