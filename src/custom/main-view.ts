@@ -1,6 +1,7 @@
 import { View } from "../models/view";
 import { Button } from "../models/button";
 import { MainController } from "./main-controller";
+import { Panel } from "../models/panel";
 
 export class MainView extends View{
     protected static instance = new MainView;
@@ -32,17 +33,21 @@ export class MainView extends View{
         this.registerControl(but);
     }
 
-    private blaButton(){
-        let but = new Button(0, 0, 400, 50, null, "rgb(250,0,0)", null, 1, null, this.ctx);
+    private firstPanelAndBlaButton(){
+        let panel = new Panel(200, 200, 400, 400, null, null, "rgb(0,0,0)", 0, null, this.ctx);
+        this.registerControl(panel);
+
+        let but = new Button(0, 0, 500, 50, null, "rgb(250,0,0)", null, 1, panel, this.ctx);
         but.mouseup = this.controller.changeColorToRed.bind(this.controller, but);
         but.mousedown = this.controller.changeColorToGrey.bind(this.controller, but);
         this.registerControl(but);
     }
 
+
     public run(): void{
         this.helloButton();
         this.hB();
         this.hB2();
-        this.blaButton();
+        this.firstPanelAndBlaButton();
     }
 }

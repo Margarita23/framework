@@ -18,8 +18,19 @@ export class Control {
     constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
         this.x = parent != null ? x + parent.x : x;
         this.y = parent != null ? y + parent.y : y;
-        this.width = width;
-        this.height = height;
+
+        if(parent && width > parent.width) {
+            this.width = parent.width;
+            this.height = height;
+        }
+        else if(parent && height > parent.height) {
+            this.height = parent.height;
+            this.width = width;
+        }
+        else {
+            this.width = width;
+            this.height = height;
+        }
         this.backgroundImage = backgroundImage;
         this.backgroundColor = backgroundColor;
         this.border = border;

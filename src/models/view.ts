@@ -17,6 +17,7 @@ export class View {
 
     protected registerControl(control: Control): void{
         this.controls.push(control);
+        console.log(control);
     }
 
     public run(){}
@@ -24,10 +25,8 @@ export class View {
     public setSubject(globalEvent: Subject<any>){
         globalEvent.subscribe(event => {
             let onClickControls = this.controls.filter(control => this.onControl(control, event));
-            
 
             if((onClickControls[onClickControls.length-1])){
-
                 switch(event.type) {
                     case 'click' :
                         (onClickControls[onClickControls.length-1]).click();
@@ -40,13 +39,9 @@ export class View {
                         return;
                     case 'mousemove' :
                         (onClickControls[onClickControls.length-1]).mousemove();
-                        
                         return;
                 }
-
             }
-
-            
         });
     }
 
