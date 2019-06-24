@@ -15,7 +15,7 @@ export class Panel extends Control {
         else if(this.backgroundColor)
         {
             this.ctx.fillStyle = this.backgroundColor;
-            this.ctx.fillRect(this.x, this.x, this.width, this.height);
+            this.ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         if(this.border){
             this.ctx.strokeStyle = this.border;

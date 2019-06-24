@@ -21,6 +21,12 @@ export class Application {
         document.addEventListener("mousemove", (evt)=>{
             this.subject.next(evt);
         });
+
+        
+
+        document.addEventListener("keydown", (evt)=>{
+            this.subject.next(evt);
+        });
         this.registerViews();
     }
 

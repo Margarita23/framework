@@ -19,12 +19,12 @@ export class Control {
         this.x = parent != null ? x + parent.x : x;
         this.y = parent != null ? y + parent.y : y;
 
-        if(parent && width > parent.width) {
-            this.width = parent.width;
+        if(parent && (x+width) > parent.width) {
+            this.width = parent.width - x;
             this.height = height;
         }
-        else if(parent && height > parent.height) {
-            this.height = parent.height;
+        else if(parent && (y+height) > parent.height) {
+            this.height = parent.height - y;
             this.width = width;
         }
         else {

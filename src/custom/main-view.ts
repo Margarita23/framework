@@ -2,6 +2,7 @@ import { View } from "../models/view";
 import { Button } from "../models/button";
 import { MainController } from "./main-controller";
 import { Panel } from "../models/panel";
+import { Input } from "../models/input";
 
 export class MainView extends View{
     protected static instance = new MainView;
@@ -34,13 +35,21 @@ export class MainView extends View{
     }
 
     private firstPanelAndBlaButton(){
-        let panel = new Panel(200, 200, 400, 400, null, null, "rgb(0,0,0)", 0, null, this.ctx);
+        let panel = new Panel(200, 200, 400, 400, null, "rgb(20,100,200)", "rgb(0,0,0)", 3, null, this.ctx);
         this.registerControl(panel);
 
-        let but = new Button(0, 0, 500, 50, null, "rgb(250,0,0)", null, 1, panel, this.ctx);
+
+        let but = new Button(0, 0, 500, 50, null, "rgb(250,0,0)", null, 2, panel, this.ctx);
+        //Ошибка!!! При смене цвета кнопки, перерисовка производится ПОВЕРХ остальных кнопок! Решить.
         but.mouseup = this.controller.changeColorToRed.bind(this.controller, but);
         but.mousedown = this.controller.changeColorToGrey.bind(this.controller, but);
         this.registerControl(but);
+
+        let firstInput = new Input(0, 0, 200, 100, null, "rgb(200,200,200)", "rgb(0,0,0)", 1, panel, this.ctx, "FIRST input", "50px Arial", "rgb(0,200,100)");
+        this.registerControl(firstInput);
+
+        let secondInput = new Input(0, 300, 300, 50, null, "rgb(100,100,100)", "rgb(0,0,0)", 2, panel, this.ctx, "Second input", "50px Arial", "rgb(0,200,100)");
+        this.registerControl(secondInput);
     }
 
 
