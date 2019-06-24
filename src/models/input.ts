@@ -13,7 +13,7 @@ export class Input extends Panel {
     public click: () => void = () => this.focusOnMe();
 
     constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D, text: string, font: string, fillStyle: string,
-        backgroundImageFocus: HTMLImageElement | null, backgroundColorFocus: string | null, borderFocus: string | null, borderLineWidthFocus: number){
+        backgroundImageFocus: HTMLImageElement | null, backgroundColorFocus: string | null, borderFocus: string | null, borderLineWidthFocus: number) {
         super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
         this.text = text;
         this.font = font;
@@ -32,16 +32,34 @@ export class Input extends Panel {
         this.ctx.fillText(this.text, this.x, this.y + this.height);
     }
 
-    public focusOnMe(): void{
+    public focusOnMe(): void {
         this.focus = true;
         this.ctx.lineWidth = this.borderLineWidth;
-        this.ctx.strokeStyle = "rgb(255,255,0)";
+        this.ctx.strokeStyle = this.borderFocus;
+        this.ctx.fillStyle = this.backgroundColorFocus;
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        
     }
 
-    public unfocus(): void{
+    public unfocus(): void {
         this.focus = false;
+        this.ctx.lineWidth = this.borderLineWidth;
         this.ctx.strokeStyle = this.border;
+        this.ctx.fillStyle = this.backgroundColor;
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        this.ctx.fillStyle = this.fillStyle;
+        this.ctx.fillText(this.text, this.x, this.y + this.height);
     }
+
+    public printText(){
+        this.ctx.fillStyle = this.backgroundColorFocus;
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
+        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+
+        this.ctx.fillStyle = this.fillStyle;
+        this.ctx.fillText(this.text, this.x, this.y + this.height);
+    }
+
 }

@@ -42,7 +42,6 @@ export class View {
         if(firstElementMustClick){
             switch(event.type) {
                 case 'click' :
-                    //расфокусировка действует ТОЛЬКО при клике на какой-нибудь контрол. Сделать так, чтобы она действовала при клике в ЛЮБУЮ точку экрана.
                     this.controls.map(c => { if(c.constructor.name === "Input"){(<Input>c).unfocus();}});
                     if (firstElementMustClick.constructor.name === "Input") {
                         (<Input>firstElementMustClick).focusOnMe();
@@ -51,9 +50,6 @@ export class View {
                     else{
                         this.inputFocus = null;
                     }
-                    console.log(onClickControls);
-                    console.log(this.inputFocus);
-
                     firstElementMustClick.click();
                     return;
                 case 'mousedown' :
@@ -71,7 +67,12 @@ export class View {
 
     private reactionOnKeyBoardEvent(event: KeyboardEvent): void{
         if(this.inputFocus !== null){
-            console.log('Plick-plack');
+            
+            this.inputFocus.text += event.key;
+            this.inputFocus.printText();
+
+            console.log(this.inputFocus.text);
+
         }else{
             console.log('There is no input with focus');
         }
