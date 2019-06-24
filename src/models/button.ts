@@ -1,8 +1,8 @@
 import { Control } from "./control";
 
 export class Button extends Control{
-    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
-        super(x, y, width, height, backgroundImage, backgroundColor, border, zOrder, parent, ctx);
+    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
+        super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
     }
 
     public draw(){
