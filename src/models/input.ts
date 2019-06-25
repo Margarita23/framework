@@ -61,23 +61,11 @@ export class Input extends Panel {
 
         this.ctx.strokeStyle = "rgb(255,0,0)";
 
-
-        //let countOfLet = this.width / this.ctx.measureText(this.text).alphabeticBaseline;
-        console.log(this.width);
-        //console.log();
-
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
 
         this.ctx.fillStyle = this.fillStyle;
-        
 
-        //this.ctx.fillText(this.text, this.x, this.y + this.ctx.measureText(this.text).emHeightAscent);
         this.ctx.fillText(this.inputText.getText(), this.x, this.y + this.ctx.measureText(this.inputText.getText()).emHeightAscent, this.width);
-        //this.ctx.fillText(this.text, this.x - (this.ctx.measureText(this.text).width - this.width), this.y + this.ctx.measureText(this.text).emHeightAscent);
-        //this.ctx.fillText(this.text, this.x - (this.ctx.measureText(this.text).width - this.width), this.y + this.ctx.measureText(this.text).emHeightAscent);
-        
-        console.log(this.ctx.measureText(this.inputText.getText()).width);
-        console.log(this.ctx.measureText(this.inputText.getText()));
     }
 
 }

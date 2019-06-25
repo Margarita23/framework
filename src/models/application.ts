@@ -22,7 +22,6 @@ export class Application {
             this.subject.next(evt);
         });
 
-        
 
         document.addEventListener("keydown", (evt)=>{
             this.subject.next(evt);

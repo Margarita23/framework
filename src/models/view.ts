@@ -65,8 +65,7 @@ export class View {
         }
     }
 
-    private reactionOnKeyBoardEvent(event: KeyboardEvent): void{
-        console.log(event);
+    private reactionOnKeyBoardEvent(event: KeyboardEvent): void {
         if(this.inputFocus !== null){
             this.inputFocus.inputText.setText(event.key);
             this.inputFocus.printText();
