@@ -1,9 +1,10 @@
 import { Control } from "./control";
 import { Panel } from "./panel";
+import { InputText } from "./inputText";
 
 export class Input extends Panel {
     public focus: boolean = false;
-    public text: string = "";
+    public inputText: InputText;
     public font: string = "30px Arial";
     public fillStyle: string = "rgb(0,0,0)";
     public backgroundImageFocus: HTMLImageElement | null;
@@ -12,10 +13,10 @@ export class Input extends Panel {
     public borderLineWidthFocus: number;
     public click: () => void = () => this.focusOnMe();
 
-    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D, text: string, font: string, fillStyle: string,
+    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D, inputText: InputText, font: string, fillStyle: string,
         backgroundImageFocus: HTMLImageElement | null, backgroundColorFocus: string | null, borderFocus: string | null, borderLineWidthFocus: number) {
         super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
-        this.text = text;
+        this.inputText = inputText;
         this.font = font;
         this.fillStyle = fillStyle;
 
@@ -29,7 +30,7 @@ export class Input extends Panel {
         super.draw();
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle;
-        this.ctx.fillText(this.text, this.x, this.y + this.height);
+        this.ctx.fillText(this.inputText.getText(), this.x, this.y + this.height);
     }
 
     public focusOnMe(): void {
@@ -50,7 +51,7 @@ export class Input extends Panel {
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle;
-        this.ctx.fillText(this.text, this.x, this.y + this.height);
+        this.ctx.fillText(this.inputText.getText(), this.x, this.y + this.height);
     }
 
     public printText(){
@@ -58,8 +59,25 @@ export class Input extends Panel {
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
 
+        this.ctx.strokeStyle = "rgb(255,0,0)";
+
+
+        //let countOfLet = this.width / this.ctx.measureText(this.text).alphabeticBaseline;
+        console.log(this.width);
+        //console.log();
+
+        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+
         this.ctx.fillStyle = this.fillStyle;
-        this.ctx.fillText(this.text, this.x, this.y + this.height);
+        
+
+        //this.ctx.fillText(this.text, this.x, this.y + this.ctx.measureText(this.text).emHeightAscent);
+        this.ctx.fillText(this.inputText.getText(), this.x, this.y + this.ctx.measureText(this.inputText.getText()).emHeightAscent, this.width);
+        //this.ctx.fillText(this.text, this.x - (this.ctx.measureText(this.text).width - this.width), this.y + this.ctx.measureText(this.text).emHeightAscent);
+        //this.ctx.fillText(this.text, this.x - (this.ctx.measureText(this.text).width - this.width), this.y + this.ctx.measureText(this.text).emHeightAscent);
+        
+        console.log(this.ctx.measureText(this.inputText.getText()).width);
+        console.log(this.ctx.measureText(this.inputText.getText()));
     }
 
 }

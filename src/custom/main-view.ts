@@ -3,6 +3,7 @@ import { Button } from "../models/button";
 import { MainController } from "./main-controller";
 import { Panel } from "../models/panel";
 import { Input } from "../models/input";
+import { InputText } from "../models/inputText";
 
 export class MainView extends View{
     protected static instance = new MainView;
@@ -43,10 +44,10 @@ export class MainView extends View{
         but.mousedown = this.controller.changeColorToGrey.bind(this.controller, but);
         this.registerControl(but);
 
-        let firstInput = new Input(0, 0, 200, 100, null, "rgb(200,200,200)", "rgb(0,0,0)",1, 1, panel, this.ctx, "FIRST input", "50px Arial", "rgb(0,0,0)", null, "rgb(255,20,200)", "rgb(0,0,0)",1);
+        let firstInput = new Input(0, 0, 200, 100, null, "rgb(200,200,200)", "rgb(0,0,0)",1, 1, panel, this.ctx, new InputText("text", 6), "50px Arial", "rgb(0,0,0)", null, "rgb(255,20,200)", "rgb(0,0,0)",1);
         this.registerControl(firstInput);
 
-        let secondInput = new Input(0, 300, 300, 50, null, "rgb(100,100,100)", "rgb(0,0,0)",1, 2, panel, this.ctx, "Second input", "50px Arial", "rgb(0,0,0)", null, "rgb(100,100,100)", "rgb(0,0,0)",1);
+        let secondInput = new Input(0, 300, 300, 50, null, "rgb(100,100,100)", "rgb(0,0,0)",1, 2, panel, this.ctx, new InputText("Second input", 10), "50px Arial", "rgb(0,0,0)", null, "rgb(100,100,100)", "rgb(0,0,0)",1);
         this.registerControl(secondInput);
     }
 

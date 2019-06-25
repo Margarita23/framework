@@ -66,15 +66,11 @@ export class View {
     }
 
     private reactionOnKeyBoardEvent(event: KeyboardEvent): void{
+        console.log(event);
         if(this.inputFocus !== null){
-            
-            this.inputFocus.text += event.key;
+            this.inputFocus.inputText.setText(event.key);
             this.inputFocus.printText();
 
-            console.log(this.inputFocus.text);
-
-        }else{
-            console.log('There is no input with focus');
         }
     }
 
