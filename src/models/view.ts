@@ -50,6 +50,12 @@ export class View {
                     else{
                         this.inputFocus = null;
                     }
+
+
+                    console.log(firstElementMustClick);
+
+
+                    
                     firstElementMustClick.click();
                     return;
                 case 'mousedown' :
@@ -65,7 +71,8 @@ export class View {
         }
     }
 
-    private reactionOnKeyBoardEvent(event: KeyboardEvent): void {
+    private reactionOnKeyBoardEvent(event: KeyboardEvent): void{
+        console.log(event);
         if(this.inputFocus !== null){
             this.inputFocus.inputText.setText(event.key);
             this.inputFocus.printText();

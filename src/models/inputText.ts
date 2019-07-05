@@ -1,6 +1,8 @@
 export class InputText {
+
     private text: string;
     maxLength: number;
+
     constructor(text: string, maxLength: number) {
         if(text.length > maxLength) {
             this.text = text.substring(0, maxLength);
