@@ -2,7 +2,7 @@ import { Control } from "./control";
 import { Rgb } from "./rgb";
 
 export class Button extends Control{
-    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: Rgb | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
+    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: Rgb | null, border: Rgb | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
         super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
     }
 
@@ -19,7 +19,7 @@ export class Button extends Control{
             this.ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         if(this.border){
-            this.ctx.strokeStyle = this.border;
+            this.ctx.strokeStyle = this.border.getColor();
             this.ctx.strokeRect(this.x, this.y, this.width, this.height)
         };
     }

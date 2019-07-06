@@ -12,18 +12,18 @@ export class Input extends Panel {
     public padding: number = 5;
 
     public backgroundImageFocus: HTMLImageElement | null;
-    public backgroundColorFocus: string | null;
-    public borderFocus: string | null;
+    public backgroundColorFocus: Rgb | null;
+    public borderFocus: Rgb | null;
     public borderLineWidthFocus: number;
     public click: () => void = () => this.focusOnMe();
 
     constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null,
-        backgroundColor: Rgb | null, border: string | null,
+        backgroundColor: Rgb | null, border: Rgb | null,
         borderLineWidth: number, zOrder: number, parent: Control,
         ctx: CanvasRenderingContext2D, inputText: InputText,
         font: string, fillStyle: Rgb, padding: number,
         backgroundImageFocus: HTMLImageElement | null,
-        backgroundColorFocus: string | null, borderFocus: string | null,
+        backgroundColorFocus: Rgb | null, borderFocus: Rgb | null,
         borderLineWidthFocus: number) {
 
         super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
@@ -52,8 +52,8 @@ export class Input extends Panel {
         this.focus = true;
         this.ctx.font = this.font;
         this.ctx.lineWidth = this.borderLineWidth;
-        this.ctx.strokeStyle = this.borderFocus;
-        this.ctx.fillStyle = this.backgroundColorFocus;
+        this.ctx.strokeStyle = this.borderFocus.getColor();
+        this.ctx.fillStyle = this.backgroundColorFocus.getColor();
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle.getColor();
@@ -65,7 +65,7 @@ export class Input extends Panel {
         this.focus = false;
         this.ctx.font = this.font;
         this.ctx.lineWidth = this.borderLineWidth;
-        this.ctx.strokeStyle = this.border;
+        this.ctx.strokeStyle = this.border.getColor();
         this.ctx.fillStyle = this.backgroundColor.getColor();
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
@@ -76,7 +76,7 @@ export class Input extends Panel {
 
     public printText(){
         this.ctx.font = this.font;
-        this.ctx.fillStyle = this.backgroundColorFocus;
+        this.ctx.fillStyle = this.backgroundColorFocus.getColor();
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
 

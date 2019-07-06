@@ -37,7 +37,7 @@ export class MainView extends View{
     }
 
     private firstPanelAndBlaButton(){
-        let panel = new Panel(200, 200, 400, 400, null, new Rgb(20,100,200), "rgb(0,0,0)",1, 3, null, this.ctx);
+        let panel = new Panel(200, 200, 400, 400, null, new Rgb(20,100,200), new Rgb(0,0,0),1, 3, null, this.ctx);
         this.registerControl(panel);
 
         let but = new Button(0, 0, 500, 50, null, new Rgb(250,0,0), null,1, 2, panel, this.ctx);
@@ -45,10 +45,10 @@ export class MainView extends View{
         but.mousedown = this.controller.changeColorToGrey.bind(this.controller, but);
         this.registerControl(but);
 
-        let firstInput = new Input(0, 0, 200, 100, null, new Rgb(200,200,200), "rgb(0,0,0)", 1, 1, panel, this.ctx, new InputText("text", 16), "50px Arial", new Rgb(0,0,0), 20, null, "rgb(255,20,200)", "rgb(0,0,0)", 1);
+        let firstInput = new Input(0, 0, 200, 100, null, new Rgb(200,200,200), new Rgb(0,0,0), 1, 1, panel, this.ctx, new InputText("text", 16), "50px Arial", new Rgb(0,0,0), 20, null, new Rgb(255,20,200), new Rgb(0,0,0), 1);
         this.registerControl(firstInput);
 
-        let secondInput = new Input(0, 300, 300, 50, null, new Rgb(100,100,100), "rgb(0,0,0)", 1, 2, panel, this.ctx, new InputText("Second input", 50), "20px Arial", new Rgb(0,0,0), 20, null, "rgb(100,100,100)", "rgb(0,0,0)", 1);
+        let secondInput = new Input(0, 300, 300, 50, null, new Rgb(100,100,100), new Rgb(0,0,0), 1, 2, panel, this.ctx, new InputText("Second input", 50), "20px Arial", new Rgb(0,0,0), 20, null, new Rgb(100,100,100), new Rgb(0,0,0), 1);
         this.registerControl(secondInput);
     }
 
