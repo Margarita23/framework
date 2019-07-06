@@ -1,12 +1,12 @@
 import { Control } from "./control";
-import { Rgb } from "./rgb";
 
 export class Button extends Control{
-    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: Rgb | null, border: Rgb | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
-        super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
+    constructor(zOrder: number, ctx: CanvasRenderingContext2D){
+        super(zOrder, ctx);
     }
 
     public draw(){
+        super.draw();
         if(this.backgroundImage)
         {
             this.backgroundImage.onload = () => {

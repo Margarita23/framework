@@ -11,32 +11,18 @@ export class Input extends Panel {
 
     public padding: number = 5;
 
-    public backgroundImageFocus: HTMLImageElement | null;
-    public backgroundColorFocus: Rgb | null;
-    public borderFocus: Rgb | null;
+    public backgroundImageFocus: HTMLImageElement | null = this.backgroundImage;
+    public backgroundColorFocus: Rgb | null = this.backgroundColor;
+    public borderFocus: Rgb | null = this.border;
     public borderLineWidthFocus: number;
     public click: () => void = () => this.focusOnMe();
 
-    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null,
-        backgroundColor: Rgb | null, border: Rgb | null,
-        borderLineWidth: number, zOrder: number, parent: Control,
-        ctx: CanvasRenderingContext2D, inputText: InputText,
-        font: string, fillStyle: Rgb, padding: number,
-        backgroundImageFocus: HTMLImageElement | null,
-        backgroundColorFocus: Rgb | null, borderFocus: Rgb | null,
-        borderLineWidthFocus: number) {
-
-        super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
+    constructor(zOrder: number, ctx: CanvasRenderingContext2D, inputText: InputText, font: string, padding: number, borderLineWidthFocus: number) {
+        super(zOrder, ctx);
         this.inputText = inputText;
         this.font = font;
-        this.fillStyle = fillStyle;
-
 
         this.padding = (padding * this.width / 100) / 2;
-
-        this.backgroundImageFocus = backgroundImageFocus;
-        this.backgroundColorFocus = backgroundColorFocus;
-        this.borderFocus = borderFocus;
         this.borderLineWidthFocus = borderLineWidthFocus;
     }
 

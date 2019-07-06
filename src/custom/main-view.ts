@@ -20,35 +20,78 @@ export class MainView extends View{
     }
 
     private helloButton() {
-        let but = new Button(0, 0, 150, 100, null, new Rgb(0,200,0), null,1, 2, null, this.ctx);
+        let but = new Button(2, this.ctx);
+        but.width = 150;
+        but.height = 100;
+        but.backgroundColor = new Rgb(0,200,0);
         but.click = this.controller.sayHi;
         this.registerControl(but);
     }
 
     private hB() {
-        let but = new Button(50, 50, 150, 100, null, new Rgb(200,0,100), null,1, 4, null, this.ctx);
+        let but = new Button(4, this.ctx);
+        but.x = 50;
+        but.y = 50;
+        but.width = 150;
+        but.height = 100;
+        but.backgroundColor = new Rgb(200,0,100);
+
         but.click = this.controller.sayHi;
         this.registerControl(but);
     }
     private hB2() {
-        let but = new Button(100, 100, 150, 100, null, new Rgb(0,0,250), null,1, 3, null, this.ctx);
+        let but = new Button(3, this.ctx);
+        but.x = 100;
+        but.y = 100;
+        but.width = 150;
+        but.height = 100;
+        but.backgroundColor = new Rgb(0,0,250);
         but.click = this.controller.sayBye;
         this.registerControl(but);
     }
 
     private firstPanelAndBlaButton(){
-        let panel = new Panel(200, 200, 400, 400, null, new Rgb(20,100,200), new Rgb(0,0,0),1, 3, null, this.ctx);
+        let panel = new Panel(3, this.ctx);
+        panel.x = 200;
+        panel.y = 200;
+        panel.width = 400;
+        panel.height = 400;
+        panel.backgroundColor = new Rgb(20,100,200);
         this.registerControl(panel);
 
-        let but = new Button(0, 0, 500, 50, null, new Rgb(250,0,0), null,1, 2, panel, this.ctx);
+        let but = new Button(2, this.ctx);
+        but.x = 0;
+        but.y = 0;
+        but.width = 500;
+        but.height = 50;
+        but.backgroundColor = new Rgb(250,0,0);
+        but.parent = panel;
+        
         but.mouseup = this.controller.changeColorToRed.bind(this.controller, but);
         but.mousedown = this.controller.changeColorToGrey.bind(this.controller, but);
         this.registerControl(but);
 
-        let firstInput = new Input(0, 0, 200, 100, null, new Rgb(200,200,200), new Rgb(0,0,0), 1, 1, panel, this.ctx, new InputText("text", 16), "50px Arial", new Rgb(0,0,0), 20, null, new Rgb(255,20,200), new Rgb(0,0,0), 1);
+        let firstInput = new Input(1, this.ctx, new InputText("text", 16), "50px Arial", 20, 1);
+        firstInput.x = 0;
+        firstInput.y = 0;
+        firstInput.width = 200;
+        firstInput.height = 100;
+        firstInput.backgroundColor = new Rgb(200,200,200);
+        firstInput.parent = panel;
+
+        firstInput.backgroundColorFocus = new Rgb(255,255,255);
+        firstInput.borderFocus = new Rgb(100,100,100);
+        
         this.registerControl(firstInput);
 
-        let secondInput = new Input(0, 300, 300, 50, null, new Rgb(100,100,100), new Rgb(0,0,0), 1, 2, panel, this.ctx, new InputText("Second input", 50), "20px Arial", new Rgb(0,0,0), 20, null, new Rgb(100,100,100), new Rgb(0,0,0), 1);
+        let secondInput = new Input(2, this.ctx, new InputText("Second input", 50), "20px Arial", 20, 1);
+        secondInput.x = 0;
+        secondInput.y = 300;
+        secondInput.width = 300;
+        secondInput.height = 50;
+        secondInput.backgroundColor = new Rgb(100,200,200);
+        secondInput.parent = panel;
+        
         this.registerControl(secondInput);
     }
 
