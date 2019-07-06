@@ -1,3 +1,5 @@
+import { Rgb } from "./rgb";
+
 export class Control {
     public controls: Control[] = [];
     public x: number;
@@ -7,7 +9,7 @@ export class Control {
     public parent: Control;
     public ctx: CanvasRenderingContext2D;
     public backgroundImage: HTMLImageElement;
-    public backgroundColor: string;
+    public backgroundColor: Rgb;
     public border: string;
     public borderLineWidth: number;
     public zOrder: number;
@@ -16,7 +18,7 @@ export class Control {
     public mousedown: () => void = () => {};
     public mousemove: () => void = () => {};
 
-    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
+    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: Rgb | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
         this.x = parent != null ? x + parent.x : x;
         this.y = parent != null ? y + parent.y : y;
 
@@ -42,6 +44,5 @@ export class Control {
     }
 
     draw(): void {
-        console.log('draw');
     }
 }

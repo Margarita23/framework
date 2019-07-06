@@ -1,7 +1,8 @@
 import { Control } from "./control";
+import { Rgb } from "./rgb";
 
 export class Panel extends Control {
-    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: string | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
+    constructor(x: number, y: number, width: number, height: number, backgroundImage: HTMLImageElement | null, backgroundColor: Rgb | null, border: string | null, borderLineWidth: number, zOrder: number, parent: Control, ctx: CanvasRenderingContext2D){
         super(x, y, width, height, backgroundImage, backgroundColor, border, borderLineWidth, zOrder, parent, ctx);
     }
 
@@ -14,7 +15,7 @@ export class Panel extends Control {
         }
         else if(this.backgroundColor)
         {
-            this.ctx.fillStyle = this.backgroundColor;
+            this.ctx.fillStyle = this.backgroundColor.getColor();
             this.ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         if(this.border){
