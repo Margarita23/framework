@@ -5,7 +5,9 @@ import { Rgb } from "./rgb";
 
 export class Input extends Panel {
     public focus: boolean = false;
-    public inputText: InputText;
+    public inputText: InputText = new InputText();
+    private isSecret: boolean = false;
+    
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
 
@@ -14,40 +16,50 @@ export class Input extends Panel {
     public backgroundImageFocus: HTMLImageElement | null = this.backgroundImage;
     public backgroundColorFocus: Rgb | null = this.backgroundColor;
     public borderFocus: Rgb | null = this.border;
-    public borderLineWidthFocus: number;
+    public borderLineWidthFocus: number = 5;
     public click: () => void = () => this.focusOnMe();
 
-    constructor(zOrder: number, inputText: InputText, font: string, padding: number, borderLineWidthFocus: number) {
+    constructor(zOrder: number) {
         super(zOrder);
-        this.inputText = inputText;
-        this.font = font;
+    }
 
-        this.padding = (padding * this.width / 100) / 2;
-        this.borderLineWidthFocus = borderLineWidthFocus;
+    public setPrivateInput(isSecret: boolean){
+        this.isSecret = isSecret;
+        this.inputText.secret = isSecret;
+    }
+
+    private getPaddingInPx(): number{
+        let padding = (this.padding * this.width / 100) / 2;
+        return padding;
     }
 
     public draw(ctx: CanvasRenderingContext2D) {
         super.draw(ctx);
+        let padding = this.getPaddingInPx();
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.inputText.getText(), this.x + this.padding/2, this.y + this.height/2, this.width - this.padding);
+        
+        this.ctx.fillText(this.inputText.getText(), this.x + padding, this.y + this.height/2, this.width - padding*2);
     }
 
     public focusOnMe(): void {
+        let padding = this.getPaddingInPx();
         this.focus = true;
         this.ctx.font = this.font;
-        this.ctx.lineWidth = this.borderLineWidth;
+        this.ctx.lineWidth = this.borderLineWidthFocus;
         this.ctx.strokeStyle = this.borderFocus.getColor();
         this.ctx.fillStyle = this.backgroundColorFocus.getColor();
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.inputText.getText(), this.x + this.padding/2, this.y + this.height/2, this.width - this.padding);
+        this.ctx.fillText(this.inputText.getText(), this.x + padding, this.y + this.height/2, this.width - padding*2);
     }
 
     public unfocus(): void {
+        let padding = this.getPaddingInPx();
+
         this.focus = false;
         this.ctx.font = this.font;
         this.ctx.lineWidth = this.borderLineWidth;
@@ -57,10 +69,12 @@ export class Input extends Panel {
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.inputText.getText(), this.x + this.padding/2, this.y + this.height/2, this.width - this.padding);
+        this.ctx.fillText(this.inputText.getText(), this.x + padding, this.y + this.height/2, this.width - padding*2);
     }
 
     public printText(){
+        let padding = this.getPaddingInPx();
+
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.backgroundColorFocus.getColor();
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -68,7 +82,7 @@ export class Input extends Panel {
 
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.inputText.getText(), this.x + this.padding/2, this.y + this.height/2, this.width - this.padding);
+        this.ctx.fillText(this.inputText.getText(), this.x + padding, this.y + this.height/2, this.width - padding*2);
     }
 
 }

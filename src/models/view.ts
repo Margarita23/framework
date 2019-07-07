@@ -9,8 +9,6 @@ export class View {
 
     //добавить указание ошибки, когда у контролов в одной панели одинаковый zOrder!! иначе есть несоответствие отрисовки и фокусировки на input
 
-    constructor(){}
-
     protected registerControl(control: Control): void{
         this.controls.push(control);
         this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше.
@@ -60,9 +58,9 @@ export class View {
 
     private reactionOnKeyBoardEvent(event: KeyboardEvent): void {
         if(this.inputFocus !== null){
-            this.inputFocus.inputText.setText(event.key);
+            this.inputFocus.inputText.addText(event.key);
             this.inputFocus.printText();
-
+            console.log(this.inputFocus.inputText.getText());
         }
     }
 
@@ -92,4 +90,5 @@ export class View {
             control.draw(ctx.ctx);
         });
     }
+
 }

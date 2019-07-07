@@ -1,5 +1,4 @@
 import { Control } from "./control";
-import { Rgb } from "./rgb";
 
 export class Panel extends Control {
     constructor(zOrder: number){

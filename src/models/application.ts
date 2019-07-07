@@ -1,10 +1,8 @@
 import { View } from "./view";
-import { MainView } from "../custom/main-view";
 import { Subject } from "rxjs";
 import { Context } from "./context";
 
 export class Application {
-
     public views: View[] = [];
     public subject: Subject<Event> = new Subject<Event>();
     public ctx: Context = new Context();
@@ -24,24 +22,24 @@ export class Application {
             this.subject.next(evt);
         });
 
-
         document.addEventListener("keydown", (evt)=>{
             this.subject.next(evt);
         });
-        this.registerViews();
     }
 
     public static getInstance(): Application {
         return Application.instance;
     }
 
-    private registerViews(){
-        this.views.push(MainView.getInstance());
+    public registerView(...views: View[]){
+        views.forEach(view => {
+            this.views.push(view);
+        });
     }
 
     public run(){
-        this.views[0].setSubject(this.subject);
-        this.views[0].run();
-        this.views[0].draw(this.ctx);
+        this.views[1].setSubject(this.subject);
+        this.views[1].run();
+        this.views[1].draw(this.ctx);
     }
 }

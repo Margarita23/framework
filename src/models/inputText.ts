@@ -1,28 +1,50 @@
 export class InputText {
 
-    private text: string;
-    maxLength: number;
+    public text: string = "Print here...";
+    public maxLength: number = 50;
+    public secret: boolean = false;
+    private secretText: string = "";
 
-    constructor(text: string, maxLength: number) {
-        if(text.length > maxLength) {
-            this.text = text.substring(0, maxLength);
+    constructor() {}
+
+    private checkTextLength(text: string):string {
+        let resText = "";
+        if(text.length > this.maxLength) {
+            resText = text.substring(0, this.maxLength);
         }else {
-            this.text = text;
+            resText = text;
         }
-        this.maxLength = maxLength;
+        return resText;
     }
 
-    public setText(text: string){
+    public addText(text: string): void{
         if(text == "Backspace" && text.length != 0) {
             this.text = this.text.slice(0,-1);
+            this.secretText = this.secretText.slice(0,-1);
         }
         else if(this.text.length <= this.maxLength) {
-            this.text += text;
+            this.text = this.text + text;
+            
+            if(this.secret){
+                this.secretText +="*";
+                console.log(text);
+            }
+        }
+
+        
+    }
+
+    public setText(text: string): void{
+        this.text = this.checkTextLength(text);
+        if(this.secret){
+            for(let i=0; i < this.text.length; i++){
+                this.secretText += "*";
+            }
         }
     }
 
     public getText(): string{
-        return this.text;
+        return this.secret ? this.secretText : this.text;
     }
 
 }

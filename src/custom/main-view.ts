@@ -3,15 +3,12 @@ import { Button } from "../models/button";
 import { MainController } from "./main-controller";
 import { Panel } from "../models/panel";
 import { Input } from "../models/input";
-import { InputText } from "../models/inputText";
 import { Rgb } from "../models/rgb";
 
 export class MainView extends View{
     protected static instance = new MainView;
     private controller: MainController = new MainController();
-    private constructor(){
-        super();
-    }
+    private constructor(){super();}
 
     public static getInstance(): MainView {
         return MainView.instance;
@@ -64,14 +61,14 @@ export class MainView extends View{
         but.height = 50;
         but.backgroundColor = new Rgb(250,0,0);
         but.parent = panel;
-        
+
         //but.mouseup = this.controller.changeColorToRed.bind(this.controller, but);
         //but.mousedown = this.controller.changeColorToGrey.bind(this.controller, but);
 
         but.recalcPosition(but.x, but.y, but.width, but.height, panel);
         this.registerControl(but);
 
-        let firstInput = new Input(1, new InputText("text", 16), "50px Arial", 20, 1);
+        let firstInput = new Input(1);
         firstInput.x = 0;
         firstInput.y = 0;
         firstInput.width = 200;
@@ -85,14 +82,14 @@ export class MainView extends View{
         firstInput.recalcPosition(firstInput.x, firstInput.y, firstInput.width, firstInput.height, panel);
         this.registerControl(firstInput);
 
-        let secondInput = new Input(2, new InputText("Second input", 50), "20px Arial", 20, 1);
+        let secondInput = new Input(2);
         secondInput.x = 0;
         secondInput.y = 300;
         secondInput.width = 300;
         secondInput.height = 50;
         secondInput.backgroundColorFocus = new Rgb(100,100,200);
         secondInput.parent = panel;
-        
+
         secondInput.recalcPosition(secondInput.x, secondInput.y, secondInput.width, secondInput.height, panel);
         this.registerControl(secondInput);
     }

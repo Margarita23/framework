@@ -4,8 +4,8 @@ export class Control {
     public controls: Control[] = [];
     public x: number = 0;
     public y: number = 0;
-    public width: number = 100;
-    public height: number = 50;
+    public width: number = 150;
+    public height: number = 75;
     public parent: Control = null;
     public ctx: CanvasRenderingContext2D;
     public backgroundImage: HTMLImageElement = null;
@@ -19,17 +19,7 @@ export class Control {
     public mousemove: () => void = () => {};
 
     constructor(zOrder: number){
-/*
-        console.log(this);
-        console.log("parent is -------");
-        console.log(parent);
-        console.log("is parent null????");
-        console.log(!parent ? true : false );
-
-        */
-
         this.zOrder = zOrder;
-        //this.ctx = ctx;
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
