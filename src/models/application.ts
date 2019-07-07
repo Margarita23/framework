@@ -1,11 +1,13 @@
 import { View } from "./view";
 import { MainView } from "../custom/main-view";
 import { Subject } from "rxjs";
+import { Context } from "./context";
 
 export class Application {
 
     public views: View[] = [];
     public subject: Subject<Event> = new Subject<Event>();
+    public ctx: Context = new Context();
     protected static instance = new Application();
 
     private constructor() {
@@ -40,6 +42,6 @@ export class Application {
     public run(){
         this.views[0].setSubject(this.subject);
         this.views[0].run();
-        this.views[0].draw();
+        this.views[0].draw(this.ctx);
     }
 }

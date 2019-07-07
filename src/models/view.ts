@@ -1,23 +1,15 @@
 import { Control } from "./control";
 import { Subject } from "rxjs";
 import { Input } from "./input";
+import { Context } from "./context";
 
 export class View {
     protected controls: Control[] = [];
-    private canvas: HTMLCanvasElement;
-    public ctx: CanvasRenderingContext2D;
-    public width: number = document.body.offsetWidth;
-    public height: number = document.body.offsetHeight;
     public inputFocus: Input = null;
 
     //добавить указание ошибки, когда у контролов в одной панели одинаковый zOrder!! иначе есть несоответствие отрисовки и фокусировки на input
 
-    constructor(){
-        this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
-        this.ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d');
-        this.canvas.width = this.width;
-        this.canvas.height = this.height;
-    }
+    constructor(){}
 
     protected registerControl(control: Control): void{
         this.controls.push(control);
@@ -94,10 +86,10 @@ export class View {
         return res;
     }
 
-    public draw(): void {
-        //this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше.
+    public draw(ctx: Context): void {
+    //this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше. И ВООБЩЕ нужна ли она!??
         this.controls.forEach(control => {
-            control.draw();
+            control.draw(ctx.ctx);
         });
     }
 }

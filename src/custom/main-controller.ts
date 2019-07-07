@@ -14,7 +14,7 @@ export class MainController extends Controller {
     public saySome(){
         console.log('Blah-blah-blah');
     }
-
+/*
     public changeColorToRed(control: Control){
         control.backgroundColor = new Rgb(250,0,0);
         control.draw();
@@ -24,4 +24,5 @@ export class MainController extends Controller {
         control.backgroundColor = new Rgb(190,190,190);
         control.draw();
     }
+    */
 }

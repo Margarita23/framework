@@ -17,8 +17,8 @@ export class Input extends Panel {
     public borderLineWidthFocus: number;
     public click: () => void = () => this.focusOnMe();
 
-    constructor(zOrder: number, ctx: CanvasRenderingContext2D, inputText: InputText, font: string, padding: number, borderLineWidthFocus: number) {
-        super(zOrder, ctx);
+    constructor(zOrder: number, inputText: InputText, font: string, padding: number, borderLineWidthFocus: number) {
+        super(zOrder);
         this.inputText = inputText;
         this.font = font;
 
@@ -26,8 +26,8 @@ export class Input extends Panel {
         this.borderLineWidthFocus = borderLineWidthFocus;
     }
 
-    public draw() {
-        super.draw();
+    public draw(ctx: CanvasRenderingContext2D) {
+        super.draw(ctx);
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";

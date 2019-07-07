@@ -2,12 +2,12 @@ import { Control } from "./control";
 import { Rgb } from "./rgb";
 
 export class Panel extends Control {
-    constructor(zOrder: number, ctx: CanvasRenderingContext2D){
-        super(zOrder, ctx);
+    constructor(zOrder: number){
+        super(zOrder);
     }
 
-    public draw(){
-        super.draw();
+    public draw(ctx: CanvasRenderingContext2D){
+        super.draw(ctx);
         if(this.backgroundImage)
         {
             this.backgroundImage.onload = () => {

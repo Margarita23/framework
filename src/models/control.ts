@@ -18,11 +18,7 @@ export class Control {
     public mousedown: () => void = () => {};
     public mousemove: () => void = () => {};
 
-    constructor(zOrder: number, ctx: CanvasRenderingContext2D){
-        //this.x = x;
-        //this.y = y;
-        //this.width = width;
-        //this.height = height;
+    constructor(zOrder: number){
 /*
         console.log(this);
         console.log("parent is -------");
@@ -32,32 +28,16 @@ export class Control {
 
         */
 
-/*
-        this.x = parent ? x + parent.x : x;
-        this.y = parent ? y + parent.y : y;
-
-        if(parent && (x + width) > parent.width) {
-            this.width = parent.width - x;
-            this.height = height;
-        }
-        else if(parent && (y + height) > parent.height) {
-            this.height = parent.height - y;
-            this.width = width;
-        }
-        else {
-            this.width = width;
-            this.height = height;
-        }
-*/
         this.zOrder = zOrder;
-        this.ctx = ctx;
+        //this.ctx = ctx;
     }
 
-    draw(): void {
+    draw(ctx: CanvasRenderingContext2D): void {
+        this.ctx = ctx;
         //this.recalcPosition(this.x, this.y, this.width, this.height, this.parent);
     }
 
-    private recalcPosition(x: number, y: number, width: number, height: number, parent: Control): void{
+    public recalcPosition(x: number, y: number, width: number, height: number, parent: Control): void{
         this.x = parent ? x + parent.x : x;
         this.y = parent ? y + parent.y : y;
 
