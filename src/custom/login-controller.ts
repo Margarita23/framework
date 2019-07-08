@@ -9,12 +9,13 @@ export class LoginController extends Controller{
         console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text);
     }
 
-    public checkedToShowPassword(this: Checkbox): void {
+    public checkedToShowPassword(this: Checkbox, passwordInput: Input): void {
         if(this.checked) {
             this.isNotChecked();
+            passwordInput.setPrivateInput(false);
         }else {
             this.isChecked();
+            passwordInput.setPrivateInput(true);
         }
-        console.log(this.checked);
     }
 }

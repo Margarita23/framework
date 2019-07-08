@@ -33,7 +33,7 @@ export class LoginView extends View {
         checkbox.x = pass.x + pass.width + 50;
         checkbox.y = pass.y;
         checkbox.name = "Show password";
-        checkbox.click = this.controller.checkedToShowPassword.bind(checkbox);
+        checkbox.click = this.controller.checkedToShowPassword.bind(checkbox, pass);
 
         this.registerControl(checkbox);
 
