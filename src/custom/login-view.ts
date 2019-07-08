@@ -2,6 +2,7 @@ import { View } from "../models/view";
 import { LoginController } from "./login-controller";
 import { Input } from "../models/input";
 import { Button } from "../models/button";
+import { Checkbox } from "../models/checkbox";
 
 export class LoginView extends View {
     protected static instance = new LoginView;
@@ -27,6 +28,14 @@ export class LoginView extends View {
         pass.inputText.setText("Print password...");
 
         this.registerControl(pass);
+
+        let checkbox = new Checkbox(1);
+        checkbox.x = pass.x + pass.width + 50;
+        checkbox.y = pass.y;
+        checkbox.name = "Show password";
+        checkbox.click = this.controller.checkedToShowPassword.bind(checkbox);
+
+        this.registerControl(checkbox);
 
         let submit = new Button(1);
         submit.x = 500;

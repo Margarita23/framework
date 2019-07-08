@@ -60,7 +60,6 @@ export class View {
         if(this.inputFocus !== null){
             this.inputFocus.inputText.addText(event.key);
             this.inputFocus.printText();
-            console.log(this.inputFocus.inputText.getText());
         }
     }
 
