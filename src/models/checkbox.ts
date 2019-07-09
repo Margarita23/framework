@@ -2,6 +2,8 @@ import { Control } from "./control";
 import { Rgb } from "./rgb";
 
 export class Checkbox extends Control {
+
+    protected controlType: string = "Checkbox";
     public autofocus: boolean = false;
     public checked: boolean = false;
     public disabled: boolean = false;
@@ -9,13 +11,13 @@ export class Checkbox extends Control {
     public width: number = 50;
     public height: number = 50;
 
-    constructor(zOrder: number){ super(zOrder); }
+    constructor(){ super(); }
 
     draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
         this.ctx.strokeRect(this.x, this.y, this.width, this.height);
         this.ctx.textBaseline = "bottom";
-        this.ctx.fillText(this.name, this.x + this.width, this.y + this.height);
+        this.ctx.fillText(this.name, this.x + this.width + this.width*0.1, this.y + this.height);
     }
 
     public isChecked(): void {

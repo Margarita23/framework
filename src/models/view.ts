@@ -11,7 +11,7 @@ export class View {
 
     protected registerControl(control: Control): void{
         this.controls.push(control);
-        this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше.
+        this.controls.sort((a,b) => a.zOrder >= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше.
     }
 
     public run(){}

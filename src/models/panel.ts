@@ -1,9 +1,10 @@
 import { Control } from "./control";
 
 export class Panel extends Control {
-    constructor(zOrder: number){
-        super(zOrder);
-    }
+
+    protected controlType: string = "Panel";
+
+    constructor(){ super(); }
 
     public draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);

@@ -2,14 +2,14 @@ import { Control } from "./control";
 import { Rgb } from "./rgb";
 
 export class Button extends Control{
+
+    protected controlType: string = "Button";
     public text: string = "Button";
     public padding: number = 10;
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
 
-    constructor(zOrder: number){
-        super(zOrder);
-    }
+    constructor(){ super(); }
 
     private getPaddingInPx(): number{
         let padding = (this.padding * this.width / 100) / 2;

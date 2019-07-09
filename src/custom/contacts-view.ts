@@ -13,7 +13,7 @@ export class ContactsView extends View {
     }
 
     private contactsInfo(){
-        let panel = new Panel(1);
+        let panel = new Panel();
         panel.width = 400;
         panel.height = 400;
         panel.ctx.fillText("tel: 000-000-000", panel.x, panel.height);
@@ -21,7 +21,7 @@ export class ContactsView extends View {
     }
 
     private menuGoToLogin(){
-        let button = new Button(1);
+        let button = new Button();
         button.text = "Main page";
         this.registerControl(button);
     }

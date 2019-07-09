@@ -24,14 +24,8 @@ export class InputText {
         }
         else if(this.text.length <= this.maxLength) {
             this.text = this.text + text;
-            
-            if(this.secret){
-                this.secretText +="*";
-                console.log(text);
-            }
+            this.secretText +="*";
         }
-
-        
     }
 
     public setText(text: string): void{

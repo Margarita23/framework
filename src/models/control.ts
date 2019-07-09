@@ -1,12 +1,14 @@
 import { Rgb } from "./rgb";
+import { Input } from "./input";
 
 export class Control {
+    protected controlType: string = "Control";
     public controls: Control[] = [];
     public x: number = 0;
     public y: number = 0;
     public width: number = 150;
     public height: number = 75;
-    public parent: Control = null;
+    private parent: Control = null;
     public ctx: CanvasRenderingContext2D;
     public backgroundImage: HTMLImageElement = null;
     public backgroundColor: Rgb = new Rgb(200,200,200);
@@ -18,13 +20,18 @@ export class Control {
     public mousedown: () => void = () => {};
     public mousemove: () => void = () => {};
 
-    constructor(zOrder: number){
-        this.zOrder = zOrder;
-    }
-
-    draw(ctx: CanvasRenderingContext2D): void {
+    public draw(ctx: CanvasRenderingContext2D): void {
         this.ctx = ctx;
         //this.recalcPosition(this.x, this.y, this.width, this.height, this.parent);
+    }
+
+    public getControlType(): string{
+        return this.controlType;
+    }
+
+    public setParent(parent: Control): void {
+        this.parent = parent;
+        this.zOrder = parent.zOrder + 1;
     }
 
     public recalcPosition(x: number, y: number, width: number, height: number, parent: Control): void{

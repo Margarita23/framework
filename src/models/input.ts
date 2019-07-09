@@ -4,10 +4,12 @@ import { InputText } from "./inputText";
 import { Rgb } from "./rgb";
 
 export class Input extends Panel {
+
+    protected controlType: string = "Input";
+
     public focus: boolean = false;
     public inputText: InputText = new InputText();
-    private isSecret: boolean = false;
-    
+
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
 
@@ -19,14 +21,7 @@ export class Input extends Panel {
     public borderLineWidthFocus: number = 5;
     public click: () => void = () => this.focusOnMe();
 
-    constructor(zOrder: number) {
-        super(zOrder);
-    }
-
-    public setPrivateInput(isSecret: boolean){
-        this.isSecret = isSecret;
-        this.inputText.secret = isSecret;
-    }
+    constructor() { super(); }
 
     private getPaddingInPx(): number{
         let padding = (this.padding * this.width / 100) / 2;
@@ -39,7 +34,6 @@ export class Input extends Panel {
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        
         this.ctx.fillText(this.inputText.getText(), this.x + padding, this.y + this.height/2, this.width - padding*2);
     }
 

@@ -14,30 +14,28 @@ export class LoginView extends View {
     }
 
     private loginForm(){
-        let login = new Input(1);
+        let login = new Input();
         login.x = 500;
         login.y = 300;
         login.inputText.maxLength = 50;
         login.inputText.setText("Print login...");
         this.registerControl(login);
 
-        let pass = new Input(1);
+        let pass = new Input();
         pass.x = 500;
         pass.y = 400;
-        pass.setPrivateInput(true);
+        pass.inputText.secret = true;
         pass.inputText.setText("Print password...");
-
         this.registerControl(pass);
 
-        let checkbox = new Checkbox(1);
+        let checkbox = new Checkbox();
         checkbox.x = pass.x + pass.width + 50;
         checkbox.y = pass.y;
         checkbox.name = "Show password";
         checkbox.click = this.controller.checkedToShowPassword.bind(checkbox, pass);
-
         this.registerControl(checkbox);
 
-        let submit = new Button(1);
+        let submit = new Button();
         submit.x = 500;
         submit.y = 500;
         submit.text = "Submit";
@@ -46,7 +44,7 @@ export class LoginView extends View {
     }
 
     private menuGoToLogin(){
-        let button = new Button(1);
+        let button = new Button();
         button.text = "Main page";
         this.registerControl(button);
     }
