@@ -4,6 +4,7 @@ import { Input } from "../models/input";
 import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
+import { Rgb } from "../models/rgb";
 
 export class LoginView extends View {
     protected static instance = new LoginView;

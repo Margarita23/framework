@@ -19,51 +19,25 @@ export class RadioButton extends Control {
 
     draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
+        this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.beginPath();
         this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
         this.ctx.textBaseline = "bottom";
         this.ctx.fillText(this.name, this.x + this.radius*2, this.y + this.radius*2);
-
-        /*
-        if(this.backgroundImage)
-        {
-            this.backgroundImage.onload = () => {
-                this.ctx.drawImage(this.backgroundImage, this.x, this.y, this.width, this.height);
-            };
-        }
-        else if(this.backgroundColor)
-        {
-            this.ctx.fillStyle = this.backgroundColor.getColor();
-            this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
-        if(this.border){
-            this.ctx.strokeStyle = this.border.getColor();
-            this.ctx.strokeRect(this.x, this.y, this.width, this.height)
-        };
-
-        this.ctx.font = this.font;
-        this.ctx.fillStyle = this.fillStyle.getColor();
-        this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.text, this.x + this.getPaddingInPx(), this.y + this.height/2, this.width - + this.getPaddingInPx()*2);
-
-        */
     }
 
     public isChecked(): void {
         this.checked = true;
-        this.ctx.fillStyle = (new Rgb(0,0,0)).getColor();
+        this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.beginPath();
         this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
         this.ctx.fill();
     }
 
     public isNotChecked(){
-
         this.checked = false;
-
         this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-
         this.ctx.beginPath();
         this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
         this.ctx.fill();
