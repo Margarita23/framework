@@ -2,9 +2,11 @@ import { Controller } from "../controllers/controller";
 import { View } from "../models/view";
 import { Input } from "../models/input";
 import { Checkbox } from "../models/checkbox";
+import { RadioButton } from "../models/radioButton";
 
 export class LoginController extends Controller{
-    public submitLoginAndPassword(this: View){
+
+    public submitLoginAndPassword(this: View): void{
         let inputControls = this.controls.filter((control)=> control.getControlType() === "Input");
         console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text);
     }
@@ -18,6 +20,16 @@ export class LoginController extends Controller{
             passwordInput.inputText.secret = true;
         }
         passwordInput.printText();
-        console.log(passwordInput.inputText.getText());
+    }
+
+    public checkedMaleOrFemale(radioButtChecked: RadioButton, radioButtElse: RadioButton): void{
+        if(!radioButtChecked.checked) {
+            radioButtChecked.isChecked();
+            if(radioButtElse.checked){
+                radioButtElse.isNotChecked();
+            }
+        }else {
+            radioButtChecked.isNotChecked();
+        }
     }
 }
