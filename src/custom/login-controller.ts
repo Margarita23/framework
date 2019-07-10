@@ -7,8 +7,14 @@ import { RadioButton } from "../models/radioButton";
 export class LoginController extends Controller{
 
     public submitLoginAndPassword(this: View): void{
-        let inputControls = this.controls.filter((control)=> control.getControlType() === "Input");
-        console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text);
+        let inputControls = this.controls.filter(control => control.getControlType() === "Input");
+        let maleOrFemale = this.controls.filter( control => control.getControlType() === "RadioButton" && (<RadioButton>control).checked);
+        let gender = "no gender";
+        if(<RadioButton>maleOrFemale[0]){
+            gender = (<RadioButton>maleOrFemale[0]).name;
+        }
+
+        console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text + "; gender: " + gender);
     }
 
     public checkedToShowPassword(this: Checkbox, passwordInput: Input): void {
