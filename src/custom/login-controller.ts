@@ -13,7 +13,6 @@ export class LoginController extends Controller{
         if(<RadioButton>maleOrFemale[0]){
             gender = (<RadioButton>maleOrFemale[0]).name;
         }
-
         console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text + "; gender: " + gender);
     }
 
@@ -28,12 +27,15 @@ export class LoginController extends Controller{
         passwordInput.printText();
     }
 
-    public checkedMaleOrFemale(radioButtChecked: RadioButton, radioButtElse: RadioButton): void{
+    public checkedMaleOrFemale(radioButtChecked: RadioButton, ...radioButtsElse: RadioButton[]): void{
         if(!radioButtChecked.checked) {
             radioButtChecked.isChecked();
-            if(radioButtElse.checked){
-                radioButtElse.isNotChecked();
-            }
+
+            radioButtsElse.forEach( radButt => {
+                if(radButt.checked){
+                    radButt.isNotChecked();
+                }
+            });
         }else {
             radioButtChecked.isNotChecked();
         }

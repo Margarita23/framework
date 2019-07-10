@@ -39,18 +39,26 @@ export class LoginView extends View {
 
         let radioButtMale = new RadioButton();
         let radioButtFemale = new RadioButton();
+        let radioButtDog = new RadioButton();
 
         radioButtMale.x = 450;
         radioButtMale.y = 500;
         radioButtMale.name = "Male";
-        radioButtMale.click = this.controller.checkedMaleOrFemale.bind(null, radioButtMale, radioButtFemale);
+        radioButtMale.click = this.controller.checkedMaleOrFemale.bind(null, radioButtMale, radioButtFemale, radioButtDog);
         this.registerControl(radioButtMale);
 
         radioButtFemale.x = 600;
         radioButtFemale.y = 500;
         radioButtFemale.name = "Female";
-        radioButtFemale.click = this.controller.checkedMaleOrFemale.bind(null, radioButtFemale, radioButtMale);
+        radioButtFemale.click = this.controller.checkedMaleOrFemale.bind(null, radioButtFemale, radioButtMale, radioButtDog);
         this.registerControl(radioButtFemale);
+
+        radioButtDog.x = 750;
+        radioButtDog.y = 500;
+        radioButtDog.name = "Dog";
+        radioButtDog.setDisabled(true);
+        radioButtDog.click = this.controller.checkedMaleOrFemale.bind(null, radioButtDog, radioButtMale, radioButtFemale);
+        this.registerControl(radioButtDog);
 
         let submit = new Button();
         submit.x = 500;
