@@ -4,9 +4,27 @@ import { Input } from "../models/input";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
 import { LoginView } from "./login-view";
+import { MainController } from "./main-controller";
 
 export class LoginController extends Controller{
     public view: View = new LoginView();
+
+    constructor(){
+        super();
+        console.log(this);
+    }
+
+    public run(){
+        console.log(this);
+        //super.run();
+        //(<LoginView>this.view).submitButton.click = this.goToMainPage.bind(null);
+        //this.view.registerControl( (<LoginView>this.view).submitButton);
+        //console.log(this.view);
+    }
+
+    private goToMainPage(): void{
+        super.localController = new MainController();
+    }
 
     public submitLoginAndPassword(this: View): void{
         let inputControls = this.controls.filter(control => control.getControlType() === "Input");

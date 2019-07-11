@@ -1,11 +1,11 @@
 import { View } from "../models/view";
-import { LoginController } from "./login-controller";
 import { Input } from "../models/input";
 import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
 
 export class LoginView extends View {
+    public submitButton = new Button();
     private loginForm(){
         let login = new Input();
         login.x = 500;
@@ -53,12 +53,10 @@ export class LoginView extends View {
         //radioButtDog.click = this.controller.checkedMaleOrFemale.bind(radioButtDog, radioButtMale, radioButtFemale);
         this.registerControl(radioButtDog);
 
-        let submit = new Button();
-        submit.x = 500;
-        submit.y = 600;
-        submit.text = "Submit";
+        this.submitButton.x = 500;
+        this.submitButton.y = 600;
+        this.submitButton.text = "Submit";
         //submit.click = this.controller.submitLoginAndPassword.bind(this);
-        this.registerControl(submit);
     }
 
     private menuGoToLogin(){

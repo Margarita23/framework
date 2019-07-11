@@ -9,7 +9,7 @@ export class View {
 
     //добавить указание ошибки, когда у контролов в одной панели одинаковый zOrder!! иначе есть несоответствие отрисовки и фокусировки на input
 
-    protected registerControl(control: Control): void{
+    public registerControl(control: Control): void{
         this.controls.push(control);
         this.controls.sort((a,b) => a.zOrder >= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше.
     }
@@ -46,7 +46,6 @@ export class View {
                         firstElementMustClick.click(firstElementMustClick)
                     //};
                     return;
-                 
                 case 'mousedown' :
                         firstElementMustClick.mousedown();
                     return;
@@ -88,6 +87,7 @@ export class View {
     }
 
     public draw(ctx: Context): void {
+        console.log(this);
     //this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше. И ВООБЩЕ нужна ли она!??
         this.controls.forEach(control => {
             control.draw(ctx.ctx);
