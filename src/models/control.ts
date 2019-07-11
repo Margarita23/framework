@@ -1,5 +1,4 @@
 import { Rgb } from "./rgb";
-import { Input } from "./input";
 
 export class Control {
     protected controlType: string = "Control";
@@ -15,7 +14,7 @@ export class Control {
     public border: Rgb = new Rgb(0,0,0);
     public borderLineWidth: number = 1;
     public zOrder: number;
-    public click: () => void = () => {};
+    public click: (control: Control) => void = () => {};
     public mouseup: () => void = () => {};
     public mousedown: () => void = () => {};
     public mousemove: () => void = () => {};
@@ -52,3 +51,5 @@ export class Control {
         }
     }
 }
+//type EventHandler = ReturnType<(sender: Control, args?: EventArgs[]) => void>;
+//class EventArgs{}

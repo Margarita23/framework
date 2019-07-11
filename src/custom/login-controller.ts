@@ -3,8 +3,10 @@ import { View } from "../models/view";
 import { Input } from "../models/input";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
+import { LoginView } from "./login-view";
 
 export class LoginController extends Controller{
+    public view: View = new LoginView();
 
     public submitLoginAndPassword(this: View): void{
         let inputControls = this.controls.filter(control => control.getControlType() === "Input");
@@ -13,21 +15,24 @@ export class LoginController extends Controller{
         if(<RadioButton>maleOrFemale[0]){
             gender = (<RadioButton>maleOrFemale[0]).name;
         }
-        console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text + "; gender: " + gender);
+        //console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text + "; gender: " + gender);
     }
-
-    public checkedToShowPassword(this: Checkbox, passwordInput: Input): void {
-        if(!this.checked) {
-            this.isChecked();
-            passwordInput.inputText.secret = false;
+//УБРАТЬ ЭТУ ФУНКЦИЮ и сделать это
+    public checkedToShowPassword(checkbox: Checkbox, passwordInput: Input): void {
+        if(!checkbox.checked) {
+            checkbox.checked = true;
+            passwordInput.inputText.secret = true;
         }else {
-            this.isNotChecked();
+            checkbox.checked = false;
             passwordInput.inputText.secret = true;
         }
+
         passwordInput.printText();
     }
 
-    public checkedMaleOrFemale(radioButtChecked: RadioButton, ...radioButtsElse: RadioButton[]): void{
+    public checkedMaleOrFemale(radioChecked: RadioButton, ...radioButtsElse: RadioButton[]): void{
+        console.log(radioChecked);
+        /*
         if(!radioButtChecked.checked) {
             radioButtChecked.isChecked();
 
@@ -39,5 +44,6 @@ export class LoginController extends Controller{
         }else {
             radioButtChecked.isNotChecked();
         }
+        */
     }
 }

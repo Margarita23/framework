@@ -6,20 +6,15 @@ import { Input } from "../models/input";
 import { Rgb } from "../models/rgb";
 
 export class MainView extends View{
-    protected static instance = new MainView;
-    private controller: MainController = new MainController();
-    private constructor(){super();}
-
-    public static getInstance(): MainView {
-        return MainView.instance;
-    }
+    //public controller: MainController = new MainController();
+    constructor(){super();}
 
     private helloButton() {
         let but = new Button();
         but.width = 150;
         but.height = 100;
         but.backgroundColor = new Rgb(0,200,0);
-        but.click = this.controller.sayHi;
+        //but.click = this.controller.sayHi;
         this.registerControl(but);
     }
 
@@ -31,7 +26,7 @@ export class MainView extends View{
         but.height = 100;
         but.backgroundColor = new Rgb(200,0,100);
 
-        but.click = this.controller.sayHi;
+        //but.click = this.controller.sayHi;
         this.registerControl(but);
     }
     private hB2() {
@@ -41,7 +36,7 @@ export class MainView extends View{
         but.width = 150;
         but.height = 100;
         but.backgroundColor = new Rgb(0,0,250);
-        but.click = this.controller.sayBye;
+        //but.click = this.controller.sayBye;
         this.registerControl(but);
     }
 
@@ -80,7 +75,7 @@ export class MainView extends View{
         firstInput.borderFocus = new Rgb(100,100,100);
 
         firstInput.recalcPosition(firstInput.x, firstInput.y, firstInput.width, firstInput.height, panel);
-        this.registerControl(firstInput);
+        //this.registerControl(firstInput);
 
         let secondInput = new Input();
         secondInput.x = 0;
@@ -91,7 +86,7 @@ export class MainView extends View{
         secondInput.setParent(panel);
 
         secondInput.recalcPosition(secondInput.x, secondInput.y, secondInput.width, secondInput.height, panel);
-        this.registerControl(secondInput);
+        //this.registerControl(secondInput);
     }
 
     public run(): void{

@@ -1,8 +1,11 @@
 import { Controller } from "../controllers/controller";
-import { Control } from "../models/control";
-import { Rgb } from "../models/rgb";
+import { MainView } from "./main-view";
+import { View } from "../models/view";
 
 export class MainController extends Controller {
+
+    //public view: View = new MainView();
+
     public sayHi(){
         console.log("Hiii!!!");
     }

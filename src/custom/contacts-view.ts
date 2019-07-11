@@ -4,13 +4,8 @@ import { Panel } from "../models/panel";
 import { Button } from "../models/button";
 
 export class ContactsView extends View {
-    protected static instance = new ContactsView;
-    private controller: ContactsController = new ContactsController();
-    private constructor(){super();}
-
-    public static getInstance(): ContactsView {
-        return ContactsView.instance;
-    }
+    //public controller: ContactsController = new ContactsController();
+    constructor(){super();}
 
     private contactsInfo(){
         let panel = new Panel();

@@ -1,9 +1,9 @@
-import { View } from "./view";
 import { Subject } from "rxjs";
 import { Context } from "./context";
+import { Controller } from "../controllers/controller";
 
 export class Application {
-    public views: View[] = [];
+    private mainController: Controller = new Controller();
     public subject: Subject<Event> = new Subject<Event>();
     public ctx: Context = new Context();
     protected static instance = new Application();
@@ -31,15 +31,18 @@ export class Application {
         return Application.instance;
     }
 
-    public registerView(...views: View[]){
-        views.forEach(view => {
-            this.views.push(view);
-        });
+    public registerControllers(controllers: Controller[]){
+        this.mainController.controllers = controllers;
+        if(controllers[0]){
+            this.mainController.localController = controllers[0];
+        }
     }
 
     public run(){
-        this.views[1].setSubject(this.subject);
-        this.views[1].run();
-        this.views[1].draw(this.ctx);
+        if(this.mainController.localController){
+            this.mainController.localController.view.setSubject(this.subject);
+            this.mainController.localController.view.run();
+            this.mainController.localController.view.draw(this.ctx);
+        }
     }
 }

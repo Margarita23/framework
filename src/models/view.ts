@@ -32,17 +32,21 @@ export class View {
         if(firstElementMustClick){
             switch(event.type) {
                 case 'click' :
-                    this.controls.map(c => { if(c.constructor.name === "Input"){(<Input>c).unfocus();}});
-                    if (firstElementMustClick.constructor.name === "Input") {
+                    this.controls.map(c => { if(c instanceof Input){c.unfocus();}});
+                    if (firstElementMustClick instanceof Input) {
                         (<Input>firstElementMustClick).focusOnMe();
                         this.inputFocus = <Input>firstElementMustClick;
                     }
                     else{
                         this.inputFocus = null;
                     }
-
-                    firstElementMustClick.click();
+//ПРОВЕРИТЬ НА СУЩЕСТВОВАНИЕ ФУНКЦИИ, а дефолтное значение убрать!!!!!
+                    //if(firstElementMustClick.click){
+                        //console.log(this);
+                        firstElementMustClick.click(firstElementMustClick)
+                    //};
                     return;
+                 
                 case 'mousedown' :
                         firstElementMustClick.mousedown();
                     return;

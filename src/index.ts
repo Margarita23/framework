@@ -1,8 +1,8 @@
 import { Application } from "./models/application";
-import { MainView } from "./custom/main-view";
-import { LoginView } from "./custom/login-view";
-import { ContactsView } from "./custom/contacts-view";
+import { MainController } from "./custom/main-controller";
+import { LoginController } from "./custom/login-controller";
+import { ContactsController } from "./custom/contacts-controller";
 
 let app = Application.getInstance();
-app.registerView(MainView.getInstance(), LoginView.getInstance(), ContactsView.getInstance());
+app.registerControllers([new LoginController(), new MainController(), new ContactsController()]);
 app.run();

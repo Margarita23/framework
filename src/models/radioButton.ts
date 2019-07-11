@@ -1,13 +1,12 @@
 import { Rgb } from "./rgb";
 import { Control } from "./control";
-import { of } from "rxjs";
 
 export class RadioButton extends Control {
 
     protected controlType: string = "RadioButton";
     public autofocus: boolean = false;
     public checked: boolean = false;
-    private disabled: boolean = false;
+    private _disabled: boolean = false;
     public disabledFillStyle: Rgb = new Rgb(150,150,150);
     public name: string = "RadioButton";
 
@@ -29,6 +28,20 @@ export class RadioButton extends Control {
         this.ctx.fillText(this.name, this.x + this.radius*2, this.y + this.radius*2);
     }
 
+    get disabled(): boolean { return this._disabled; }
+    set disabled(newDisabled: boolean){
+        /*if(newDisabled) {
+            this.ctx.fillStyle = this.fillStyle.getColor();
+        } else {
+            this.ctx.fillStyle = this.disabledFillStyle.getColor();
+        }
+        this.ctx.beginPath();
+        this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
+        this.ctx.fill();
+*/
+        this._disabled = newDisabled;
+    }
+
     public isChecked(): void {
         if(!this.disabled){
             this.checked = true;
@@ -45,7 +58,6 @@ export class RadioButton extends Control {
         if(!this.disabled){
             this.checked = false;
             this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-            
         } else {
             this.ctx.fillStyle = (new Rgb(150,150,150)).getColor();
 
@@ -61,9 +73,9 @@ export class RadioButton extends Control {
             this.ctx.stroke();
     }
 
-    public setDisabled(disabled: boolean){
+    public setDisabled(disabled: boolean): void{
         this.disabled = disabled;
-        console.log(this);
+        console.log(this.ctx);
     }
 
 }
