@@ -4,26 +4,25 @@ import { Input } from "../models/input";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
 import { LoginView } from "./login-view";
+import { MainView } from "./main-view";
 import { MainController } from "./main-controller";
+import { Application } from "../models/application";
 
 export class LoginController extends Controller{
-    public view: View = new LoginView();
 
-    constructor(){
-        super();
-        console.log(this);
+    constructor(view: View){
+        super(view);
     }
 
     public run(){
-        console.log(this);
-        //super.run();
-        //(<LoginView>this.view).submitButton.click = this.goToMainPage.bind(null);
-        //this.view.registerControl( (<LoginView>this.view).submitButton);
-        //console.log(this.view);
+        (<LoginView>this.view).submitButton.click = this.goToMainPage.bind(null);
+        (<LoginView>this.view).mainPage.click = this.goToMainPage.bind(null);
     }
 
     private goToMainPage(): void{
-        super.localController = new MainController();
+        const mainView = new MainView();
+        const mainController = new MainController(mainView);
+        (Application.getInstance()).run(mainView);
     }
 
     public submitLoginAndPassword(this: View): void{

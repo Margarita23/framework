@@ -87,7 +87,6 @@ export class View {
     }
 
     public draw(ctx: Context): void {
-        console.log(this);
     //this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше. И ВООБЩЕ нужна ли она!??
         this.controls.forEach(control => {
             control.draw(ctx.ctx);

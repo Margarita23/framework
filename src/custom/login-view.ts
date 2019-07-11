@@ -6,6 +6,8 @@ import { RadioButton } from "../models/radioButton";
 
 export class LoginView extends View {
     public submitButton = new Button();
+    public mainPage = new Button();
+
     private loginForm(){
         let login = new Input();
         login.x = 500;
@@ -56,13 +58,12 @@ export class LoginView extends View {
         this.submitButton.x = 500;
         this.submitButton.y = 600;
         this.submitButton.text = "Submit";
-        //submit.click = this.controller.submitLoginAndPassword.bind(this);
+        this.registerControl(this.submitButton);
     }
 
     private menuGoToLogin(){
-        let button = new Button();
-        button.text = "Main page";
-        this.registerControl(button);
+        this.mainPage.text = "Main page";
+        this.registerControl(this.mainPage);
     }
 
     public run(): void{

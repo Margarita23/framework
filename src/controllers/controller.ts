@@ -1,26 +1,14 @@
 import { View } from "../models/view";
-import { Context } from "../models/context";
-import { Subject } from "rxjs";
+import { Application } from "../models/application";
 
 export class Controller {
-    private _localController: Controller;
     public view: View;
-    public ctx: Context = new Context();
-    public subject: Subject<Event> = new Subject<Event>();
+    public localController: Controller;
 
-    constructor(){}
-
-    get localController() { return this._localController };
-    set localController(contrl: Controller) {
-        this._localController = contrl;
+    constructor(view: View){
+        this.view = view;
+        this.run();
     }
 
-    public run(): void {
-        this.localController.view.setSubject(this.subject);
-        this.view.run();
-
-        console.log(this.view);
-        this.view.draw(this.ctx);
-    }
-
+    public run(): void {}
 }
