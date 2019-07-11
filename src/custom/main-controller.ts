@@ -4,7 +4,7 @@ import { View } from "../models/view";
 
 export class MainController extends Controller {
 
-    //public view: View = new MainView();
+    public view: View = new MainView();
 
     public sayHi(){
         console.log("Hiii!!!");

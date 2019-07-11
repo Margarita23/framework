@@ -3,9 +3,8 @@ import { Context } from "./context";
 import { Controller } from "../controllers/controller";
 
 export class Application {
-    private mainController: Controller = new Controller();
+    private localController: Controller;
     public subject: Subject<Event> = new Subject<Event>();
-    public ctx: Context = new Context();
     protected static instance = new Application();
 
     private constructor() {
@@ -31,18 +30,16 @@ export class Application {
         return Application.instance;
     }
 
-    public registerControllers(controllers: Controller[]){
-        this.mainController.controllers = controllers;
-        if(controllers[0]){
-            this.mainController.localController = controllers[0];
+    public setStartController(controller: Controller){
+        if(controller){
+            this.localController = controller;
         }
     }
 
     public run(){
-        if(this.mainController.localController){
-            this.mainController.localController.view.setSubject(this.subject);
-            this.mainController.localController.view.run();
-            this.mainController.localController.view.draw(this.ctx);
+        if(this.localController){
+            this.localController.view.setSubject(this.subject);
+            this.localController.run();
         }
     }
 }

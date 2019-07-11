@@ -1,12 +1,13 @@
 import { View } from "../models/view";
+import { Context } from "../models/context";
 
 export class Controller {
     public view: View;
-    public controllers: Controller[] = [];
-    public localController: Controller;
+    public ctx: Context = new Context();
     constructor(){}
 
-    public trueView(view: View): void{
-        this.view = view;
+    public run(): void{
+        this.view.run();
+        this.view.draw(this.ctx);
     }
 }
