@@ -1,6 +1,3 @@
-//import { Subject } from "rxjs";
-//import { Context } from "./context";
-import { Controller } from "../controllers/controller";
 import { View } from "./view";
 import { Context } from "./context";
 import { Subject } from "rxjs";
@@ -11,27 +8,35 @@ export class Application {
     public subject: Subject<Event> = new Subject<Event>();
 
     private constructor() {
+        this.createSub(this.subject);
+    }
+
+    private createSub(subject: Subject<Event>){
         document.addEventListener("click", (evt)=>{
-            this.subject.next(evt);
+            subject.next(evt);
         });
         document.addEventListener("mouseup", (evt)=>{
-            this.subject.next(evt);
+            subject.next(evt);
         });
         document.addEventListener("mousedown", (evt)=>{
-            this.subject.next(evt);
+            subject.next(evt);
         });
         document.addEventListener("mousemove", (evt)=>{
-            this.subject.next(evt);
+            subject.next(evt);
         });
 
         document.addEventListener("keydown", (evt)=>{
-            this.subject.next(evt);
+            subject.next(evt);
         });
     }
 
-
     public static getInstance(): Application {
         return Application.instance;
+    }
+
+    public unsubsrc(view: View){
+        this.subject.unsubscribe();
+        console.log(view);
     }
 
     public run(view: View){

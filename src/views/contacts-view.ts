@@ -1,5 +1,5 @@
 import { View } from "../models/view";
-import { ContactsController } from "./contacts-controller";
+import { ContactsController } from "../controllers/contacts-controller";
 import { Panel } from "../models/panel";
 import { Button } from "../models/button";
 

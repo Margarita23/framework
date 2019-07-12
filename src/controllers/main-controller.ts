@@ -1,10 +1,13 @@
-import { Controller } from "../controllers/controller";
-import { MainView } from "./main-view";
+import { MainView } from "../views/main-view";
 import { View } from "../models/view";
 
-export class MainController extends Controller {
+export class MainController{
 
-    public view: View = new MainView();
+    public view: MainView;
+
+    constructor(view: View){
+        this.view = <MainView>view;
+    }
 
     public sayHi(){
         console.log("Hiii!!!");

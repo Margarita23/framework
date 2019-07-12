@@ -4,7 +4,7 @@ import { Input } from "./input";
 import { Context } from "./context";
 
 export class View {
-    protected controls: Control[] = [];
+    public controls: Control[] = [];
     public inputFocus: Input = null;
 
     //добавить указание ошибки, когда у контролов в одной панели одинаковый zOrder!! иначе есть несоответствие отрисовки и фокусировки на input

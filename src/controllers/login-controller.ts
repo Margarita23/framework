@@ -1,37 +1,37 @@
-import { Controller } from "../controllers/controller";
 import { View } from "../models/view";
 import { Input } from "../models/input";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
-import { LoginView } from "./login-view";
-import { MainView } from "./main-view";
+import { LoginView } from "../views/login-view";
+import { MainView } from "../views/main-view";
 import { MainController } from "./main-controller";
 import { Application } from "../models/application";
 
-export class LoginController extends Controller{
+export class LoginController{
+    public view: LoginView;
 
     constructor(view: View){
-        super(view);
+        this.view = <LoginView>view;
+        (<LoginView>this.view).submitButton.click = this.goToMainPage.bind((<LoginView>this.view).submitButton, this);
+        (<LoginView>this.view).mainPage.click = this.goToMainPage.bind((<LoginView>this.view).submitButton, this);
     }
 
-    public run(){
-        (<LoginView>this.view).submitButton.click = this.goToMainPage.bind(null);
-        (<LoginView>this.view).mainPage.click = this.goToMainPage.bind(null);
-    }
-
-    private goToMainPage(): void{
+    private goToMainPage(view: View): void{
         const mainView = new MainView();
         const mainController = new MainController(mainView);
+        (Application.getInstance()).unsubsrc(view);
         (Application.getInstance()).run(mainView);
     }
 
+    //УБРАТЬ this в параметрах!!!!!
     public submitLoginAndPassword(this: View): void{
-        let inputControls = this.controls.filter(control => control.getControlType() === "Input");
+        let inputControls = this.controls.filter(control => control instanceof Input);
         let maleOrFemale = this.controls.filter( control => control.getControlType() === "RadioButton" && (<RadioButton>control).checked);
         let gender = "no gender";
         if(<RadioButton>maleOrFemale[0]){
             gender = (<RadioButton>maleOrFemale[0]).name;
         }
+        
         //console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text + "; gender: " + gender);
     }
 //УБРАТЬ ЭТУ ФУНКЦИЮ и сделать это

@@ -1,6 +1,6 @@
 import { Application } from "./models/application";
-import { LoginController } from "./custom/login-controller";
-import { LoginView } from "./custom/login-view";
+import { LoginController } from "./controllers/login-controller";
+import { LoginView } from "./views/login-view";
 
 
 const view = new LoginView();

@@ -1,6 +1,6 @@
 import { View } from "../models/view";
 import { Button } from "../models/button";
-import { MainController } from "./main-controller";
+import { MainController } from "../controllers/main-controller";
 import { Panel } from "../models/panel";
 import { Input } from "../models/input";
 import { Rgb } from "../models/rgb";
