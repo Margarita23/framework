@@ -9,6 +9,7 @@ export class Input extends Panel {
 
     public focus: boolean = false;
     public inputText: InputText = new InputText();
+    private showText: string = "";
 
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
@@ -68,6 +69,18 @@ export class Input extends Panel {
 
     public printText(){
         let padding = this.getPaddingInPx();
+        let textLength = this.inputText.getText().length;
+        let sum = 0;
+
+        for(let i = textLength - 1; i >= 0; i--){
+            let tW = this.ctx.measureText(this.inputText.getText()[i]).width;
+            if(sum < (this.width - padding*2 - tW*2 )){
+                sum += tW;
+            }else {
+                this.showText = this.inputText.getText().slice(i, this.inputText.getText().length);
+                break;
+            }
+        }
 
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.backgroundColorFocus.getColor();
@@ -76,7 +89,7 @@ export class Input extends Panel {
 
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.inputText.getText(), this.x + padding, this.y + this.height/2, this.width - padding*2);
+        this.ctx.fillText(this.showText, this.x + padding, this.y + this.height/2);
     }
 
 }
