@@ -1,12 +1,19 @@
-import { View } from "../models/view";
+import { View } from "./view";
 import { Input } from "../models/input";
 import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
 
 export class LoginView extends View {
-    public submitButton = new Button();
-    public mainPage = new Button();
+    public pass: Input = new Input();
+    public submitButton: Button = new Button();
+    public checkboxShowPass: Checkbox = new Checkbox();
+    public genderRadios: RadioButton[] = [new RadioButton(), new RadioButton(), new RadioButton()];
+
+    constructor(){
+        super();
+        this.loginForm();
+    }
 
     private loginForm(){
         let login = new Input();
@@ -14,60 +21,40 @@ export class LoginView extends View {
         login.y = 300;
         login.inputText.maxLength = 50;
         login.inputText.setText("Print login...");
-        //this.registerControl(login);
+        this.registerControl(login);
 
-        let pass = new Input();
-        pass.x = 500;
-        pass.y = 400;
-        pass.inputText.secret = true;
-        pass.inputText.setText("Print password...");
-        //this.registerControl(pass);
+        this.pass.x = 500;
+        this.pass.y = 400;
+        this.pass.inputText.secret = true;
+        this.pass.inputText.setText("Print password...");
+        this.registerControl(this.pass);
 
-        let checkbox = new Checkbox();
-        checkbox.x = pass.x + pass.width + 50;
-        checkbox.y = pass.y;
-        checkbox.name = "Show password";
-        //checkbox.click = this.controller.checkedToShowPassword.bind(null, checkbox, pass);
-        this.registerControl(checkbox);
+        this.checkboxShowPass.x = this.pass.x + this.pass.width + 50;
+        this.checkboxShowPass.y = this.pass.y;
+        this.checkboxShowPass.name = "Show password";
+        this.registerControl(this.checkboxShowPass);
 
-        let radioButtMale = new RadioButton();
-        let radioButtFemale = new RadioButton();
-        let radioButtDog = new RadioButton();
+        this.genderRadios[0].x = 450;
+        this.genderRadios[0].y = 500;
+        this.genderRadios[0].name = "Male";
+        this.genderRadios[0].disabled = false;
+        this.registerControl(this.genderRadios[0]);
 
-        radioButtMale.x = 450;
-        radioButtMale.y = 500;
-        radioButtMale.name = "Male";
-        radioButtDog.disabled = false;
-        //radioButtMale.click = this.controller.checkedMaleOrFemale.bind(radioButtMale, radioButtFemale, radioButtDog);
-        this.registerControl(radioButtMale);
+        this.genderRadios[1].x = 600;
+        this.genderRadios[1].y = 500;
+        this.genderRadios[1].name = "Female";
+        this.genderRadios[1].disabled = false;
+        this.registerControl(this.genderRadios[1]);
 
-        radioButtFemale.x = 600;
-        radioButtFemale.y = 500;
-        radioButtFemale.name = "Female";
-        radioButtDog.disabled = false;
-        //radioButtFemale.click = this.controller.checkedMaleOrFemale.bind(radioButtFemale, radioButtMale, radioButtDog);
-        this.registerControl(radioButtFemale);
-
-        radioButtDog.x = 750;
-        radioButtDog.y = 500;
-        radioButtDog.name = "Dog";
-        radioButtDog.disabled = true;
-        //radioButtDog.click = this.controller.checkedMaleOrFemale.bind(radioButtDog, radioButtMale, radioButtFemale);
-        this.registerControl(radioButtDog);
+        this.genderRadios[2].x = 750;
+        this.genderRadios[2].y = 500;
+        this.genderRadios[2].name = "Dog";
+        this.genderRadios[2].disabled = true;
+        this.registerControl(this.genderRadios[2]);
 
         this.submitButton.x = 500;
         this.submitButton.y = 600;
         this.submitButton.text = "Submit";
         this.registerControl(this.submitButton);
-    }
-
-    private menuGoToLogin(){
-        this.mainPage.text = "Main page";
-        this.registerControl(this.mainPage);
-    }
-
-    public run(): void{
-        this.menuGoToLogin();
-        this.loginForm();
     }
 }

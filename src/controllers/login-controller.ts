@@ -1,66 +1,75 @@
-import { View } from "../models/view";
 import { Input } from "../models/input";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
 import { LoginView } from "../views/login-view";
+import { Application } from "../models/application";
 import { MainView } from "../views/main-view";
 import { MainController } from "./main-controller";
-import { Application } from "../models/application";
+import { ContactsView } from "../views/contacts-view";
+import { ContactsController } from "./contacts-controller";
 
 export class LoginController{
-    public view: LoginView;
 
-    constructor(view: View){
-        this.view = <LoginView>view;
-        (<LoginView>this.view).submitButton.click = this.goToMainPage.bind((<LoginView>this.view).submitButton, this);
-        (<LoginView>this.view).mainPage.click = this.goToMainPage.bind((<LoginView>this.view).submitButton, this);
+    public view: LoginView;
+    public login: string = "";
+    public password: string = "";
+    public gender: string = "no gender";
+
+    constructor(view: LoginView){
+        this.view = view;
+        this.view.mainButtonPage.click = this.goToMainPage.bind(this.view.mainButtonPage, this.view);
+        this.view.contactsButtonPage.click = this.goToContactPage.bind(this.view.contactsButtonPage, this.view);
+        this.view.checkboxShowPass.click = this.checkedToShowPassword.bind(this.view.checkboxShowPass, this);
+        this.view.genderRadios.forEach(radio => {
+            radio.click = this.checkedMaleOrFemale.bind(radio, this.view.genderRadios.filter(r => r.name !== radio.name), this);
+        });
+        this.view.submitButton.click = this.submitLoginAndPassword.bind(null, this);
     }
 
-    private goToMainPage(view: View): void{
+    private goToMainPage(old: LoginView, loginForm: LoginForm): void{
         const mainView = new MainView();
-        const mainController = new MainController(mainView);
-        (Application.getInstance()).unsubsrc(view);
+        const mainContr = new MainController(mainView);
+        (Application.getInstance()).unsubsrc(old);
         (Application.getInstance()).run(mainView);
     }
-
-    //УБРАТЬ this в параметрах!!!!!
-    public submitLoginAndPassword(this: View): void{
-        let inputControls = this.controls.filter(control => control instanceof Input);
-        let maleOrFemale = this.controls.filter( control => control.getControlType() === "RadioButton" && (<RadioButton>control).checked);
-        let gender = "no gender";
-        if(<RadioButton>maleOrFemale[0]){
-            gender = (<RadioButton>maleOrFemale[0]).name;
-        }
-        
-        //console.log("login: " + (<Input>inputControls[0]).inputText.getText() + "; password: " + (<Input>inputControls[1]).inputText.text + "; gender: " + gender);
-    }
-//УБРАТЬ ЭТУ ФУНКЦИЮ и сделать это
-    public checkedToShowPassword(checkbox: Checkbox, passwordInput: Input): void {
-        if(!checkbox.checked) {
-            checkbox.checked = true;
-            passwordInput.inputText.secret = true;
-        }else {
-            checkbox.checked = false;
-            passwordInput.inputText.secret = true;
-        }
-
-        passwordInput.printText();
+    private goToContactPage(oldView: LoginView): void{
+        const contactsView = new ContactsView();
+        const contactsContr = new ContactsController(contactsView);
+        (Application.getInstance()).unsubsrc(oldView);
+        (Application.getInstance()).run(contactsView);
     }
 
-    public checkedMaleOrFemale(radioChecked: RadioButton, ...radioButtsElse: RadioButton[]): void{
-        console.log(radioChecked);
-        /*
-        if(!radioButtChecked.checked) {
-            radioButtChecked.isChecked();
+    public submitLoginAndPassword(controller: LoginController): void{
+        let inputControls = controller.view.controls.filter(control => control instanceof Input);
+        controller.login = (<Input>inputControls[0]).inputText.text;
+        controller.password = (<Input>inputControls[1]).inputText.text;
+        let loginForm = {login: controller.login, password: controller.password, gender: controller.gender};
+        controller.goToMainPage(controller.view, loginForm);
+        console.log(loginForm);
+    }
 
-            radioButtsElse.forEach( radButt => {
-                if(radButt.checked){
-                    radButt.isNotChecked();
-                }
+    public checkedToShowPassword(controller: LoginController): void {
+        let box: Checkbox = <any>this;
+        if(box.checked) {
+            (<Checkbox>(<any>this)).checked = false;
+            controller.view.pass.inputText.secret = true;
+        } else {
+            (<Checkbox>(<any>this)).checked = true;
+            controller.view.pass.inputText.secret = false;
+        }
+        controller.view.pass.printText();
+    }
+
+    public checkedMaleOrFemale(radioElse: RadioButton[], controller: LoginController): void{
+        let radio: RadioButton = <any>this;
+        if(radio.checked) {
+            (<RadioButton>(<any>this)).checked = false;
+        } else {
+            (<RadioButton>(<any>this)).checked = true;
+            controller.gender = (<RadioButton>(<any>this)).name;
+            radioElse.forEach(radio => {
+                radio.checked = false;
             });
-        }else {
-            radioButtChecked.isNotChecked();
         }
-        */
     }
 }

@@ -37,7 +37,7 @@ export class Button extends Control{
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.text, this.x + this.getPaddingInPx(), this.y + this.height/2, this.width - + this.getPaddingInPx()*2);
+        this.ctx.fillText(this.text, this.x + this.getPaddingInPx(), this.y + this.height/2, this.width - this.getPaddingInPx()*2);
     }
 
 }

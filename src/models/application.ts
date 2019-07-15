@@ -1,4 +1,4 @@
-import { View } from "./view";
+import { View } from "../views/view";
 import { Context } from "./context";
 import { Subject } from "rxjs";
 
@@ -34,14 +34,13 @@ export class Application {
         return Application.instance;
     }
 
-    public unsubsrc(view: View){
-        this.subject.unsubscribe();
-        console.log(view);
+    public unsubsrc(oldView: View){
+        oldView.cleanView(this.ctx);
+        this.subject.observers.shift();
     }
 
     public run(view: View){
         view.setSubject(this.subject);
-        view.run();
         view.draw(this.ctx);
     }
 }

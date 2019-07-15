@@ -1,12 +1,21 @@
 import { MainView } from "../views/main-view";
-import { View } from "../models/view";
+import { ContactsView } from "../views/contacts-view";
+import { ContactsController } from "./contacts-controller";
+import { Application } from "../models/application";
 
 export class MainController{
+public view: MainView;
+    constructor(view: MainView){
+        this.view = view;
+        (<MainView>this.view).helloButton.click = this.sayHi.bind((<MainView>this.view).helloButton);
+        (<MainView>this.view).contactsButtonPage.click = this.goToContactPage.bind((<MainView>this.view).contactsButtonPage, this.view);
+    }
 
-    public view: MainView;
-
-    constructor(view: View){
-        this.view = <MainView>view;
+    private goToContactPage(oldView: MainView): void{
+        const contactsView = new ContactsView();
+        const contactsContr = new ContactsController(contactsView);
+        (Application.getInstance()).unsubsrc(oldView);
+        (Application.getInstance()).run(contactsView);
     }
 
     public sayHi(){

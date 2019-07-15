@@ -5,7 +5,7 @@ export class RadioButton extends Control {
 
     protected controlType: string = "RadioButton";
     public autofocus: boolean = false;
-    public checked: boolean = false;
+    public _checked: boolean = false;
     private _disabled: boolean = false;
     public disabledFillStyle: Rgb = new Rgb(150,150,150);
     public name: string = "RadioButton";
@@ -42,6 +42,30 @@ export class RadioButton extends Control {
         this._disabled = newDisabled;
     }
 
+    get checked():boolean { return this._checked; }
+    set checked(isCheck: boolean) {
+        this._checked = isCheck;
+        if(isCheck){
+            this.ctx.fillStyle = this.fillStyle.getColor();
+            this.ctx.beginPath();
+            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
+            this.ctx.fill();
+        } else {
+            this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
+            this.ctx.beginPath();
+            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
+            this.ctx.fill();
+
+            this.ctx.fillStyle = this.fillStyle.getColor();
+            this.ctx.beginPath();
+            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
+            this.ctx.stroke();
+        }
+    }
+
+
+
+/*
     public isChecked(): void {
         if(!this.disabled){
             this.checked = true;
@@ -72,6 +96,7 @@ export class RadioButton extends Control {
             this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
             this.ctx.stroke();
     }
+*/
 
     public setDisabled(disabled: boolean): void{
         this.disabled = disabled;

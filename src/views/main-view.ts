@@ -1,21 +1,24 @@
-import { View } from "../models/view";
+import { View } from "./view";
 import { Button } from "../models/button";
-import { MainController } from "../controllers/main-controller";
 import { Panel } from "../models/panel";
 import { Input } from "../models/input";
 import { Rgb } from "../models/rgb";
 
-export class MainView extends View{
-    //public controller: MainController = new MainController();
-    constructor(){super();}
+export class MainView extends View {
+    public helloButton = new Button;
+    constructor(){
+        super();
+        this.setPropertiesHelloButton();
+    }
 
-    private helloButton() {
-        let but = new Button();
-        but.width = 150;
-        but.height = 100;
-        but.backgroundColor = new Rgb(0,200,0);
-        //but.click = this.controller.sayHi;
-        this.registerControl(but);
+    setPropertiesHelloButton() {
+        this.helloButton.text = "helloButton";
+        this.helloButton.x = 150;
+        this.helloButton.y = 150;
+        this.helloButton.width = 150;
+        this.helloButton.height = 100;
+        this.helloButton.backgroundColor = new Rgb(0,200,0);
+        this.registerControl(this.helloButton);
     }
 
     private hB() {
@@ -25,8 +28,6 @@ export class MainView extends View{
         but.width = 150;
         but.height = 100;
         but.backgroundColor = new Rgb(200,0,100);
-
-        //but.click = this.controller.sayHi;
         this.registerControl(but);
     }
     private hB2() {
@@ -36,7 +37,6 @@ export class MainView extends View{
         but.width = 150;
         but.height = 100;
         but.backgroundColor = new Rgb(0,0,250);
-        //but.click = this.controller.sayBye;
         this.registerControl(but);
     }
 
@@ -87,12 +87,5 @@ export class MainView extends View{
 
         secondInput.recalcPosition(secondInput.x, secondInput.y, secondInput.width, secondInput.height, panel);
         //this.registerControl(secondInput);
-    }
-
-    public run(): void{
-        this.helloButton();
-        this.hB();
-        this.hB2();
-        this.firstPanelAndBlaButton();
     }
 }

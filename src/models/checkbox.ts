@@ -29,14 +29,11 @@ export class Checkbox extends Control {
             this.ctx.moveTo(this.x + this.width*0.2, this.y + this.height*0.5);
             this.ctx.lineTo(this.x + this.width*0.5, this.y + this.height*0.8);
             this.ctx.lineTo(this.x + this.width*0.8, this.y + this.height*0.2);
-    
             this.ctx.stroke();
         } else {
-            this.checked = false;
-        this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-    
+            this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
+            this.ctx.fillRect(this.x, this.y, this.width, this.height);
+            this.ctx.strokeRect(this.x, this.y, this.width, this.height);
         }
     }
 /*

@@ -1,20 +1,41 @@
-import { Control } from "./control";
+import { Control } from "../models/control";
 import { Subject } from "rxjs";
-import { Input } from "./input";
-import { Context } from "./context";
+import { Input } from "../models/input";
+import { Context } from "../models/context";
+import { Button } from "../models/button";
 
 export class View {
     public controls: Control[] = [];
     public inputFocus: Input = null;
+    public mainButtonPage = new Button();
+    public contactsButtonPage = new Button();
+
+    constructor(){
+        this.goToContactPage();
+        this.goToMainPage();
+    }
+
+    public goToMainPage(){
+        this.mainButtonPage.text = "Main page";
+        this.registerControl(this.mainButtonPage);
+    }
+
+    public goToContactPage(){
+        this.contactsButtonPage.text = "Contacts";
+        this.contactsButtonPage.x = this.mainButtonPage.width;
+        this.contactsButtonPage.y = 0;
+        this.registerControl(this.contactsButtonPage);
+    }
 
     //добавить указание ошибки, когда у контролов в одной панели одинаковый zOrder!! иначе есть несоответствие отрисовки и фокусировки на input
 
+    public cleanView(context: Context){
+        context.ctx.clearRect(0, 0, context.width, context.height);
+    }
     public registerControl(control: Control): void{
         this.controls.push(control);
         this.controls.sort((a,b) => a.zOrder >= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше.
     }
-
-    public run(){}
 
     public setSubject(globalEvent: Subject<any>){
         globalEvent.subscribe(event => {

@@ -1,28 +1,21 @@
-import { View } from "../models/view";
-import { ContactsController } from "../controllers/contacts-controller";
+import { View } from "./view";
 import { Panel } from "../models/panel";
-import { Button } from "../models/button";
 
 export class ContactsView extends View {
-    //public controller: ContactsController = new ContactsController();
-    constructor(){super();}
 
-    private contactsInfo(){
-        let panel = new Panel();
-        panel.width = 400;
-        panel.height = 400;
-        panel.ctx.fillText("tel: 000-000-000", panel.x, panel.height);
-        this.registerControl(panel);
+    public contactsInfo: Panel = new Panel();
+
+    constructor(){
+        super();
+        this.contactsInfoProperties();
     }
 
-    private menuGoToLogin(){
-        let button = new Button();
-        button.text = "Main page";
-        this.registerControl(button);
-    }
-
-    public run(){
-        this.contactsInfo();
-        this.menuGoToLogin();
+    private contactsInfoProperties(){
+        this.contactsInfo.x = 200;
+        this.contactsInfo.y = 200;
+        this.contactsInfo.width = 400;
+        this.contactsInfo.height = 400;
+        this.contactsInfo.innerText = "tel: 000-000-000";
+        this.registerControl(this.contactsInfo);
     }
 }
