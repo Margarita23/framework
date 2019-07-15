@@ -5,8 +5,6 @@ import { LoginView } from "../views/login-view";
 import { Application } from "../models/application";
 import { MainView } from "../views/main-view";
 import { MainController } from "./main-controller";
-import { ContactsView } from "../views/contacts-view";
-import { ContactsController } from "./contacts-controller";
 export class LoginController{
 
     public view: LoginView;
@@ -19,7 +17,7 @@ export class LoginController{
         this.view = view;
         this.view.checkboxShowPass.click = this.checkedToShowPassword.bind(this.view.checkboxShowPass, this);
         this.view.genderRadios.forEach(radio => {
-            radio.click = this.checkedMaleOrFemale.bind(radio, this.view.genderRadios.filter(r => r.name !== radio.name), this);
+            radio.click = this.checkedMaleOrFemale.bind(radio, this.view.genderRadios.filter(r => r.name !== radio.name && !r.disabled), this);
         });
         this.view.submitButton.click = this.submitRegister.bind(null, this);
     }

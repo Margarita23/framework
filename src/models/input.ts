@@ -16,9 +16,9 @@ export class Input extends Panel {
     public padding: number = 5;
 
     public backgroundImageFocus: HTMLImageElement | null = this.backgroundImage;
-    public backgroundColorFocus: Rgb | null = this.backgroundColor;
+    public backgroundColorFocus: Rgb | null = new Rgb(250, 250, 250);
     public borderFocus: Rgb | null = this.border;
-    public borderLineWidthFocus: number = 5;
+    public borderLineWidthFocus: number = 0;
     public click: () => void = () => this.focusOnMe();
 
     constructor() { super(); }

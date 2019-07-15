@@ -90,10 +90,20 @@ export class View {
     }
 
     private reactionOnKeyBoardEvent(event: KeyboardEvent): void {
-        if(this.inputFocus !== null){
+        if(this.inputFocus !== null && this.checkInputKye(event)){
             this.inputFocus.inputText.addText(event.key);
             this.inputFocus.printText();
         }
+    }
+
+    private checkInputKye(e: KeyboardEvent): boolean{
+        let res = false;
+        if(e.key !== "Tab" && e.key !== "Shift" && e.key !== "CapsLock" &&
+            e.key !== "Control" && e.key !== "Alt" && e.key !== "Meta" &&
+            e.key !== "Enter" && e.key !== "Escape" && e.key !== "Unidentified"){
+            res =true;
+        }
+        return res;
     }
 
     private whichEvent(ev: string): string{

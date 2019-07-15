@@ -20,7 +20,11 @@ export class RadioButton extends Control {
 
     draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
-        this.ctx.fillStyle = this.fillStyle.getColor();
+        if(this.disabled) {
+            this.ctx.fillStyle = this.disabledFillStyle.getColor();
+        } else {
+            this.ctx.fillStyle = this.fillStyle.getColor();
+        }
         this.ctx.beginPath();
         this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
@@ -30,77 +34,30 @@ export class RadioButton extends Control {
 
     get disabled(): boolean { return this._disabled; }
     set disabled(newDisabled: boolean){
-        /*if(newDisabled) {
-            this.ctx.fillStyle = this.fillStyle.getColor();
-        } else {
-            this.ctx.fillStyle = this.disabledFillStyle.getColor();
-        }
-        this.ctx.beginPath();
-        this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
-        this.ctx.fill();
-*/
         this._disabled = newDisabled;
     }
 
     get checked():boolean { return this._checked; }
     set checked(isCheck: boolean) {
-        this._checked = isCheck;
-        if(isCheck){
-            this.ctx.fillStyle = this.fillStyle.getColor();
-            this.ctx.beginPath();
-            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
-            this.ctx.fill();
-        } else {
-            this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-            this.ctx.beginPath();
-            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
-            this.ctx.fill();
-
-            this.ctx.fillStyle = this.fillStyle.getColor();
-            this.ctx.beginPath();
-            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
-            this.ctx.stroke();
-        }
-    }
-
-
-
-/*
-    public isChecked(): void {
         if(!this.disabled){
-            this.checked = true;
-            this.ctx.fillStyle = this.fillStyle.getColor();
-        } else {
-            this.ctx.fillStyle = this.disabledFillStyle.getColor();
+            this._checked = isCheck;
+            if(isCheck){
+                this.ctx.fillStyle = this.fillStyle.getColor();
+                this.ctx.beginPath();
+                this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
+                this.ctx.fill();
+            } else {
+                this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
+                this.ctx.beginPath();
+                this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
+                this.ctx.fill();
+
+                this.ctx.fillStyle = this.fillStyle.getColor();
+                this.ctx.beginPath();
+                this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
+                this.ctx.stroke();
+            }
         }
-            this.ctx.beginPath();
-            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
-            this.ctx.fill();
-    }
-
-    public isNotChecked(){
-        if(!this.disabled){
-            this.checked = false;
-            this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-        } else {
-            this.ctx.fillStyle = (new Rgb(150,150,150)).getColor();
-
-        }
-        this.ctx.beginPath();
-            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
-            this.ctx.fill();
-
-            this.ctx.fillStyle = this.fillStyle.getColor();
-
-            this.ctx.beginPath();
-            this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
-            this.ctx.stroke();
-    }
-*/
-
-    public setDisabled(disabled: boolean): void{
-        this.disabled = disabled;
-        console.log(this.ctx);
     }
 
 }
