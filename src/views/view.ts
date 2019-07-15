@@ -9,10 +9,12 @@ export class View {
     public inputFocus: Input = null;
     public mainButtonPage = new Button();
     public contactsButtonPage = new Button();
+    public playButtonPage = new Button();
 
     constructor(){
         this.goToContactPage();
         this.goToMainPage();
+        this.goPlay();
     }
 
     public goToMainPage(){
@@ -25,6 +27,13 @@ export class View {
         this.contactsButtonPage.x = this.mainButtonPage.width;
         this.contactsButtonPage.y = 0;
         this.registerControl(this.contactsButtonPage);
+    }
+
+    public goPlay(){
+        this.playButtonPage.text = "Go to play";
+        this.playButtonPage.x = this.mainButtonPage.width*2;
+        this.playButtonPage.y = 0;
+        this.registerControl(this.playButtonPage);
     }
 
     //добавить указание ошибки, когда у контролов в одной панели одинаковый zOrder!! иначе есть несоответствие отрисовки и фокусировки на input
@@ -108,7 +117,6 @@ export class View {
     }
 
     public draw(ctx: Context): void {
-    //this.controls.sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше. И ВООБЩЕ нужна ли она!??
         this.controls.forEach(control => {
             control.draw(ctx.ctx);
         });

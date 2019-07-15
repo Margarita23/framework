@@ -14,6 +14,7 @@ export class Control {
     public border: Rgb = new Rgb(0,0,0);
     public borderLineWidth: number = 1;
     public zOrder: number;
+    //Убрать объявление пустой функции.
     public click: (control: Control) => void = () => {};
     public mouseup: () => void = () => {};
     public mousedown: () => void = () => {};
@@ -21,7 +22,6 @@ export class Control {
 
     public draw(ctx: CanvasRenderingContext2D): void {
         this.ctx = ctx;
-        //this.recalcPosition(this.x, this.y, this.width, this.height, this.parent);
     }
 
     public getControlType(): string{
@@ -33,6 +33,7 @@ export class Control {
         this.zOrder = parent.zOrder + 1;
     }
 
+//Убрать расчет координат от парента!!
     public recalcPosition(x: number, y: number, width: number, height: number, parent: Control): void{
         this.x = parent ? x + parent.x : x;
         this.y = parent ? y + parent.y : y;
@@ -51,5 +52,3 @@ export class Control {
         }
     }
 }
-//type EventHandler = ReturnType<(sender: Control, args?: EventArgs[]) => void>;
-//class EventArgs{}

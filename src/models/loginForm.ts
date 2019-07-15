@@ -1,5 +1,5 @@
-interface LoginForm {
-    login?: string;
-    password?: string;
-    gender?: string;
+interface GamerProfile {
+    login: string;
+    password: string;
+    gender: string;
 }
