@@ -15,10 +15,15 @@ export class LoginController{
 
     constructor(view: LoginView){
         this.view = view;
+
         this.view.checkboxShowPass.click = this.checkedToShowPassword.bind(this.view.checkboxShowPass, this);
         this.view.genderRadios.forEach(radio => {
-            radio.click = this.checkedMaleOrFemale.bind(radio, this.view.genderRadios.filter(r => r.name !== radio.name && !r.disabled), this);
+            if(!radio.disabled)
+            {
+                radio.click = this.checkedMaleOrFemale.bind(radio, this.view.genderRadios.filter(r => r.name !== radio.name && !r.disabled), this);
+            }
         });
+
         this.view.submitButton.click = this.submitRegister.bind(null, this);
     }
 

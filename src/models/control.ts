@@ -7,13 +7,13 @@ export class Control {
     public y: number = 0;
     public width: number = 150;
     public height: number = 75;
-    private parent: Control = null;
+    public parent: Control = null;
     public ctx: CanvasRenderingContext2D;
     public backgroundImage: HTMLImageElement = null;
     public backgroundColor: Rgb = new Rgb(200,200,200);
     public border: Rgb = new Rgb(0,0,0);
     public borderLineWidth: number = 1;
-    public zOrder: number;
+    public zOrder: number = 0;
     //Убрать объявление пустой функции.
     public click: (control: Control) => void = () => {};
     public mouseup: () => void = () => {};
@@ -22,6 +22,17 @@ export class Control {
 
     public draw(ctx: CanvasRenderingContext2D): void {
         this.ctx = ctx;
+        //console.log(this);
+
+        this.x = this.parent ? this.x + this.parent.x : this.x;
+        this.y = this.parent ? this.y + this.parent.y : this.y;
+        if(this.parent && (this.x + this.width) > this.parent.x) {
+            this.width = (this.parent.x + this.parent.width) - this.x;
+            //this.width = (this.parent.x + this.parent.width) - this.x;
+        }
+        else if(this.parent && (this.y + this.height) > this.parent.y) {
+            //this.height = (this.parent.y + this.parent.height) - this.y;
+        }
     }
 
     public getControlType(): string{
@@ -31,24 +42,5 @@ export class Control {
     public setParent(parent: Control): void {
         this.parent = parent;
         this.zOrder = parent.zOrder + 1;
-    }
-
-//Убрать расчет координат от парента!!
-    public recalcPosition(x: number, y: number, width: number, height: number, parent: Control): void{
-        this.x = parent ? x + parent.x : x;
-        this.y = parent ? y + parent.y : y;
-
-        if(parent && (x + width) > parent.width) {
-            this.width = parent.width - x;
-            this.height = height;
-        }
-        else if(parent && (y + height) > parent.height) {
-            this.height = parent.height - y;
-            this.width = width;
-        }
-        else {
-            this.width = width;
-            this.height = height;
-        }
     }
 }

@@ -1,5 +1,6 @@
 import { Control } from "./control";
 import { Rgb } from "./rgb";
+import { RadioButton } from "./radioButton";
 
 export class Panel extends Control {
 
