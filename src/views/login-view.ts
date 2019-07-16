@@ -3,6 +3,8 @@ import { Input } from "../models/input";
 import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
+import { Panel } from "../models/panel";
+import { Rgb } from "../models/rgb";
 
 export class LoginView extends View {
     public pass: Input = new Input();
@@ -34,27 +36,43 @@ export class LoginView extends View {
         this.checkboxShowPass.name = "Show password";
         this.registerControl(this.checkboxShowPass);
 
-        this.genderRadios[0].x = 450;
-        this.genderRadios[0].y = 500;
-        this.genderRadios[0].name = "Male";
-        this.genderRadios[0].disabled = false;
-        this.registerControl(this.genderRadios[0]);
-
-        this.genderRadios[1].x = 600;
-        this.genderRadios[1].y = 500;
-        this.genderRadios[1].name = "Female";
-        this.genderRadios[1].disabled = false;
-        this.registerControl(this.genderRadios[1]);
-
-        this.genderRadios[2].x = 750;
-        this.genderRadios[2].y = 500;
-        this.genderRadios[2].name = "Dog";
-        this.genderRadios[2].disabled = true;
-        this.registerControl(this.genderRadios[2]);
+        this.radiosGender();
 
         this.submitButton.x = 500;
         this.submitButton.y = 600;
         this.submitButton.text = "Submit";
         this.registerControl(this.submitButton);
+    }
+
+    private radiosGender(){
+        let genderPanel = new Panel();
+        genderPanel.border = new Rgb(255,0,0);
+        genderPanel.backgroundColor = null;
+        genderPanel.x = 375;
+        genderPanel.y = 500;
+        genderPanel.width = 400;
+
+        this.genderRadios[0].x = 0;
+        this.genderRadios[0].y = 37.5 - this.genderRadios[0].radius;
+        this.genderRadios[0].name = "Male";
+        this.genderRadios[0].disabled = false;
+        this.genderRadios[0].parent = genderPanel;
+        this.registerControl(this.genderRadios[0]);
+
+        this.genderRadios[1].x = 130;
+        this.genderRadios[1].y = 37.5 - this.genderRadios[0].radius;
+        this.genderRadios[1].name = "Female";
+        this.genderRadios[1].disabled = false;
+        this.genderRadios[1].parent = genderPanel;
+        this.registerControl(this.genderRadios[1]);
+
+        this.genderRadios[2].x = 290;
+        this.genderRadios[2].y = 37.5 - this.genderRadios[0].radius;
+        this.genderRadios[2].name = "Dog";
+        this.genderRadios[2].disabled = true;
+        this.genderRadios[2].parent = genderPanel;
+        this.registerControl(this.genderRadios[2]);
+
+        this.registerControl(genderPanel);
     }
 }

@@ -7,7 +7,7 @@ export class Control {
     public y: number = 0;
     public width: number = 150;
     public height: number = 75;
-    public parent: Control = null;
+    private _parent: Control = null;
     public ctx: CanvasRenderingContext2D;
     public backgroundImage: HTMLImageElement = null;
     public backgroundColor: Rgb = new Rgb(200,200,200);
@@ -33,6 +33,13 @@ export class Control {
         else if(this.parent && (this.y + this.height) > this.parent.y) {
             //this.height = (this.parent.y + this.parent.height) - this.y;
         }
+    }
+
+    get parent(): Control { return this._parent; }
+    set parent(newParent) {
+        this._parent = newParent;
+        this._parent.controls.push(this);
+        this.zOrder = newParent.zOrder + 1;
     }
 
     public getControlType(): string{

@@ -18,10 +18,7 @@ export class LoginController{
 
         this.view.checkboxShowPass.click = this.checkedToShowPassword.bind(this.view.checkboxShowPass, this);
         this.view.genderRadios.forEach(radio => {
-            if(!radio.disabled)
-            {
-                radio.click = this.checkedMaleOrFemale.bind(radio, this.view.genderRadios.filter(r => r.name !== radio.name && !r.disabled), this);
-            }
+            if(!radio.disabled){ radio.click = this.checkedMaleOrFemale.bind(radio, this); }
         });
 
         this.view.submitButton.click = this.submitRegister.bind(null, this);
@@ -59,16 +56,13 @@ export class LoginController{
         controller.view.pass.printText();
     }
 
-    public checkedMaleOrFemale(radioElse: RadioButton[], controller: LoginController): void{
+    public checkedMaleOrFemale(controller: LoginController): void{
         let radio: RadioButton = <any>this;
         if(radio.checked) {
             (<RadioButton>(<any>this)).checked = false;
         } else {
             (<RadioButton>(<any>this)).checked = true;
             controller.gender = (<RadioButton>(<any>this)).name;
-            radioElse.forEach(radio => {
-                radio.checked = false;
-            });
         }
     }
 }
