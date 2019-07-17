@@ -10,6 +10,7 @@ export class View {
     public mainButtonPage = new Button();
     public contactsButtonPage = new Button();
     public playButtonPage = new Button();
+    public ctx: CanvasRenderingContext2D;
 
     constructor(){
         this.goToContactPage();
@@ -36,14 +37,12 @@ export class View {
         this.registerControl(this.playButtonPage);
     }
 
-    //добавить указание ошибки, когда у контролов в одной панели одинаковый zOrder!! иначе есть несоответствие отрисовки и фокусировки на input
-
     public cleanView(context: Context){
         context.ctx.clearRect(0, 0, context.width, context.height);
     }
     public registerControl(control: Control): void{
         this.controls.push(control);
-        this.controls.sort((a,b) => a.zOrder >= b.zOrder ? 1 : -1); //пересмотри способ сортировки, возможно есть лучше.
+        this.controls.sort((a,b) => a.zOrder >= b.zOrder ? 1 : -1);
     }
 
     public setSubject(globalEvent: Subject<any>){
@@ -57,33 +56,39 @@ export class View {
     }
 
     private reactionOnMouseEvent(event: MouseEvent): void{
-        let onClickControls = this.controls.filter(control => this.onControl(control, event.x, event.y));
-        let firstElementMustClick = (onClickControls[onClickControls.length-1]);
-        if(firstElementMustClick){
+        let onControls = this.controls.filter(control => this.onControl(control, event.x, event.y))
+        .sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1)
+        let trueControl = onControls[0];
+        if(trueControl){
             switch(event.type) {
-                case 'click' :
-                    this.controls.map(c => { if(c instanceof Input){c.unfocus();}});
-                    if (firstElementMustClick instanceof Input) {
-                        (<Input>firstElementMustClick).focusOnMe();
-                        this.inputFocus = <Input>firstElementMustClick;
-                    }
-                    else{
-                        this.inputFocus = null;
-                    }
-//ПРОВЕРИТЬ НА СУЩЕСТВОВАНИЕ ФУНКЦИИ, а дефолтное значение убрать!!!!!
-                    //if(firstElementMustClick.click){
-                        //console.log(this);
-                        firstElementMustClick.click(firstElementMustClick)
-                    //};
-                    return;
                 case 'mousedown' :
-                        firstElementMustClick.mousedown();
+                        if(trueControl.mousedown){
+                            trueControl.mousedown(trueControl);
+                        }
                     return;
                 case 'mouseup' :
-                        firstElementMustClick.mouseup();
+                        if(trueControl.mouseup){
+                            trueControl.mouseup(trueControl);
+                        }
+                    return;
+                case 'click' :
+
+                    if(trueControl.click){
+                        this.controls.map(c => { if(c instanceof Input){c.unfocus();}});
+                        if (trueControl instanceof Input) {
+                            (<Input>trueControl).focusOnMe();
+                            this.inputFocus = <Input>trueControl;
+                        }
+                        else{
+                            this.inputFocus = null;
+                        }
+                        trueControl.click(trueControl);
+                    }
                     return;
                 case 'mousemove' :
-                        firstElementMustClick.mousemove();
+                        if(trueControl.mousemove){
+                            trueControl.mousemove(trueControl);
+                        }
                     return;
             }
         }
@@ -116,7 +121,7 @@ export class View {
         return res;
     }
 
-    private onControl(control: Input | Control, clickX: number, clickY: number): boolean{
+    private onControl(control: Control, clickX: number, clickY: number): boolean{
         let res = false;
         if ((control.x) <= clickX && control.y <= clickY &&
             (control.x + control.width) >= clickX &&
@@ -127,6 +132,7 @@ export class View {
     }
 
     public draw(ctx: Context): void {
+        this.ctx = ctx.ctx;
         this.controls.forEach(control => {
             control.draw(ctx.ctx);
         });

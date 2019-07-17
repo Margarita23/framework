@@ -23,7 +23,7 @@ export class InputText {
             this.secretText = this.secretText.slice(0,-1);
         }
         else if(this.text.length <= this.maxLength) {
-            this.text = this.text + text;
+            this.text += text;
             this.secretText +="*";
         }
     }

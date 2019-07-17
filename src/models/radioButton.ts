@@ -65,9 +65,7 @@ export class RadioButton extends Control {
     private setOtherRadioNotCheck(radio: RadioButton): void{
         if(this.parent){
             let otherRadio = radio.parent.controls.filter(r => r instanceof RadioButton && r.name !== radio.name && !r.disabled);
-            otherRadio.forEach(radio => {
-                (<RadioButton>radio).checked = false;
-            });
+            otherRadio.forEach(radio => (<RadioButton>radio).checked = false );
         }
     }
 

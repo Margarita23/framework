@@ -4,6 +4,8 @@ import { ContactsController } from "./contacts-controller";
 import { Application } from "../models/application";
 import { MapsView } from "../views/maps-view";
 import { MapsController } from "./maps-controller";
+import { Rgb } from "../models/rgb";
+import { Control } from "../models/control";
 
 export class MainController{
 public view: MainView;
@@ -12,12 +14,22 @@ public gamer: GamerProfile;
         this.view = view;
         if(gamer){
             this.gamer = gamer;
-            (<MainView>this.view).helloPanel.innerText = "Hello, " + this.gamer.login + " !";
+            this.view.helloPanel.innerText = "Hello, " + this.gamer.login + " !";
         } else {
-            (<MainView>this.view).helloPanel.innerText = "Hello!";
+            this.view.helloPanel.innerText = "Hello!";
         }
-        (<MainView>this.view).contactsButtonPage.click = this.goToContactPage.bind((<MainView>this.view).contactsButtonPage, this.view, this.gamer);
-        (<MainView>this.view).playButtonPage.click = this.goToMapsPage.bind((<MainView>this.view).contactsButtonPage, this.view, this.gamer);
+        this.view.contactsButtonPage.click = this.goToContactPage.bind(this.view.contactsButtonPage, this.view, this.gamer);
+        this.view.playButtonPage.click = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.gamer);
+
+        this.clickEffectsForButtons(this.view.contactsButtonPage);
+        this.clickEffectsForButtons(this.view.playButtonPage);
+        this.view.playButtonPage.mousedown = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.gamer);
+    }
+
+    private clickEffectsForButtons(button: Control){
+        let lastColor = button.backgroundColor;
+        button.mousedown = () => { button.backgroundColor = new Rgb(240,240,240); button.draw(this.view.ctx); };
+        button.mouseup = () => { button.backgroundColor = lastColor; button.draw(this.view.ctx); };
     }
 
     private goToContactPage(oldView: MainView, gamer?: GamerProfile): void{

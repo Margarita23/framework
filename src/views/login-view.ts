@@ -2,76 +2,103 @@ import { View } from "./view";
 import { Input } from "../models/input";
 import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
-import { RadioButton } from "../models/radioButton";
 import { Panel } from "../models/panel";
-import { Rgb } from "../models/rgb";
+import { RadioButton } from "../models/radioButton";
 
 export class LoginView extends View {
-    public pass: Input = new Input();
-    public submitButton: Button = new Button();
-    public checkboxShowPass: Checkbox = new Checkbox();
-    public genderRadios: RadioButton[] = [new RadioButton(), new RadioButton(), new RadioButton()];
+    public loginForm: Panel = new Panel();
 
     constructor(){
         super();
-        this.loginForm();
+        this.createLoginForm();
     }
 
-    private loginForm(){
+    private createLoginForm(){
+        this.loginForm.name = "loginForm";
+        this.loginForm.x = 200;
+        this.loginForm.y = 200;
+        this.loginForm.width = 600;
+        this.loginForm.height = 600;
+        this.loginForm.border = null;
+        this.loginForm.backgroundColor = null;
+        this.registerControl(this.loginForm);
+
         let login = new Input();
-        login.x = 500;
-        login.y = 300;
+        let pass = new Input();
+        let checkBoxShowPassword = new Checkbox();
+
+        login.x = 0; login.y = 0;
+        pass.x = 0; pass.y = 150;
+        login.width = this.loginForm.width - 200;
+        login.height = 100;
+        pass.width = this.loginForm.width - 200;
+        pass.height = 100;
+
+        login.parent = this.loginForm;
         login.inputText.maxLength = 50;
+        login.name = "login";
         login.inputText.setText("Print login...");
         this.registerControl(login);
 
-        this.pass.x = 500;
-        this.pass.y = 400;
-        this.pass.inputText.secret = true;
-        this.pass.inputText.setText("Print password...");
-        this.registerControl(this.pass);
+        pass.parent = this.loginForm;
+        pass.inputText.secret = true;
+        pass.name = "password";
+        pass.inputText.setText("Print password...");
+        this.registerControl(pass);
 
-        this.checkboxShowPass.x = this.pass.x + this.pass.width + 50;
-        this.checkboxShowPass.y = this.pass.y;
-        this.checkboxShowPass.name = "Show password";
-        this.registerControl(this.checkboxShowPass);
+        checkBoxShowPassword.parent = this.loginForm;
+        checkBoxShowPassword.x = this.loginForm.width - 190;
+        checkBoxShowPassword.y = pass.y;
+        checkBoxShowPassword.name = "show";
 
+        this.registerControl(checkBoxShowPassword);
+
+        let submit = new Button();
+        submit.name = "submit";
+        submit.x = 50;
+        submit.y = 450;
+        submit.height = 100;
+        submit.width = this.loginForm.width - 300;
+        submit.parent = this.loginForm;
+        submit.text = "Submit";
+        this.registerControl(submit);
         this.radiosGender();
-
-        this.submitButton.x = 500;
-        this.submitButton.y = 600;
-        this.submitButton.text = "Submit";
-        this.registerControl(this.submitButton);
     }
 
     private radiosGender(){
         let genderPanel = new Panel();
-        genderPanel.border = new Rgb(255,0,0);
+        genderPanel.border = null;
         genderPanel.backgroundColor = null;
-        genderPanel.x = 375;
-        genderPanel.y = 500;
-        genderPanel.width = 400;
+        genderPanel.x = 0;
+        genderPanel.y = 300;
+        genderPanel.width = this.loginForm.width;
+        genderPanel.parent = this.loginForm;
+        genderPanel.name = "genderPanel";
 
-        this.genderRadios[0].x = 0;
-        this.genderRadios[0].y = 37.5 - this.genderRadios[0].radius;
-        this.genderRadios[0].name = "Male";
-        this.genderRadios[0].disabled = false;
-        this.genderRadios[0].parent = genderPanel;
-        this.registerControl(this.genderRadios[0]);
+        let radioMale = new RadioButton();
+        let radioFemale = new RadioButton();
+        let radioDog = new RadioButton();
 
-        this.genderRadios[1].x = 130;
-        this.genderRadios[1].y = 37.5 - this.genderRadios[0].radius;
-        this.genderRadios[1].name = "Female";
-        this.genderRadios[1].disabled = false;
-        this.genderRadios[1].parent = genderPanel;
-        this.registerControl(this.genderRadios[1]);
+        radioMale.x = 0;
+        radioMale.y = 37.5 - radioMale.radius;
+        radioMale.name = "male";
+        radioMale.disabled = false;
+        radioMale.parent = genderPanel;
+        this.registerControl(radioMale);
 
-        this.genderRadios[2].x = 290;
-        this.genderRadios[2].y = 37.5 - this.genderRadios[0].radius;
-        this.genderRadios[2].name = "Dog";
-        this.genderRadios[2].disabled = true;
-        this.genderRadios[2].parent = genderPanel;
-        this.registerControl(this.genderRadios[2]);
+        radioFemale.x = 130;
+        radioFemale.y = 37.5 - radioFemale.radius;
+        radioFemale.name = "female";
+        radioFemale.disabled = false;
+        radioFemale.parent = genderPanel;
+        this.registerControl(radioFemale);
+
+        radioDog.x = 290;
+        radioDog.y = 37.5 - radioDog.radius;
+        radioDog.name = "dog";
+        radioDog.disabled = true;
+        radioDog.parent = genderPanel;
+        this.registerControl(radioDog);
 
         this.registerControl(genderPanel);
     }

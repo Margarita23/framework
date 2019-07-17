@@ -19,12 +19,12 @@ export class Panel extends Control {
                 this.ctx.drawImage(this.backgroundImage, this.x, this.y, this.width, this.height);
             };
         }
-        else if(this.backgroundColor)
+        else if(this.backgroundColor !== null)
         {
             this.ctx.fillStyle = this.backgroundColor.getColor();
             this.ctx.fillRect(this.x, this.y, this.width, this.height);
         }
-        if(this.border){
+        if(this.border !== null){
             this.ctx.strokeStyle = this.border.getColor();
             this.ctx.strokeRect(this.x, this.y, this.width, this.height)
         };

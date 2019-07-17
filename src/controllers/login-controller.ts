@@ -5,6 +5,9 @@ import { LoginView } from "../views/login-view";
 import { Application } from "../models/application";
 import { MainView } from "../views/main-view";
 import { MainController } from "./main-controller";
+import { Button } from "../models/button";
+import { Control } from "../models/control";
+import { Rgb } from "../models/rgb";
 export class LoginController{
 
     public view: LoginView;
@@ -16,12 +19,27 @@ export class LoginController{
     constructor(view: LoginView){
         this.view = view;
 
-        this.view.checkboxShowPass.click = this.checkedToShowPassword.bind(this.view.checkboxShowPass, this);
-        this.view.genderRadios.forEach(radio => {
-            if(!radio.disabled){ radio.click = this.checkedMaleOrFemale.bind(radio, this); }
+        let checkboxShowPass = this.view.controls.find(c => c.name === "show");
+        checkboxShowPass.click = this.checkedToShowPassword.bind(checkboxShowPass, this);
+        let login: Input = (<Input>this.view.controls.find(c => c.name === "login"));
+        login.click = login.focusOnMe;
+
+        let pass: Input = (<Input>this.view.controls.find(c => c.name === "password"));
+        pass.click = pass.focusOnMe;
+
+        this.view.controls.find(c => c.name === "genderPanel").controls.forEach(radio => {
+            if(!(<RadioButton>radio).disabled){
+                radio.click = this.checkedMaleOrFemale.bind(radio, this);
+            }
         });
 
-        this.view.submitButton.click = this.submitRegister.bind(null, this);
+        let submit = this.view.loginForm.controls.find(c => c.name === "submit");
+        if(submit !== null){
+            submit.click = this.submitRegister.bind(submit, this);
+        }
+
+        let submitColor = submit.backgroundColor;
+        submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); };
     }
 
     private goToMainPage(old: LoginView, gamer: GamerProfile): void{
@@ -32,37 +50,44 @@ export class LoginController{
     }
 
     public submitRegister(controller: LoginController): void{
-        let inputControls = controller.view.controls.filter(control => control instanceof Input);
-        controller.login = (<Input>inputControls[0]).inputText.text;
-        controller.password = (<Input>inputControls[1]).inputText.text;
-        let loginForm: GamerProfile = {
-            login: controller.login,
-            password: controller.password,
-            gender: controller.gender
-        };
-        controller.gamer = loginForm;
-        controller.goToMainPage(controller.view, loginForm);
+        if (this instanceof Button){
+            let inputControls = this.parent.controls.filter(control => control instanceof Input);
+            controller.login = (<Input>inputControls.find(c => c.name === "login")).inputText.text;
+            controller.password = (<Input>inputControls.find(c => c.name === "password")).inputText.text;
+            let loginForm: GamerProfile = {
+                login: controller.login,
+                password: controller.password,
+                gender: controller.gender
+            };
+            controller.gamer = loginForm;
+            controller.goToMainPage(controller.view, loginForm);
+            console.log(this);
+        }
     }
 
     public checkedToShowPassword(controller: LoginController): void {
         let box: Checkbox = <any>this;
-        if(box.checked) {
-            (<Checkbox>(<any>this)).checked = false;
-            controller.view.pass.inputText.secret = true;
-        } else {
-            (<Checkbox>(<any>this)).checked = true;
-            controller.view.pass.inputText.secret = false;
+        if (this instanceof Checkbox){
+            if(box.checked) {
+                this.checked = false;
+                (<Input>controller.view.loginForm.controls.find(c => c.name === "password" && c instanceof Input)).inputText.secret = true;
+            } else {
+                this.checked = true;
+                (<Input>controller.view.loginForm.controls.find(c => c.name === "password" && c instanceof Input)).inputText.secret = false;
+            }
         }
-        controller.view.pass.printText();
+        (<Input>controller.view.loginForm.controls.find(c => c.name === "password" && c instanceof Input)).printText();
     }
 
     public checkedMaleOrFemale(controller: LoginController): void{
         let radio: RadioButton = <any>this;
-        if(radio.checked) {
-            (<RadioButton>(<any>this)).checked = false;
-        } else {
-            (<RadioButton>(<any>this)).checked = true;
-            controller.gender = (<RadioButton>(<any>this)).name;
+        if(this instanceof RadioButton){
+            if(radio.checked) {
+                this.checked = false;
+            } else {
+                this.checked = true;
+                controller.gender = this.name;
+            }
         }
     }
 }
