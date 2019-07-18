@@ -1,9 +1,11 @@
 export class InputText {
 
-    public text: string = "Print here...";
+    public text: string = null;
     public maxLength: number = 50;
     public secret: boolean = false;
     private secretText: string = "";
+    public align: string = "left";
+    public startX: number = 0;
 
     constructor() {}
 

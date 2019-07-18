@@ -3,6 +3,8 @@ import { Subject } from "rxjs";
 import { Input } from "../models/input";
 import { Context } from "../models/context";
 import { Button } from "../models/button";
+import { Panel } from "../models/panel";
+import { Rgb } from "../models/rgb";
 
 export class View {
     public controls: Control[] = [];
@@ -10,12 +12,14 @@ export class View {
     public mainButtonPage = new Button();
     public contactsButtonPage = new Button();
     public playButtonPage = new Button();
+    public footer = new Panel();
     public ctx: CanvasRenderingContext2D;
 
     constructor(){
         this.goToContactPage();
         this.goToMainPage();
         this.goPlay();
+        this.showFooter();
     }
 
     public goToMainPage(){
@@ -35,6 +39,17 @@ export class View {
         this.playButtonPage.x = this.mainButtonPage.width*2;
         this.playButtonPage.y = 0;
         this.registerControl(this.playButtonPage);
+    }
+
+    public showFooter(){
+        this.footer.x = 0;
+        this.footer.y = 950;
+        this.footer.width = 1000;
+        this.footer.height = 50;
+        this.footer.innerText.text = "@WebTanks";
+        this.footer.innerText.startX = 500;
+        this.footer.innerText.align = "center";
+        this.registerControl(this.footer);
     }
 
     public cleanView(context: Context){
@@ -72,7 +87,6 @@ export class View {
                         }
                     return;
                 case 'click' :
-
                     if(trueControl.click){
                         this.controls.map(c => { if(c instanceof Input){c.unfocus();}});
                         if (trueControl instanceof Input) {
@@ -90,6 +104,11 @@ export class View {
                             trueControl.mousemove(trueControl);
                         }
                     return;
+                case 'mouseover' :
+                    if(trueControl.mouseover){
+                        trueControl.mouseover(trueControl);
+                    }
+                return;
             }
         }
     }
@@ -133,6 +152,8 @@ export class View {
 
     public draw(ctx: Context): void {
         this.ctx = ctx.ctx;
+        this.ctx.strokeStyle = new Rgb(0, 0, 0).getColor();
+        this.ctx.strokeRect(0, 0, ctx.width, ctx.height);
         this.controls.forEach(control => {
             control.draw(ctx.ctx);
         });

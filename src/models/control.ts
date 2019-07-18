@@ -15,11 +15,12 @@ export class Control {
     public borderLineWidth: number = 1;
     public zOrder: number = 0;
     public name: string = "no name";
-    //Убрать объявление пустой функции.
     public click: (control: Control) => void;
     public mouseup: (constrol: Control) => void;
     public mousedown: (control: Control) => void;
     public mousemove: (control: Control) => void;
+    public mouseleave: (control: Control) => void;
+    public mouseover: (control: Control) => void;
 
     public draw(ctx: CanvasRenderingContext2D): void {
         this.ctx = ctx;

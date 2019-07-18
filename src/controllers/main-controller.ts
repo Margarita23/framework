@@ -12,12 +12,18 @@ public view: MainView;
 public gamer: GamerProfile;
     constructor(view: MainView, gamer?: GamerProfile){
         this.view = view;
+        
         if(gamer){
             this.gamer = gamer;
-            this.view.helloPanel.innerText = "Hello, " + this.gamer.login + " !";
+            this.view.helloPanel.innerText.text = "Hello, " + this.gamer.login + " !";
         } else {
-            this.view.helloPanel.innerText = "Hello!";
+            this.view.helloPanel.innerText.text = "Hello!";
         }
+        console.log(gamer);
+        console.log(this.view.helloPanel.innerText.text);
+        console.log(this.view);
+        //this.view.helloPanel.draw(this.view.ctx);
+
         this.view.contactsButtonPage.click = this.goToContactPage.bind(this.view.contactsButtonPage, this.view, this.gamer);
         this.view.playButtonPage.click = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.gamer);
 
@@ -44,9 +50,5 @@ public gamer: GamerProfile;
         const mapsContr = new MapsController(mapsView, gamer);
         (Application.getInstance()).unsubsrc(oldView);
         (Application.getInstance()).run(mapsView);
-    }
-
-    public saySome(){
-        console.log('Blah-blah-blah');
     }
 }

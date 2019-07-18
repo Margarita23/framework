@@ -87,5 +87,4 @@ export class Input extends Panel {
 
         this.ctx.fillText(this.showText, this.x + padding, this.y + this.height/2);
     }
-
 }

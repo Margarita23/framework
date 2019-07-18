@@ -8,6 +8,7 @@ import { MainController } from "./main-controller";
 import { Button } from "../models/button";
 import { Control } from "../models/control";
 import { Rgb } from "../models/rgb";
+import { Panel } from "../models/panel";
 export class LoginController{
 
     public view: LoginView;
@@ -40,6 +41,19 @@ export class LoginController{
 
         let submitColor = submit.backgroundColor;
         submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); };
+
+        this.view.footer.mousemove = this.changeSizeOrPosition.bind(this.view.footer, 0, 850, this.view.footer.width, 150, this);
+        this.view.footer.mouseleave = this.changeSizeOrPosition.bind(this.view.footer, 0, 950, this.view.footer.width, 50, this);
+    }
+
+    private changeSizeOrPosition(x: number, y: number, width?: number, height?: number, controller?: LoginController){
+        if(this instanceof Panel){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.draw(controller.view.ctx);
+        }
     }
 
     private goToMainPage(old: LoginView, gamer: GamerProfile): void{
@@ -61,7 +75,6 @@ export class LoginController{
             };
             controller.gamer = loginForm;
             controller.goToMainPage(controller.view, loginForm);
-            console.log(this);
         }
     }
 

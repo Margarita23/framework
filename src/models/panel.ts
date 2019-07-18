@@ -1,11 +1,11 @@
 import { Control } from "./control";
 import { Rgb } from "./rgb";
-import { RadioButton } from "./radioButton";
+import { InputText } from "./inputText";
 
 export class Panel extends Control {
 
     protected controlType: string = "Panel";
-    public innerText: string;
+    public innerText: InputText = new InputText();
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
 
@@ -28,12 +28,20 @@ export class Panel extends Control {
             this.ctx.strokeStyle = this.border.getColor();
             this.ctx.strokeRect(this.x, this.y, this.width, this.height)
         };
+        this.getText();
+    }
 
-        if(this.innerText){
+    public getText(): void{
+        if(this.innerText && this.innerText.getText()){
             this.ctx.font = this.font;
             this.ctx.fillStyle = this.fillStyle.getColor();
+            let oldAlight = this.ctx.textAlign;
+            this.ctx.textAlign = <CanvasTextAlign>this.innerText.align;
             this.ctx.textBaseline = "middle";
-            this.ctx.fillText(this.innerText, this.x, this.y + this.height/2, this.width);
+            this.ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX, this.y + this.height/2, this.width);
+            this.ctx.textAlign = oldAlight;
+        } else {
+            console.log(this.innerText);
         }
     }
 }

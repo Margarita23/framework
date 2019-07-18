@@ -10,8 +10,6 @@ export class Application {
 
     private constructor() {
         this.createSub(this.subject);
-        this.ctx.ctx.strokeStyle = new Rgb(0, 0, 0).getColor();
-        this.ctx.ctx.strokeRect(0, 0, this.ctx.width, this.ctx.height);
     }
 
     private createSub(subject: Subject<Event>){
@@ -25,6 +23,9 @@ export class Application {
             subject.next(evt);
         });
         document.addEventListener("mousemove", (evt)=>{
+            subject.next(evt);
+        });
+        document.addEventListener("mouseover", (evt)=>{
             subject.next(evt);
         });
         document.addEventListener("keydown", (evt)=>{
