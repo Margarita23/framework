@@ -6,6 +6,7 @@ import { MapsView } from "../views/maps-view";
 import { MapsController } from "./maps-controller";
 import { Control } from "../models/control";
 import { Rgb } from "../models/rgb";
+import { Panel } from "../models/panel";
 
 export class ContactsController{
     public view: ContactsView;
@@ -26,6 +27,18 @@ export class ContactsController{
 
         this.clickEffectsForButtons(this.view.mainButtonPage);
         this.clickEffectsForButtons(this.view.playButtonPage);
+        this.view.footer.mousemove = this.changeSizeOrPosition.bind(this.view.footer, 0, 850, this.view.footer.width, 150, this);
+        this.view.footer.mouseleave = this.changeSizeOrPosition.bind(this.view.footer, 0, 950, this.view.footer.width, 50, this);
+    }
+
+    private changeSizeOrPosition(x: number, y: number, width?: number, height?: number, controller?: ContactsController){
+        if(this instanceof Panel){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.draw(controller.view.ctx);
+        }
     }
 
     private clickEffectsForButtons(button: Control){

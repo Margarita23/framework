@@ -19,8 +19,8 @@ export class MapsView extends View{
         this.mapsTitle.y = 75;
         this.mapsTitle.width = 300;
         this.mapsTitle.height = 100;
-        this.mapsTitle.backgroundColor = new Rgb(255, 255, 255);
-        this.mapsTitle.border = new Rgb(255, 255, 255);
+        this.mapsTitle.backgroundColor = null;
+        this.mapsTitle.border = null;
         this.registerControl(this.mapsTitle);
     }
 

@@ -6,6 +6,7 @@ import { MapsView } from "../views/maps-view";
 import { MapsController } from "./maps-controller";
 import { Rgb } from "../models/rgb";
 import { Control } from "../models/control";
+import { Panel } from "../models/panel";
 
 export class MainController{
 public view: MainView;
@@ -30,6 +31,18 @@ public gamer: GamerProfile;
         this.clickEffectsForButtons(this.view.contactsButtonPage);
         this.clickEffectsForButtons(this.view.playButtonPage);
         this.view.playButtonPage.mousedown = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.gamer);
+        this.view.footer.mousemove = this.changeSizeOrPosition.bind(this.view.footer, 0, 850, this.view.footer.width, 150, this);
+        this.view.footer.mouseleave = this.changeSizeOrPosition.bind(this.view.footer, 0, 950, this.view.footer.width, 50, this);
+    }
+
+    private changeSizeOrPosition(x: number, y: number, width?: number, height?: number, controller?: MainController){
+        if(this instanceof Panel){
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.draw(controller.view.ctx);
+        }
     }
 
     private clickEffectsForButtons(button: Control){
