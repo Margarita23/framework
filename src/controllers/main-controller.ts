@@ -22,7 +22,5 @@ export class MainController{
         } else {
             this.view.helloPanel.innerText.text = "Hello!";
         }
-        console.log(this.layoutController.gamer);
-
     }
 }

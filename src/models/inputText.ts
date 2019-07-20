@@ -42,5 +42,4 @@ export class InputText {
     public getText(): string{
         return this.secret ? this.secretText : this.text;
     }
-
 }

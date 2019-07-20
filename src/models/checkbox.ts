@@ -36,18 +36,4 @@ export class Checkbox extends Control {
             this.ctx.strokeRect(this.x, this.y, this.width, this.height);
         }
     }
-/*
-    public isChecked(): void {
-        this.checked = true;
-
-        
-    }
-
-    public isNotChecked(){
-        this.checked = false;
-        this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
-    }
-    */
 }

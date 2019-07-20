@@ -20,9 +20,6 @@ export class WrapperController {
         this.view = view;
         this.gamer = gamer;
 
-        console.log("gamer in WrapperController");
-        console.log(gamer);
-
         this.view.mainButtonPage.click = this.goToMainPage.bind(this.view.contactsButtonPage, this.view, this.otherView, this);
         this.view.contactsButtonPage.click = this.goToContactPage.bind(this.view.contactsButtonPage, this.view, this.otherView);
         this.view.playButtonPage.click = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.otherView);
@@ -48,7 +45,6 @@ export class WrapperController {
 
         (Application.getInstance()).unsubsrc(oldView);
         (Application.getInstance()).run(mainView);
-
         (Application.getInstance()).run(layoutView);
     }
 
@@ -59,19 +55,16 @@ export class WrapperController {
 
         (Application.getInstance()).unsubsrc(oldView);
         (Application.getInstance()).run(contactsView);
-
         (Application.getInstance()).run(layoutView);
     }
 
     private goToMapsPage(layoutView: WrapperView, oldView: View): void{
         const mapsView = new MapsView();
         const mapsContr = new MapsController(mapsView);
-        
         (Application.getInstance()).unsubsrc(layoutView);
-        
+
         (Application.getInstance()).unsubsrc(oldView);
         (Application.getInstance()).run(mapsView);
-
         (Application.getInstance()).run(layoutView);
     }
 

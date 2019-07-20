@@ -2,7 +2,6 @@ import { Control } from "../models/control";
 import { Subject } from "rxjs";
 import { Input } from "../models/input";
 import { Context } from "../models/context";
-import { Rgb } from "../models/rgb";
 
 export class View {
     public controls: Control[] = [];

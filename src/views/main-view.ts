@@ -1,6 +1,5 @@
 import { View } from "./view";
 import { Panel } from "../models/panel";
-import { Rgb } from "../models/rgb";
 
 export class MainView extends View {
     public helloPanel = new Panel;

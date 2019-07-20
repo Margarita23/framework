@@ -1,7 +1,6 @@
 import { View } from "./view";
 import { Panel } from "../models/panel";
 import { Button } from "../models/button";
-import { Rgb } from "../models/rgb";
 
 export class ContactsView extends View {
 

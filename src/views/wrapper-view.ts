@@ -14,9 +14,6 @@ export class WrapperView extends View {
         this.goToContactPage();
         this.goPlay();
         this.showFooter();
-
-        //this.ctx.strokeStyle = new Rgb(0, 0, 0).getColor();
-        //this.ctx.strokeRect(0, 0, 1000, 1000);
     }
 
     public goToMainPage(){
