@@ -1,7 +1,7 @@
 export class Rgb {
-    private red: number;
-    private green: number;
-    private blue: number;
+    private _red: number;
+    private _green: number;
+    private _blue: number;
     private alpha: number;
 
     constructor(red: number, green: number, blue: number, alpha?:number){
@@ -11,7 +11,22 @@ export class Rgb {
         this.alpha = this.setAlpha(alpha);
     }
 
-    private setColor(color: number): number {
+    get red(): number{ return this._red; }
+    set red(newRed: number) {
+        this._red = this.setColor(newRed);
+    }
+
+    get green(): number{ return this._green; }
+    set green(newGreen: number) {
+        this._green = this.setColor(newGreen);
+    }
+
+    get blue(): number{ return this._blue; }
+    set blue(newBlue: number) {
+        this._blue = this.setColor(newBlue);
+    }
+
+    public setColor(color: number): number {
         let res;
         if(color < 0) {
             res = 0;

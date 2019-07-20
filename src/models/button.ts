@@ -42,22 +42,17 @@ export class Button extends Control{
     }
 
     public getShadow(): void{
-        this.ctx.globalCompositeOperation ='source-atop';
-
         this.ctx.shadowOffsetX = 500;
         this.ctx.shadowOffsetY = 500;
-        this.ctx.shadowBlur = 10;
+        this.ctx.shadowBlur = 7;
         this.ctx.shadowColor = 'rgb(0,0,0)';
 
         this.ctx.beginPath();
         this.ctx.rect(this.x-500, this.y-500, this.width, this.height);
         this.ctx.stroke();
 
-        this.ctx.globalCompositeOperation ='source-over';
-
         this.ctx.shadowOffsetX = 0;
         this.ctx.shadowOffsetY = 0;
         this.ctx.shadowBlur = 0;
     }
-
 }

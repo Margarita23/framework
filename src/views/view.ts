@@ -41,20 +41,12 @@ export class View {
                     return;
                 case 'mouseup' :
                         if(trueControl.mouseup){
-                            trueControl.mouseup(trueControl);
+                            setTimeout(this.runAfterUpWithSlowerReaction, 400, trueControl);
                         }
                     return;
                 case 'click' :
                     if(trueControl.click){
-                        this.controls.map(c => { if(c instanceof Input){c.unfocus();}});
-                        if (trueControl instanceof Input) {
-                            (<Input>trueControl).focusOnMe();
-                            this.inputFocus = <Input>trueControl;
-                        }
-                        else{
-                            this.inputFocus = null;
-                        }
-                        trueControl.click(trueControl);
+                        setTimeout(this.runAfterClickWithSlowerReaction, 500, this, trueControl);
                     }
                     return;
                 case 'mousemove' :
@@ -69,6 +61,22 @@ export class View {
                 return;
             }
         }
+    }
+
+    private runAfterUpWithSlowerReaction(trueControl: Control){
+        trueControl.mouseup(trueControl);
+    }
+
+    private runAfterClickWithSlowerReaction(view: View, trueControl: Control){
+        view.controls.map(c => { if(c instanceof Input){c.unfocus();}});
+        if (trueControl instanceof Input) {
+            (<Input>trueControl).focusOnMe();
+            view.inputFocus = <Input>trueControl;
+        }
+        else{
+            view.inputFocus = null;
+        }
+        trueControl.click(trueControl);
     }
 
     private reactionOnKeyBoardEvent(event: KeyboardEvent): void {
