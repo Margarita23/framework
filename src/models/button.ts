@@ -22,8 +22,8 @@ export class Button extends Control{
         if(this.backgroundImage)
         {
             this.backgroundImage.onload = () => {
-                this.ctx.drawImage(this.backgroundImage, this.x, this.y, this.width, this.height);
-            };
+            this.ctx.drawImage(this.backgroundImage, this.x, this.y, this.width, this.height);
+            }
         }
         else if(this.backgroundColor)
         {
@@ -38,7 +38,9 @@ export class Button extends Control{
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.text, this.x + this.getPaddingInPx(), this.y + this.height/2, this.width - this.getPaddingInPx()*2);
+        if(this.text){
+            this.ctx.fillText(this.text, this.x + this.getPaddingInPx(), this.y + this.height/2, this.width - this.getPaddingInPx()*2);
+        }
     }
 
     public getShadow(): void{

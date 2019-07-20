@@ -60,7 +60,11 @@ export class LoginView extends View {
         submit.height = 100;
         submit.width = this.loginForm.width - 300;
         submit.parent = this.loginForm;
-        submit.text = "Submit";
+        let img = new Image();
+        img.src = require('../assets/submit-button.svg');
+        submit.backgroundImage = img;
+        submit.border = null;
+        submit.text = null;
         this.registerControl(submit);
         this.radiosGender();
     }

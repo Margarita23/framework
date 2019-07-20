@@ -15,9 +15,9 @@ export class Panel extends Control {
         super.draw(ctx);
         if(this.backgroundImage)
         {
-            this.backgroundImage.onload = () => {
-                this.ctx.drawImage(this.backgroundImage, this.x, this.y, this.width, this.height);
-            };
+            //this.backgroundImage.onload = () => {
+            //    this.ctx.drawImage(this.backgroundImage, this.x, this.y, this.width, this.height);
+            //};
         }
         else if(this.backgroundColor !== null)
         {
