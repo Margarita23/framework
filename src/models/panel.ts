@@ -40,8 +40,6 @@ export class Panel extends Control {
             this.ctx.textBaseline = "middle";
             this.ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX, this.y + this.height/2, this.width);
             this.ctx.textAlign = oldAlight;
-        } else {
-            console.log(this.innerText);
         }
     }
 }

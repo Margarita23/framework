@@ -18,6 +18,7 @@ export class Button extends Control{
 
     public draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
+
         if(this.backgroundImage)
         {
             this.backgroundImage.onload = () => {
@@ -38,6 +39,25 @@ export class Button extends Control{
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
         this.ctx.fillText(this.text, this.x + this.getPaddingInPx(), this.y + this.height/2, this.width - this.getPaddingInPx()*2);
+    }
+
+    public getShadow(): void{
+        this.ctx.globalCompositeOperation ='source-atop';
+
+        this.ctx.shadowOffsetX = 500;
+        this.ctx.shadowOffsetY = 500;
+        this.ctx.shadowBlur = 10;
+        this.ctx.shadowColor = 'rgb(0,0,0)';
+
+        this.ctx.beginPath();
+        this.ctx.rect(this.x-500, this.y-500, this.width, this.height);
+        this.ctx.stroke();
+
+        this.ctx.globalCompositeOperation ='source-over';
+
+        this.ctx.shadowOffsetX = 0;
+        this.ctx.shadowOffsetY = 0;
+        this.ctx.shadowBlur = 0;
     }
 
 }

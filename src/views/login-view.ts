@@ -4,6 +4,7 @@ import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { Panel } from "../models/panel";
 import { RadioButton } from "../models/radioButton";
+import { Rgb } from "../models/rgb";
 
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
@@ -102,4 +103,8 @@ export class LoginView extends View {
 
         this.registerControl(genderPanel);
     }
+
+    //public doAlign ()
 }
+
+type  Some = "left" | "right" | "center";

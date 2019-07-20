@@ -3,15 +3,17 @@ import { Checkbox } from "../models/checkbox";
 import { RadioButton } from "../models/radioButton";
 import { LoginView } from "../views/login-view";
 import { Application } from "../models/application";
-import { MainView } from "../views/main-view";
-import { MainController } from "./main-controller";
 import { Button } from "../models/button";
 import { Control } from "../models/control";
 import { Rgb } from "../models/rgb";
-import { Panel } from "../models/panel";
+import { WrapperController } from "./wrapper-controller";
+import { WrapperView } from "../views/wrapper-view";
+
 export class LoginController{
 
     public view: LoginView;
+    public layoutView: WrapperView;
+    public layoutController: WrapperController;
     public login: string = "";
     public password: string = "";
     public gender: string = "no gender";
@@ -34,33 +36,13 @@ export class LoginController{
             }
         });
 
-        let submit = this.view.loginForm.controls.find(c => c.name === "submit");
+        let submit = (<LoginView>this.view).loginForm.controls.find(c => c.name === "submit");
         if(submit !== null){
             submit.click = this.submitRegister.bind(submit, this);
         }
 
         let submitColor = submit.backgroundColor;
         submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); };
-
-        this.view.footer.mousemove = this.changeSizeOrPosition.bind(this.view.footer, 0, 850, this.view.footer.width, 150, this);
-        this.view.footer.mouseleave = this.changeSizeOrPosition.bind(this.view.footer, 0, 950, this.view.footer.width, 50, this);
-    }
-
-    private changeSizeOrPosition(x: number, y: number, width?: number, height?: number, controller?: LoginController){
-        if(this instanceof Panel){
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.draw(controller.view.ctx);
-        }
-    }
-
-    private goToMainPage(old: LoginView, gamer: GamerProfile): void{
-        const mainView = new MainView();
-        const mainContr = new MainController(mainView, gamer);
-        (Application.getInstance()).unsubsrc(old);
-        (Application.getInstance()).run(mainView);
     }
 
     public submitRegister(controller: LoginController): void{
@@ -74,7 +56,12 @@ export class LoginController{
                 gender: controller.gender
             };
             controller.gamer = loginForm;
-            controller.goToMainPage(controller.view, loginForm);
+
+            controller.layoutView = new WrapperView();
+            controller.layoutController = new WrapperController(controller.layoutView, controller.view, loginForm);
+            (Application.getInstance()).run(controller.layoutView);
+
+            controller.layoutController.goToMainPage(controller.layoutView, controller.view);
         }
     }
 
@@ -83,13 +70,13 @@ export class LoginController{
         if (this instanceof Checkbox){
             if(box.checked) {
                 this.checked = false;
-                (<Input>controller.view.loginForm.controls.find(c => c.name === "password" && c instanceof Input)).inputText.secret = true;
+                (<Input>(<LoginView>controller.view).loginForm.controls.find(c => c.name === "password" && c instanceof Input)).inputText.secret = true;
             } else {
                 this.checked = true;
-                (<Input>controller.view.loginForm.controls.find(c => c.name === "password" && c instanceof Input)).inputText.secret = false;
+                (<Input>(<LoginView>controller.view).loginForm.controls.find(c => c.name === "password" && c instanceof Input)).inputText.secret = false;
             }
         }
-        (<Input>controller.view.loginForm.controls.find(c => c.name === "password" && c instanceof Input)).printText();
+        (<Input>(<LoginView>controller.view).loginForm.controls.find(c => c.name === "password" && c instanceof Input)).printText();
     }
 
     public checkedMaleOrFemale(controller: LoginController): void{

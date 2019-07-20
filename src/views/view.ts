@@ -2,55 +2,14 @@ import { Control } from "../models/control";
 import { Subject } from "rxjs";
 import { Input } from "../models/input";
 import { Context } from "../models/context";
-import { Button } from "../models/button";
-import { Panel } from "../models/panel";
 import { Rgb } from "../models/rgb";
 
 export class View {
     public controls: Control[] = [];
     public inputFocus: Input = null;
-    public mainButtonPage = new Button();
-    public contactsButtonPage = new Button();
-    public playButtonPage = new Button();
-    public footer = new Panel();
     public ctx: CanvasRenderingContext2D;
 
-    constructor(){
-        this.goToContactPage();
-        this.goToMainPage();
-        this.goPlay();
-        this.showFooter();
-    }
-
-    public goToMainPage(){
-        this.mainButtonPage.text = "Main page";
-        this.registerControl(this.mainButtonPage);
-    }
-
-    public goToContactPage(){
-        this.contactsButtonPage.text = "Contacts";
-        this.contactsButtonPage.x = this.mainButtonPage.width;
-        this.contactsButtonPage.y = 0;
-        this.registerControl(this.contactsButtonPage);
-    }
-
-    public goPlay(){
-        this.playButtonPage.text = "Go to play";
-        this.playButtonPage.x = this.mainButtonPage.width*2;
-        this.playButtonPage.y = 0;
-        this.registerControl(this.playButtonPage);
-    }
-
-    public showFooter(){
-        this.footer.x = 0;
-        this.footer.y = 950;
-        this.footer.width = 1000;
-        this.footer.height = 50;
-        this.footer.innerText.text = "@WebTanks";
-        this.footer.innerText.startX = 500;
-        this.footer.innerText.align = "center";
-        this.registerControl(this.footer);
-    }
+    constructor(){}
 
     public cleanView(context: Context){
         context.ctx.clearRect(0, 0, context.width, context.height);
@@ -152,11 +111,8 @@ export class View {
 
     public draw(ctx: Context): void {
         this.ctx = ctx.ctx;
-        this.ctx.strokeStyle = new Rgb(0, 0, 0).getColor();
-        this.ctx.strokeRect(0, 0, ctx.width, ctx.height);
         this.controls.forEach(control => {
             control.draw(ctx.ctx);
         });
     }
-
 }

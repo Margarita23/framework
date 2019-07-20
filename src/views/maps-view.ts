@@ -13,7 +13,6 @@ export class MapsView extends View{
     }
 
     setPropertiesMapsTitle() {
-
         this.mapsTitle.innerText.text = "Choose maps";
         this.mapsTitle.x = 400;
         this.mapsTitle.y = 75;

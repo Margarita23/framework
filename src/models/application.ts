@@ -1,7 +1,6 @@
 import { View } from "../views/view";
 import { Context } from "./context";
 import { Subject } from "rxjs";
-import { Rgb } from "./rgb";
 
 export class Application {
     protected static instance = new Application();

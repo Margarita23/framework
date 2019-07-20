@@ -16,7 +16,7 @@ export class MainView extends View {
         this.helloPanel.width = 600;
         this.helloPanel.height = 100;
         this.helloPanel.backgroundColor = null;
-        this.helloPanel.border = new Rgb(255, 255, 255);
+        this.helloPanel.border = null;
         this.registerControl(this.helloPanel);
     }
 }
