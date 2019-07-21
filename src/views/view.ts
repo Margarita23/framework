@@ -53,20 +53,13 @@ export class View {
                     return;
                 case 'mousemove' :
                     if(trueControl.mousemove){
-
                         if(trueControl !== this.hoverControl) {
-                            if(this.hoverControl){
-                                this.controls.find(c => c.name === this.hoverControl.name).hover = false;
-                            }
                             this.hoverControl = trueControl;
-                            trueControl.hover = true;
-                        } else {
-                            trueControl.mousemove(trueControl);
                         }
-                    }
-                    else {
-                        if(this.hoverControl){
-                            this.controls.find(c => c.name === this.hoverControl.name).hover = false;
+                        trueControl.mousemove(trueControl);
+                    } else {
+                        if(this.hoverControl && this.hoverControl.mousemove && this.hoverControl.mouseover){
+                            this.hoverControl.mouseover(this.hoverControl);
                         }
                             this.hoverControl = null;
                     }

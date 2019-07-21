@@ -4,11 +4,10 @@ import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { Panel } from "../models/panel";
 import { RadioButton } from "../models/radioButton";
-import { Rgb } from "../models/rgb";
 
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
-    private submitImage: HTMLImageElement = new Image();
+    public submitImage: HTMLImageElement = new Image();
 
     constructor(){
         super();
@@ -108,6 +107,13 @@ export class LoginView extends View {
 
     public whenSubmitHover(control: Button){
         this.submitImage.src = require('../assets/submit-button-hover.svg');
+        control.backgroundImage = this.submitImage;
+        control.draw(this.ctx);
+    }
+
+    public whenSubmitNotHover(control: Button){
+        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
+        this.submitImage.src = require('../assets/submit-button.svg');
         control.backgroundImage = this.submitImage;
         control.draw(this.ctx);
     }

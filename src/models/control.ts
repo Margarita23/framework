@@ -15,7 +15,6 @@ export class Control {
     public borderLineWidth: number = 1;
     public zOrder: number = 0;
     public name: string = "no name";
-    public hover: boolean = false;
 
     public pX: number = 0;
     public pY: number = 0;
