@@ -18,6 +18,7 @@ export class LoginController{
     public password: string = "";
     public gender: string = "no gender";
     public gamer: GamerProfile;
+    public hoverControl: Control;
 
     constructor(view: LoginView){
         this.view = view;
@@ -37,12 +38,18 @@ export class LoginController{
         });
 
         let submit = (<LoginView>this.view).loginForm.controls.find(c => c.name === "submit");
-        if(submit !== null){
-            submit.click = this.submitRegister.bind(submit, this);
-        }
+
+        submit.click = this.submitRegister.bind(submit, this);
+        submit.mousemove = this.changeColor.bind(submit, this);
 
         let submitColor = submit.backgroundColor;
-        submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); };
+        submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); (<Control>submit).draw(this.view.ctx) };
+    }
+
+    public changeColor(controller: LoginController){
+        if(this instanceof Button){
+            controller.view.whenSubmitHover(this);
+        }
     }
 
     public submitRegister(controller: LoginController): void{

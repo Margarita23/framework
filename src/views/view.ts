@@ -7,15 +7,17 @@ export class View {
     public controls: Control[] = [];
     public inputFocus: Input = null;
     public ctx: CanvasRenderingContext2D;
+    public hoverControl: Control;
+    public bufferForHoverControl: Control;
 
     constructor(){}
 
     public cleanView(context: Context){
         context.ctx.clearRect(0, 0, context.width, context.height);
     }
+
     public registerControl(control: Control): void{
         this.controls.push(control);
-        this.controls.sort((a,b) => a.zOrder >= b.zOrder ? 1 : -1);
     }
 
     public setSubject(globalEvent: Subject<any>){
@@ -30,7 +32,7 @@ export class View {
 
     private reactionOnMouseEvent(event: MouseEvent): void{
         let onControls = this.controls.filter(control => this.onControl(control, event.x, event.y))
-        .sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1)
+        .sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1);
         let trueControl = onControls[0];
         if(trueControl){
             switch(event.type) {
@@ -50,15 +52,25 @@ export class View {
                     }
                     return;
                 case 'mousemove' :
-                        if(trueControl.mousemove){
+                    if(trueControl.mousemove){
+
+                        if(trueControl !== this.hoverControl) {
+                            if(this.hoverControl){
+                                this.controls.find(c => c.name === this.hoverControl.name).hover = false;
+                            }
+                            this.hoverControl = trueControl;
+                            trueControl.hover = true;
+                        } else {
                             trueControl.mousemove(trueControl);
                         }
-                    return;
-                case 'mouseover' :
-                    if(trueControl.mouseover){
-                        trueControl.mouseover(trueControl);
                     }
-                return;
+                    else {
+                        if(this.hoverControl){
+                            this.controls.find(c => c.name === this.hoverControl.name).hover = false;
+                        }
+                            this.hoverControl = null;
+                    }
+                    return;
             }
         }
     }
@@ -108,9 +120,9 @@ export class View {
 
     private onControl(control: Control, clickX: number, clickY: number): boolean{
         let res = false;
-        if ((control.x) <= clickX && control.y <= clickY &&
-            (control.x + control.width) >= clickX &&
-            (control.y + control.height) >= clickY){
+        if((control.x + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
+            (control.x + control.pX + control.width) >= clickX &&
+            (control.y + control.pY + control.height) >= clickY){
                 res = true;
         }
         return res;

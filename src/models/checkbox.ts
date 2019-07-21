@@ -15,9 +15,9 @@ export class Checkbox extends Control {
 
     draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
-        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.textBaseline = "bottom";
-        this.ctx.fillText(this.name, this.x + this.width + this.width*0.1, this.y + this.height);
+        this.ctx.fillText(this.name, this.x + this.width + this.width*0.1 + this.pX, this.y + this.height + this.pY);
     }
 
     get checked(): boolean{ return this._checked; }
@@ -26,14 +26,14 @@ export class Checkbox extends Control {
         if(this._checked){
             this.ctx.lineWidth = 5;
             this.ctx.beginPath();
-            this.ctx.moveTo(this.x + this.width*0.2, this.y + this.height*0.5);
-            this.ctx.lineTo(this.x + this.width*0.5, this.y + this.height*0.8);
-            this.ctx.lineTo(this.x + this.width*0.8, this.y + this.height*0.2);
+            this.ctx.moveTo(this.x + this.width*0.2  + this.pX, this.y + this.height*0.5 + this.pY);
+            this.ctx.lineTo(this.x + this.width*0.5  + this.pX, this.y + this.height*0.8 + this.pY);
+            this.ctx.lineTo(this.x + this.width*0.8 + this.pX, this.y + this.height*0.2 + this.pY);
             this.ctx.stroke();
         } else {
             this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-            this.ctx.fillRect(this.x, this.y, this.width, this.height);
-            this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+            this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+            this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         }
     }
 }

@@ -24,9 +24,6 @@ export class Application {
         document.addEventListener("mousemove", (evt)=>{
             subject.next(evt);
         });
-        document.addEventListener("mouseover", (evt)=>{
-            subject.next(evt);
-        });
         document.addEventListener("keydown", (evt)=>{
             subject.next(evt);
         });

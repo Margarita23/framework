@@ -1,6 +1,5 @@
 import { Rgb } from "./rgb";
 import { Control } from "./control";
-import { Panel } from "./panel";
 
 export class RadioButton extends Control {
 
@@ -27,10 +26,10 @@ export class RadioButton extends Control {
             this.ctx.fillStyle = this.fillStyle.getColor();
         }
         this.ctx.beginPath();
-        this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
+        this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
         this.ctx.textBaseline = "bottom";
-        this.ctx.fillText(this.name, this.x + this.radius*2, this.y + this.radius*2);
+        this.ctx.fillText(this.name, this.x + this.radius*2 + this.pX, this.y + this.radius*2 + this.pY);
     }
 
     get disabled(): boolean { return this._disabled; }
@@ -46,17 +45,17 @@ export class RadioButton extends Control {
                 this.setOtherRadioNotCheck(this);
                 this.ctx.fillStyle = this.fillStyle.getColor();
                 this.ctx.beginPath();
-                this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius/2, 0, 2 * Math.PI);
+                this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius/2, 0, 2 * Math.PI);
                 this.ctx.fill();
             } else {
                 this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
                 this.ctx.beginPath();
-                this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
+                this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius, 0, 2 * Math.PI);
                 this.ctx.fill();
 
                 this.ctx.fillStyle = this.fillStyle.getColor();
                 this.ctx.beginPath();
-                this.ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI);
+                this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius, 0, 2 * Math.PI);
                 this.ctx.stroke();
             }
         }

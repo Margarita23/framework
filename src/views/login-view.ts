@@ -4,9 +4,11 @@ import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { Panel } from "../models/panel";
 import { RadioButton } from "../models/radioButton";
+import { Rgb } from "../models/rgb";
 
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
+    private submitImage: HTMLImageElement = new Image();
 
     constructor(){
         super();
@@ -55,29 +57,28 @@ export class LoginView extends View {
 
         let submit = new Button();
         submit.name = "submit";
-        submit.x = 50;
-        submit.y = 450;
+        submit.x = 50; submit.y = 450;
         submit.height = 100;
         submit.width = this.loginForm.width - 300;
         submit.parent = this.loginForm;
-        let img = new Image();
-        img.src = require('../assets/submit-button.svg');
-        submit.backgroundImage = img;
+        submit.backgroundColor = null;
         submit.border = null;
         submit.text = null;
         this.registerControl(submit);
+        this.submitImage.src = require('../assets/submit-button.svg');
+        submit.backgroundImage = this.submitImage;
         this.radiosGender();
     }
 
     private radiosGender(){
         let genderPanel = new Panel();
-        genderPanel.border = null;
         genderPanel.backgroundColor = null;
         genderPanel.x = 0;
         genderPanel.y = 300;
         genderPanel.width = this.loginForm.width;
         genderPanel.parent = this.loginForm;
         genderPanel.name = "genderPanel";
+        this.registerControl(genderPanel);
 
         let radioMale = new RadioButton();
         let radioFemale = new RadioButton();
@@ -103,7 +104,11 @@ export class LoginView extends View {
         radioDog.disabled = true;
         radioDog.parent = genderPanel;
         this.registerControl(radioDog);
+    }
 
-        this.registerControl(genderPanel);
+    public whenSubmitHover(control: Button){
+        this.submitImage.src = require('../assets/submit-button-hover.svg');
+        control.backgroundImage = this.submitImage;
+        control.draw(this.ctx);
     }
 }

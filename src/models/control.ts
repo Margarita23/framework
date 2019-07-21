@@ -15,6 +15,10 @@ export class Control {
     public borderLineWidth: number = 1;
     public zOrder: number = 0;
     public name: string = "no name";
+    public hover: boolean = false;
+
+    public pX: number = 0;
+    public pY: number = 0;
     public click: (control: Control) => void;
     public mouseup: (constrol: Control) => void;
     public mousedown: (control: Control) => void;
@@ -24,15 +28,20 @@ export class Control {
 
     public draw(ctx: CanvasRenderingContext2D): void {
         this.ctx = ctx;
-        this.x = this.parent ? this.x + this.parent.x : this.x;
-        this.y = this.parent ? this.y + this.parent.y : this.y;
     }
 
     get parent(): Control { return this._parent; }
     set parent(newParent) {
         this._parent = newParent;
-        this._parent.controls.push(this);
         this.zOrder = newParent.zOrder + 1;
+
+        let parent = newParent;
+        while(parent){
+            this.pX += parent.x;
+            this.pY += parent.y;
+            parent = parent.parent;
+        }
+        this._parent.controls.push(this);
     }
 
     public getControlType(): string{

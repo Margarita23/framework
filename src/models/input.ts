@@ -32,7 +32,7 @@ export class Input extends Panel {
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.inputText.getText(), this.x + padding, this.y + this.height/2, this.width - padding*2);
+        this.ctx.fillText(this.inputText.getText(), this.x + padding + this.pX, this.y + this.height/2 + this.pY, this.width - padding*2);
     }
 
     public focusOnMe(): void {
@@ -42,11 +42,11 @@ export class Input extends Panel {
         this.ctx.lineWidth = this.borderLineWidthFocus;
         this.ctx.strokeStyle = this.borderFocus.getColor();
         this.ctx.fillStyle = this.backgroundColorFocus.getColor();
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+        this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.showText, this.x + padding, this.y + this.height/2, this.width - padding*2);
+        this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY, this.width - padding*2);
     }
 
     public unfocus(): void {
@@ -57,11 +57,11 @@ export class Input extends Panel {
         this.ctx.lineWidth = this.borderLineWidth;
         this.ctx.strokeStyle = this.border.getColor();
         this.ctx.fillStyle = this.backgroundColor.getColor();
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+        this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.showText, this.x + padding, this.y + this.height/2, this.width - padding*2);
+        this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY, this.width - padding*2);
     }
 
     public printText(){
@@ -80,11 +80,10 @@ export class Input extends Panel {
         }
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.backgroundColorFocus.getColor();
-        this.ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.ctx.strokeRect(this.x, this.y, this.width, this.height);
+        this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+        this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
-
-        this.ctx.fillText(this.showText, this.x + padding, this.y + this.height/2);
+        this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY);
     }
 }
