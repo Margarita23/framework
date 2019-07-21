@@ -25,21 +25,6 @@ export class LoginView extends View {
         this.loginForm.backgroundColor = null;
         this.registerControl(this.loginForm);
 
-        let childOverLogForm = new Button();
-        childOverLogForm.backgroundColor = new Rgb(100,20,200);
-        childOverLogForm.click = ()=>{console.log("CLIIIICK from child")};
-        childOverLogForm.x = 550;
-        childOverLogForm.y = 550;
-        childOverLogForm.parent = this.loginForm;
-        this.registerControl(childOverLogForm);
-
-        let child= new Button();
-        child.x = 300;
-        child.y = 0;
-        child.backgroundColor = new Rgb(10,100,0);
-        child.parent = this.loginForm;
-        this.registerControl(child);
-
         let login = new Input();
         let pass = new Input();
         let checkBoxShowPassword = new Checkbox();
@@ -95,13 +80,6 @@ export class LoginView extends View {
         genderPanel.name = "genderPanel";
         this.registerControl(genderPanel);
 
-        let childOverLogForm = new Button();
-        childOverLogForm.x = -10;
-        childOverLogForm.y = -10;
-        childOverLogForm.backgroundColor = new Rgb(200,0,200);
-        childOverLogForm.parent = genderPanel;
-        this.registerControl(childOverLogForm);
-
         let radioMale = new RadioButton();
         let radioFemale = new RadioButton();
         let radioDog = new RadioButton();
@@ -135,7 +113,7 @@ export class LoginView extends View {
     }
 
     public whenSubmitNotHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
+        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.pW, control.pH);
         this.submitImage.src = require('../assets/submit-button.svg');
         control.backgroundImage = this.submitImage;
         control.draw(this.ctx);
