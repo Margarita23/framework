@@ -114,8 +114,8 @@ export class View {
     private onControl(control: Control, clickX: number, clickY: number): boolean{
         let res = false;
         if((control.x + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
-            (control.x + control.pX + control.width) >= clickX &&
-            (control.y + control.pY + control.height) >= clickY){
+            (control.x + control.pX + control.pW) >= clickX &&
+            (control.y + control.pY + control.pH) >= clickY){
                 res = true;
         }
         return res;

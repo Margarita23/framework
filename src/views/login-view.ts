@@ -4,6 +4,7 @@ import { Button } from "../models/button";
 import { Checkbox } from "../models/checkbox";
 import { Panel } from "../models/panel";
 import { RadioButton } from "../models/radioButton";
+import { Rgb } from "../models/rgb";
 
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
@@ -20,9 +21,24 @@ export class LoginView extends View {
         this.loginForm.y = 200;
         this.loginForm.width = 600;
         this.loginForm.height = 600;
-        this.loginForm.border = null;
+        this.loginForm.border = new Rgb(0,0,0);
         this.loginForm.backgroundColor = null;
         this.registerControl(this.loginForm);
+
+        let childOverLogForm = new Button();
+        childOverLogForm.backgroundColor = new Rgb(100,20,200);
+        childOverLogForm.click = ()=>{console.log("CLIIIICK from child")};
+        childOverLogForm.x = 550;
+        childOverLogForm.y = 550;
+        childOverLogForm.parent = this.loginForm;
+        this.registerControl(childOverLogForm);
+
+        let child= new Button();
+        child.x = 300;
+        child.y = 0;
+        child.backgroundColor = new Rgb(10,100,0);
+        child.parent = this.loginForm;
+        this.registerControl(child);
 
         let login = new Input();
         let pass = new Input();
@@ -78,6 +94,13 @@ export class LoginView extends View {
         genderPanel.parent = this.loginForm;
         genderPanel.name = "genderPanel";
         this.registerControl(genderPanel);
+
+        let childOverLogForm = new Button();
+        childOverLogForm.x = -10;
+        childOverLogForm.y = -10;
+        childOverLogForm.backgroundColor = new Rgb(200,0,200);
+        childOverLogForm.parent = genderPanel;
+        this.registerControl(childOverLogForm);
 
         let radioMale = new RadioButton();
         let radioFemale = new RadioButton();

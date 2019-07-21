@@ -40,19 +40,11 @@ export class LoginController{
         let submit = (<LoginView>this.view).loginForm.controls.find(c => c.name === "submit");
 
         submit.click = this.submitRegister.bind(submit, this);
-        submit.mousemove = this.submitHover.bind(submit, this);
+        submit.mousemove = this.view.whenSubmitHover.bind(this.view, submit);
         submit.mouseover = this.view.whenSubmitNotHover.bind(this.view, submit);
 
         let submitColor = submit.backgroundColor;
         submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); (<Control>submit).draw(this.view.ctx) };
-    }
-
-    public submitHover(controller: LoginController){
-        if(this instanceof Button){
-            (<LoginView>controller.view).submitImage.src = require('../assets/submit-button-hover.svg');
-            this.backgroundImage = (<LoginView>controller.view).submitImage;
-            this.draw((<LoginView>controller.view).ctx);
-        }
     }
 
     public submitRegister(controller: LoginController): void{
