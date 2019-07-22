@@ -51,11 +51,21 @@ export class View {
                 }
                 return;
             case 'mousemove' :
-                if(trueControl && trueControl.mousemove){
-                    if(trueControl !== this.hoverControl) {
-                        this.hoverControl = trueControl;
+                if(trueControl){
+                    if(trueControl.mousemove){
+                        if(trueControl !== this.hoverControl) {
+                            if(this.hoverControl && this.hoverControl.mouseover){
+                                this.hoverControl.mouseover(this.hoverControl);
+                            }
+                            this.hoverControl = trueControl;
+                        }
+                        trueControl.mousemove(trueControl);
+                    } else {
+                        if(this.hoverControl && this.hoverControl.mouseover){
+                            this.hoverControl.mouseover(this.hoverControl);
+                        }
+                        this.hoverControl = null;
                     }
-                    trueControl.mousemove(trueControl);
                 } else {
                     if(this.hoverControl && this.hoverControl.mouseover){
                         this.hoverControl.mouseover(this.hoverControl);

@@ -62,23 +62,6 @@ export class WrapperView extends View {
         this.registerControl(this.footer);
     }
 
-    /*
-    public buttonHover(control: Button){
-        //if(control.text=== "Main page"){
-        //    this.mainImage.src = require('../assets/button-hover.svg');
-         //   control.backgroundImage = this.mainImage;
-        //} else {
-            control.backgroundImage.src = require('../assets/button-hover.svg');
-        //}
-        control.draw(this.ctx);
-    }
-
-    public buttonNotHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.pW, control.pH);
-        control.backgroundImage.src = require('../assets/button.svg');
-        control.draw(this.ctx);
-    }
-*/
     public controlHover(control: Button){
         let req = require('../assets/'+ control.getControlType().toLowerCase() + '-hover.svg');
         if(control.text=== "Main page"){

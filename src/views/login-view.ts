@@ -9,6 +9,7 @@ import { Rgb } from "../models/rgb";
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
     public submitImage: HTMLImageElement = new Image();
+    public submitImageFocus: HTMLImageElement = new Image();
     public loginImage: HTMLImageElement = new Image();
     public passImage: HTMLImageElement = new Image();
     public loginImageFocus: HTMLImageElement = new Image();
@@ -90,9 +91,9 @@ export class LoginView extends View {
         submit.border = null;
         submit.fillStyle = new Rgb(96,160,122);
         submit.text = "Submit";
-        this.registerControl(submit);
         this.submitImage.src = require('../assets/button.svg');
         submit.backgroundImage = this.submitImage;
+        this.registerControl(submit);
         this.radiosGender();
     }
 
