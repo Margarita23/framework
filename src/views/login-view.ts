@@ -11,6 +11,8 @@ export class LoginView extends View {
     public submitImage: HTMLImageElement = new Image();
     public loginImage: HTMLImageElement = new Image();
     public passImage: HTMLImageElement = new Image();
+    public loginImageFocus: HTMLImageElement = new Image();
+    public passImageFocus: HTMLImageElement = new Image();
 
     constructor(){
         super();
@@ -35,8 +37,17 @@ export class LoginView extends View {
         pass.x = 0; pass.y = 150;
         login.width = this.loginForm.width - 200;
         login.height = 100;
+        this.loginImageFocus.src = require("../assets/input-hover.svg");
+        login.backgroundImageFocus = this.loginImageFocus;
+        login.backgroundColorFocus = null;
+        login.borderFocus = null;
+
         pass.width = this.loginForm.width - 200;
         pass.height = 100;
+        this.passImageFocus.src = require("../assets/input-hover.svg");
+        pass.backgroundImageFocus = this.passImageFocus;
+        pass.backgroundColorFocus = null;
+        pass.borderFocus = null;
 
         login.border = null;
         login.backgroundColor = null;

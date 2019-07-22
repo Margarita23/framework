@@ -18,8 +18,7 @@ export class Button extends Control{
 
     public draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
-        if(this.backgroundImage)
-        {
+        if(this.backgroundImage){
             this.backgroundImage.onload = () => {
                 this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.pW, this.pH);
             }

@@ -42,12 +42,12 @@ export class View {
                 return;
             case 'mouseup' :
                 if( trueControl && trueControl.mouseup){
-                    setTimeout(this.runAfterUpWithSlowerReaction, 400, trueControl);
+                    setTimeout(this.runAfterUpWithSlowerReaction, 200, trueControl);
                 }
                 return;
             case 'click' :
                 if(trueControl && trueControl.click){
-                    setTimeout(this.runAfterClickWithSlowerReaction, 500, this, trueControl);
+                    setTimeout(this.runAfterClickWithSlowerReaction, 300, this, trueControl);
                 }
                 return;
             case 'mousemove' :
@@ -71,9 +71,9 @@ export class View {
     }
 
     private runAfterClickWithSlowerReaction(view: View, trueControl: Control){
-        view.controls.map(c => { if(c instanceof Input){c.unfocus();}});
+        view.controls.map(c => { if(c instanceof Input){c.unfocus() }});
         if (trueControl instanceof Input) {
-            (<Input>trueControl).focusOnMe();
+            trueControl.focusOnMe();
             view.inputFocus = <Input>trueControl;
         }
         else{
