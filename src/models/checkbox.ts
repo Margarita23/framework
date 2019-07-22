@@ -10,6 +10,7 @@ export class Checkbox extends Control {
     public name: string = "Checkbox";
     public width: number = 50;
     public height: number = 50;
+    public fillStyle: Rgb = new Rgb(0,0,0);
 
     constructor(){ super(); }
 
@@ -18,7 +19,10 @@ export class Checkbox extends Control {
         this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.textBaseline = "bottom";
         this.ctx.textAlign = "start";
+        let oldFillStyle = this.ctx.fillStyle;
+        this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.fillText(this.name, this.x + this.width + this.width*0.1 + this.pX, this.y + this.height + this.pY);
+        this.ctx.fillStyle = oldFillStyle;
     }
 
     get checked(): boolean{ return this._checked; }

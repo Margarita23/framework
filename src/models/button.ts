@@ -18,10 +18,11 @@ export class Button extends Control{
 
     public draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
+
+        this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.pW, this.pH);
+
         if(this.backgroundImage){
-            this.backgroundImage.onload = () => {
-                this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.pW, this.pH);
-            }
+            this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.pW, this.pH);
         }
         else if(this.backgroundColor)
         {
@@ -42,20 +43,5 @@ export class Button extends Control{
             this.ctx.fillText(this.text, this.x + this.pX + this.pW/2, this.y + this.pH/2 + this.pY, this.pW - this.getPaddingInPx()*2);
         }
         this.ctx.fillStyle = oldFillStyle;
-    }
-
-    public getShadow(): void{
-        this.ctx.shadowOffsetX = 500;
-        this.ctx.shadowOffsetY = 500;
-        this.ctx.shadowBlur = 7;
-        this.ctx.shadowColor = 'rgb(0,0,0)';
-
-        this.ctx.beginPath();
-        this.ctx.rect(this.x + this.pX - 500, this.y + this.pY - 500, this.pW, this.pH);
-        this.ctx.stroke();
-
-        this.ctx.shadowOffsetX = 0;
-        this.ctx.shadowOffsetY = 0;
-        this.ctx.shadowBlur = 0;
     }
 }

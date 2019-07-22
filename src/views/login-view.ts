@@ -70,6 +70,7 @@ export class LoginView extends View {
         pass.backgroundImage = this.passImage;
         pass.parent = this.loginForm;
         pass.inputText.secret = true;
+        pass.fillStyle = new Rgb(96,160,122);
         pass.name = "password";
         pass.inputText.setText("Print password...");
         this.registerControl(pass);
@@ -77,6 +78,7 @@ export class LoginView extends View {
         checkBoxShowPassword.parent = this.loginForm;
         checkBoxShowPassword.x = this.loginForm.width - 190;
         checkBoxShowPassword.y = pass.y;
+        checkBoxShowPassword. fillStyle = new Rgb(96,160,122);
         checkBoxShowPassword.name = "show";
 
         this.registerControl(checkBoxShowPassword);
@@ -93,6 +95,7 @@ export class LoginView extends View {
         submit.text = "Submit";
         this.submitImage.src = require('../assets/button.svg');
         submit.backgroundImage = this.submitImage;
+
         this.registerControl(submit);
         this.radiosGender();
     }
@@ -135,6 +138,7 @@ export class LoginView extends View {
     }
 
     public whenSubmitHover(control: Button){
+        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.pW, control.pH);
         this.submitImage.src = require('../assets/button-hover.svg');
         control.backgroundImage = this.submitImage;
         control.draw(this.ctx);

@@ -79,17 +79,15 @@ export class WrapperView extends View {
     }
 
     public controlNotHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.pW, control.pH);
-        
         let req = require('../assets/'+ control.getControlType().toLowerCase() + '.svg');
-        if(control.text=== "Main page"){
+        if(control.text === "Main page"){
             this.mainImage.src = req;
             control.backgroundImage = this.mainImage;
-        } else if(control.text=== "Contacts"){
+        } else if(control.text === "Contacts"){
             this.contactImage.src = req;
             control.backgroundImage = this.contactImage;
         }
-        else if(control.text=== "Go to play"){
+        else if(control.text === "Go to play"){
             this.goToPlayImage.src = req;
             control.backgroundImage = this.goToPlayImage;
         }

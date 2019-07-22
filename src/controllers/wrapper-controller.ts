@@ -35,20 +35,6 @@ export class WrapperController {
 
         this.view.playButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.playButtonPage);
         this.view.playButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.playButtonPage);
-
-//this.view.mainButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.mainButtonPage);
-//this.view.mainButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.mainButtonPage);
-
-
-        this.clickEffectsForButtons(this.view.mainButtonPage);
-        this.clickEffectsForButtons(this.view.contactsButtonPage);
-        this.clickEffectsForButtons(this.view.playButtonPage);
-    }
-
-    private clickEffectsForButtons(button: Button){
-        let lastColor = button.backgroundColor;
-        button.mousedown = () => { button.getShadow(); };
-        button.mouseup = () => { button.backgroundColor = lastColor; button.draw(this.view.ctx); };
     }
 
     public goToMainPage(layoutView: WrapperView, oldView: View, controller?: WrapperController): void{
