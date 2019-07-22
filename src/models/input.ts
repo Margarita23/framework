@@ -5,20 +5,23 @@ import { Rgb } from "./rgb";
 export class Input extends Panel {
 
     protected controlType: string = "Input";
-    public focus: boolean = false;
+    private _focus: boolean = false;
     public inputText: InputText = new InputText();
     private showText: string = "";
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
     public padding: number = 5;
-    public backgroundImageFocus: HTMLImageElement | null = this.backgroundImage;
-    public backgroundColorFocus: Rgb | null = new Rgb(250, 250, 250);
-    public borderFocus: Rgb | null = this.border;
-    public borderLineWidthFocus: number = 0;
+    //public backgroundImageFocus: HTMLImageElement | null = this.backgroundImage;
+    //public backgroundColorFocus: Rgb | null = new Rgb(250, 250, 250);
+    //public borderFocus: Rgb | null = this.border;
+    //public borderLineWidthFocus: number = 0;
 
     constructor(){
         super();
     }
+
+    get focus(): boolean { return this._focus; }
+    set focus(newFocus: boolean) { this._focus = newFocus; }
 
     private getPaddingInPx(): number{
         let padding = (this.padding * this.width / 100) / 2;
@@ -32,6 +35,7 @@ export class Input extends Panel {
         this.ctx.font = this.font;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
+        this.ctx.textAlign = "start";
         this.ctx.fillText(this.inputText.getText(), this.x + padding + this.pX, this.y + this.height/2 + this.pY, this.width - padding*2);
     }
 
@@ -39,14 +43,25 @@ export class Input extends Panel {
         let padding = this.getPaddingInPx();
         this.focus = true;
         this.ctx.font = this.font;
-        this.ctx.lineWidth = this.borderLineWidthFocus;
-        this.ctx.strokeStyle = this.borderFocus.getColor();
-        this.ctx.fillStyle = this.backgroundColorFocus.getColor();
-        this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
-        this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
-        this.ctx.fillStyle = this.fillStyle.getColor();
-        this.ctx.textBaseline = "middle";
-        this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY, this.width - padding*2);
+        this.ctx.lineWidth = this.borderLineWidth + 3;
+        if(this.border){
+            let newBorder = this.border;
+            newBorder.red + 50;
+            newBorder.green + 100;
+            newBorder.blue + 100;
+            this.ctx.strokeStyle = newBorder.getColor();
+        }
+        //if(this.backgroundColor){
+        //    this.ctx.fillStyle = this.backgroundColorFocus.getColor();
+        //    this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+        //    this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+        //}
+        //if(this.fillStyle){
+        //    this.ctx.fillStyle = this.fillStyle.getColor();
+        //}
+        //this.ctx.textBaseline = "middle";
+        //this.ctx.textAlign = "start";
+        //this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY, this.width - padding*2);
     }
 
     public unfocus(): void {
@@ -55,12 +70,19 @@ export class Input extends Panel {
         this.focus = false;
         this.ctx.font = this.font;
         this.ctx.lineWidth = this.borderLineWidth;
-        this.ctx.strokeStyle = this.border.getColor();
-        this.ctx.fillStyle = this.backgroundColor.getColor();
-        this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
-        this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
-        this.ctx.fillStyle = this.fillStyle.getColor();
+        if(this.border){
+            this.ctx.strokeStyle = this.border.getColor();
+        }
+        if(this.backgroundColor){
+            this.ctx.fillStyle = this.backgroundColor.getColor();
+            this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+            this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
+        }
+        if(this.fillStyle){
+            this.ctx.fillStyle = this.fillStyle.getColor();
+        }
         this.ctx.textBaseline = "middle";
+        this.ctx.textAlign = "start";
         this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY, this.width - padding*2);
     }
 
@@ -79,11 +101,12 @@ export class Input extends Panel {
             }
         }
         this.ctx.font = this.font;
-        this.ctx.fillStyle = this.backgroundColorFocus.getColor();
+        //this.ctx.fillStyle = this.backgroundColorFocus.getColor();
         this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
+        this.ctx.textAlign = "start";
         this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY);
     }
 }

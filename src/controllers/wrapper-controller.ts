@@ -27,6 +27,19 @@ export class WrapperController {
         this.view.footer.mousemove = this.changeSizeOrPosition.bind(this.view.footer, 0, 850, this.view.footer.width, 150, this);
         this.view.footer.mouseleave = this.changeSizeOrPosition.bind(this.view.footer, 0, 950, this.view.footer.width, 50, this);
 
+        this.view.mainButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.mainButtonPage);
+        this.view.mainButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.mainButtonPage);
+
+        this.view.contactsButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.contactsButtonPage);
+        this.view.contactsButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.contactsButtonPage);
+
+        this.view.playButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.playButtonPage);
+        this.view.playButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.playButtonPage);
+
+//this.view.mainButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.mainButtonPage);
+//this.view.mainButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.mainButtonPage);
+
+
         this.clickEffectsForButtons(this.view.mainButtonPage);
         this.clickEffectsForButtons(this.view.contactsButtonPage);
         this.clickEffectsForButtons(this.view.playButtonPage);

@@ -35,11 +35,14 @@ export class Button extends Control{
         };
 
         this.ctx.font = this.font;
+        let oldFillStyle = this.ctx.fillStyle;
         this.ctx.fillStyle = this.fillStyle.getColor();
         this.ctx.textBaseline = "middle";
+        this.ctx.textAlign = "center";
         if(this.text){
-            this.ctx.fillText(this.text, this.x + this.getPaddingInPx() + this.pX, this.y + this.pH/2 + this.pY, this.pW - this.getPaddingInPx()*2);
+            this.ctx.fillText(this.text, this.x + this.pX + this.pW/2, this.y + this.pH/2 + this.pY, this.pW - this.getPaddingInPx()*2);
         }
+        this.ctx.fillStyle = oldFillStyle;
     }
 
     public getShadow(): void{

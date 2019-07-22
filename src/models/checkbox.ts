@@ -17,6 +17,7 @@ export class Checkbox extends Control {
         super.draw(ctx);
         this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         this.ctx.textBaseline = "bottom";
+        this.ctx.textAlign = "start";
         this.ctx.fillText(this.name, this.x + this.width + this.width*0.1 + this.pX, this.y + this.height + this.pY);
     }
 

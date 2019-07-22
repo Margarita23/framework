@@ -34,37 +34,35 @@ export class View {
         let onControls = this.controls.filter(control => this.onControl(control, event.x, event.y))
         .sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1);
         let trueControl = onControls[0];
-        if(trueControl){
-            switch(event.type) {
-                case 'mousedown' :
-                        if(trueControl.mousedown){
-                            trueControl.mousedown(trueControl);
-                        }
-                    return;
-                case 'mouseup' :
-                        if(trueControl.mouseup){
-                            setTimeout(this.runAfterUpWithSlowerReaction, 400, trueControl);
-                        }
-                    return;
-                case 'click' :
-                    if(trueControl.click){
-                        setTimeout(this.runAfterClickWithSlowerReaction, 500, this, trueControl);
+        switch(event.type) {
+            case 'mousedown' :
+                    if(trueControl && trueControl.mousedown){
+                        trueControl.mousedown(trueControl);
                     }
-                    return;
-                case 'mousemove' :
-                    if(trueControl.mousemove){
-                        if(trueControl !== this.hoverControl) {
-                            this.hoverControl = trueControl;
-                        }
-                        trueControl.mousemove(trueControl);
-                    } else {
-                        if(this.hoverControl && this.hoverControl.mouseover){
-                            this.hoverControl.mouseover(this.hoverControl);
-                        }
-                            this.hoverControl = null;
+                return;
+            case 'mouseup' :
+                if( trueControl && trueControl.mouseup){
+                    setTimeout(this.runAfterUpWithSlowerReaction, 400, trueControl);
+                }
+                return;
+            case 'click' :
+                if(trueControl && trueControl.click){
+                    setTimeout(this.runAfterClickWithSlowerReaction, 500, this, trueControl);
+                }
+                return;
+            case 'mousemove' :
+                if(trueControl && trueControl.mousemove){
+                    if(trueControl !== this.hoverControl) {
+                        this.hoverControl = trueControl;
                     }
-                    return;
-            }
+                    trueControl.mousemove(trueControl);
+                } else {
+                    if(this.hoverControl && this.hoverControl.mouseover){
+                        this.hoverControl.mouseover(this.hoverControl);
+                    }
+                    this.hoverControl = null;
+                }
+                return;
         }
     }
 

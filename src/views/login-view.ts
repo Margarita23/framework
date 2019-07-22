@@ -9,6 +9,8 @@ import { Rgb } from "../models/rgb";
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
     public submitImage: HTMLImageElement = new Image();
+    public loginImage: HTMLImageElement = new Image();
+    public passImage: HTMLImageElement = new Image();
 
     constructor(){
         super();
@@ -21,7 +23,7 @@ export class LoginView extends View {
         this.loginForm.y = 200;
         this.loginForm.width = 600;
         this.loginForm.height = 600;
-        this.loginForm.border = new Rgb(0,0,0);
+        this.loginForm.border = null;
         this.loginForm.backgroundColor = null;
         this.registerControl(this.loginForm);
 
@@ -36,12 +38,24 @@ export class LoginView extends View {
         pass.width = this.loginForm.width - 200;
         pass.height = 100;
 
+        login.border = null;
+        login.backgroundColor = null;
+        this.loginImage.src = require("../assets/input.svg");
+        login.backgroundImage = this.loginImage;
+
+        login.border = null;
+        login.fillStyle = new Rgb(96,160,122);
+
         login.parent = this.loginForm;
         login.inputText.maxLength = 50;
         login.name = "login";
         login.inputText.setText("Print login...");
         this.registerControl(login);
 
+        pass.border = null;
+        pass.backgroundColor = null;
+        this.passImage.src = require("../assets/input.svg")
+        pass.backgroundImage = this.passImage;
         pass.parent = this.loginForm;
         pass.inputText.secret = true;
         pass.name = "password";
@@ -63,9 +77,10 @@ export class LoginView extends View {
         submit.parent = this.loginForm;
         submit.backgroundColor = null;
         submit.border = null;
-        submit.text = null;
+        submit.fillStyle = new Rgb(96,160,122);
+        submit.text = "Submit";
         this.registerControl(submit);
-        this.submitImage.src = require('../assets/submit-button.svg');
+        this.submitImage.src = require('../assets/button.svg');
         submit.backgroundImage = this.submitImage;
         this.radiosGender();
     }
@@ -77,6 +92,7 @@ export class LoginView extends View {
         genderPanel.y = 300;
         genderPanel.width = this.loginForm.width;
         genderPanel.parent = this.loginForm;
+        genderPanel.border = null;
         genderPanel.name = "genderPanel";
         this.registerControl(genderPanel);
 
@@ -107,14 +123,14 @@ export class LoginView extends View {
     }
 
     public whenSubmitHover(control: Button){
-        this.submitImage.src = require('../assets/submit-button-hover.svg');
+        this.submitImage.src = require('../assets/button-hover.svg');
         control.backgroundImage = this.submitImage;
         control.draw(this.ctx);
     }
 
     public whenSubmitNotHover(control: Button){
         this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.pW, control.pH);
-        this.submitImage.src = require('../assets/submit-button.svg');
+        this.submitImage.src = require('../assets/button.svg');
         control.backgroundImage = this.submitImage;
         control.draw(this.ctx);
     }
