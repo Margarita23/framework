@@ -1,5 +1,5 @@
-import { View } from "./view";
-import { Panel } from "../models/panel";
+import { View } from "../../models/view";
+import { Panel } from "../../controls/panel";
 
 export class MainView extends View {
     public helloPanel = new Panel;

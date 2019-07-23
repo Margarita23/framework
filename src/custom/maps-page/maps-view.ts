@@ -1,6 +1,6 @@
-import { Panel } from "../models/panel";
-import { Rgb } from "../models/rgb";
-import { View } from "./view";
+import { Panel } from "../../controls/panel";
+import { Rgb } from "../../models/rgb";
+import { View } from "../../models/view";
 
 export class MapsView extends View{
     public mapsTitle = new Panel;

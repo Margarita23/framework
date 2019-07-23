@@ -1,5 +1,5 @@
 import { Control } from "./control";
-import { Rgb } from "./rgb";
+import { Rgb } from "../models/rgb";
 
 export class Checkbox extends Control {
 
@@ -8,11 +8,13 @@ export class Checkbox extends Control {
     private _checked: boolean = false;
     public disabled: boolean = false;
     public name: string = "Checkbox";
-    public width: number = 50;
-    public height: number = 50;
     public fillStyle: Rgb = new Rgb(0,0,0);
 
-    constructor(){ super(); }
+    constructor(){
+        super();
+        this.width = 50;
+        this.height = 50;
+    }
 
     draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);

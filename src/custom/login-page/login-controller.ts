@@ -1,13 +1,13 @@
-import { Input } from "../models/input";
-import { Checkbox } from "../models/checkbox";
-import { RadioButton } from "../models/radioButton";
-import { LoginView } from "../views/login-view";
-import { Application } from "../models/application";
-import { Button } from "../models/button";
-import { Control } from "../models/control";
-import { Rgb } from "../models/rgb";
-import { WrapperController } from "./wrapper-controller";
-import { WrapperView } from "../views/wrapper-view";
+import { Input } from "../../controls/input";
+import { Checkbox } from "../../controls/checkbox";
+import { RadioButton } from "../../controls/radioButton";
+import { LoginView } from "./login-view";
+import { Application } from "../../models/application";
+import { Button } from "../../controls/button";
+import { Control } from "../../controls/control";
+import { Rgb } from "../../models/rgb";
+import { WrapperController } from "../layout/wrapper-controller";
+import { WrapperView } from "../layout/wrapper-view";
 
 export class LoginController{
 
@@ -23,15 +23,15 @@ export class LoginController{
     constructor(view: LoginView){
         this.view = view;
 
-        let checkboxShowPass = this.view.controls.find(c => c.name === "show");
+        let checkboxShowPass = this.view.loginForm.controls.find(c => c.name === "show");
         checkboxShowPass.click = this.checkedToShowPassword.bind(checkboxShowPass, this);
-        let login: Input = (<Input>this.view.controls.find(c => c.name === "login"));
+        let login: Input = <Input>this.view.login;
         login.click = login.focusOnMe;
 
-        let pass: Input = (<Input>this.view.controls.find(c => c.name === "password"));
+        let pass: Input = <Input>this.view.pass;
         pass.click = pass.focusOnMe;
 
-        this.view.controls.find(c => c.name === "genderPanel").controls.forEach(radio => {
+        this.view.genderPanel.controls.forEach(radio => {
             if(!(<RadioButton>radio).disabled){
                 radio.click = this.checkedMaleOrFemale.bind(radio, this);
             }

@@ -1,4 +1,4 @@
-import { Rgb } from "./rgb";
+import { Rgb } from "../models/rgb";
 import { Control } from "./control";
 
 export class RadioButton extends Control {
@@ -30,7 +30,10 @@ export class RadioButton extends Control {
         this.ctx.stroke();
         this.ctx.textBaseline = "bottom";
         this.ctx.textAlign = "start";
+        let oldFont = this.ctx.font;
+        this.ctx.font = this.font;
         this.ctx.fillText(this.name, this.x + this.radius*2 + this.pX, this.y + this.radius*2 + this.pY);
+        this.ctx.font = oldFont;
     }
 
     get disabled(): boolean { return this._disabled; }
@@ -42,6 +45,7 @@ export class RadioButton extends Control {
     set checked(isCheck: boolean) {
         if(!this.disabled){
             this._checked = isCheck;
+            /*
             if(isCheck){
                 this.setOtherRadioNotCheck(this);
                 this.ctx.fillStyle = this.fillStyle.getColor();
@@ -59,6 +63,11 @@ export class RadioButton extends Control {
                 this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius, 0, 2 * Math.PI);
                 this.ctx.stroke();
             }
+
+            */
+
+            console.log(this.name);
+            console.log(this._checked);
         }
     }
 

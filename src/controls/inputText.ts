@@ -6,6 +6,7 @@ export class InputText {
     private secretText: string = "";
     public align: string = "left";
     public startX: number = 0;
+    public startY: number = 0;
 
     constructor() {}
 

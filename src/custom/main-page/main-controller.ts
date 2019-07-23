@@ -1,6 +1,6 @@
-import { MainView } from "../views/main-view";
-import { WrapperView } from "../views/wrapper-view";
-import { WrapperController } from "./wrapper-controller";
+import { MainView } from "./main-view";
+import { WrapperView } from "../layout/wrapper-view";
+import { WrapperController } from "../layout/wrapper-controller";
 
 export class MainController{
 

@@ -1,5 +1,5 @@
 import { Control } from "./control";
-import { Rgb } from "./rgb";
+import { Rgb } from "../models/rgb";
 
 export class Button extends Control{
 

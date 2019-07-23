@@ -1,4 +1,4 @@
-import { ContactsView } from "../views/contacts-view";
+import { ContactsView } from "./contacts-view";
 export class ContactsController{
     public view: ContactsView;
     public gamer: GamerProfile;

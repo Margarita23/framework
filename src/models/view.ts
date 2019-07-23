@@ -1,7 +1,7 @@
-import { Control } from "../models/control";
+import { Control } from "../controls/control";
 import { Subject } from "rxjs";
-import { Input } from "../models/input";
-import { Context } from "../models/context";
+import { Input } from "../controls/input";
+import { Context } from "./context";
 
 export class View {
     public controls: Control[] = [];
@@ -17,7 +17,11 @@ export class View {
     }
 
     public registerControl(control: Control): void{
-        this.controls.push(control);
+        if(control.parent){
+            control.parent.controls.push(control);
+        } else {
+            this.controls.push(control);
+        }
     }
 
     public setSubject(globalEvent: Subject<any>){
@@ -31,9 +35,10 @@ export class View {
     }
 
     private reactionOnMouseEvent(event: MouseEvent): void{
-        let onControls = this.controls.filter(control => this.onControl(control, event.x, event.y))
-        .sort((a,b) => a.zOrder <= b.zOrder ? 1 : -1);
-        let trueControl = onControls[0];
+        let res = new Array<Control>();
+        this.searchNeededControl(res, this.controls, event.x, event.y);
+
+        let trueControl = res[res.length - 1];
         switch(event.type) {
             case 'mousedown' :
                     if(trueControl && trueControl.mousedown){
@@ -74,6 +79,20 @@ export class View {
                 }
                 return;
         }
+    }
+
+    private searchNeededControl(ret: Control[], controls: Control[], eX: number, eY: number): void{
+        controls.forEach(control => {
+            if(this.onControl(control, eX, eY)){
+                if(control.controls.length === 0){
+                    ret.pop();
+                }
+                ret.push(control);
+            }
+            if(control.controls.length !== 0){
+                this.searchNeededControl(ret, control.controls, eX, eY);
+            }
+        });
     }
 
     private runAfterUpWithSlowerReaction(trueControl: Control){
@@ -121,21 +140,23 @@ export class View {
 
     private onControl(control: Control, clickX: number, clickY: number): boolean{
         let res = false;
-        //if((control.x + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
-        //    (control.x + control.pX + control.pW) >= clickX &&
-        //    (control.y + control.pY + control.pH) >= clickY){
         if((control.x + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
             (control.x + control.pX + control.width) >= clickX &&
             (control.y + control.pY + control.height) >= clickY){
-                res = true;
+            res = true;
         }
         return res;
     }
 
-    public draw(ctx: Context): void {
+    public draw(controls: Control[], ctx: Context): void {
         this.ctx = ctx.ctx;
-        this.controls.forEach(control => {
-            control.draw(ctx.ctx);
+        controls.forEach(control => {
+            if(control.controls.length === 0){
+                control.draw(this.ctx);
+            } else {
+                this.draw(control.controls, ctx);
+            }
         });
     }
+
 }

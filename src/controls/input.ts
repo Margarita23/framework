@@ -1,6 +1,6 @@
 import { Panel } from "./panel";
 import { InputText } from "./inputText";
-import { Rgb } from "./rgb";
+import { Rgb } from "../models/rgb";
 
 export class Input extends Panel {
 

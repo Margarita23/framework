@@ -1,7 +1,7 @@
-import { View } from "./view";
-import { Panel } from "../models/panel";
-import { Button } from "../models/button";
-import { Rgb } from "../models/rgb";
+import { View } from "../../models/view";
+import { Panel } from "../../controls/panel";
+import { Button } from "../../controls/button";
+import { Rgb } from "../../models/rgb";
 
 export class WrapperView extends View {
     public mainButtonPage = new Button();
@@ -22,7 +22,7 @@ export class WrapperView extends View {
 
     public goToMainPage(){
         this.mainButtonPage.text = "Main page";
-        this.mainImage.src = require('../assets/button.svg');
+        this.mainImage.src = require('../../assets/button.svg');
         this.mainButtonPage.backgroundImage = this.mainImage;
         this.mainButtonPage.border = null;
         this.mainButtonPage.fillStyle = new Rgb(140, 205, 166);
@@ -35,7 +35,7 @@ export class WrapperView extends View {
         this.contactsButtonPage.y = 0;
         this.contactsButtonPage.fillStyle = new Rgb(140, 205, 166);
         this.contactsButtonPage.border = null;
-        this.contactImage.src = require('../assets/button.svg');
+        this.contactImage.src = require('../../assets/button.svg');
         this.contactsButtonPage.backgroundImage = this.contactImage;
         this.registerControl(this.contactsButtonPage);
     }
@@ -46,7 +46,7 @@ export class WrapperView extends View {
         this.playButtonPage.y = 0;
         this.playButtonPage.fillStyle = new Rgb(140, 205, 166);
         this.playButtonPage.border = null;
-        this.goToPlayImage.src = require('../assets/button.svg');
+        this.goToPlayImage.src = require('../../assets/button.svg');
         this.playButtonPage.backgroundImage = this.goToPlayImage;
         this.registerControl(this.playButtonPage);
     }
@@ -63,7 +63,7 @@ export class WrapperView extends View {
     }
 
     public controlHover(control: Button){
-        let req = require('../assets/'+ control.getControlType().toLowerCase() + '-hover.svg');
+        let req = require('../../assets/'+ control.getControlType().toLowerCase() + '-hover.svg');
         if(control.text=== "Main page"){
             this.mainImage.src = req;
             control.backgroundImage = this.mainImage;
@@ -79,7 +79,7 @@ export class WrapperView extends View {
     }
 
     public controlNotHover(control: Button){
-        let req = require('../assets/'+ control.getControlType().toLowerCase() + '.svg');
+        let req = require('../../assets/'+ control.getControlType().toLowerCase() + '.svg');
         if(control.text === "Main page"){
             this.mainImage.src = req;
             control.backgroundImage = this.mainImage;

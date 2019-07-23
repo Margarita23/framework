@@ -1,14 +1,14 @@
-import { WrapperView } from "../views/wrapper-view";
-import { MainView } from "../views/main-view";
-import { MainController } from "./main-controller";
-import { Application } from "../models/application";
-import { View } from "../views/view";
-import { Panel } from "../models/panel";
-import { ContactsView } from "../views/contacts-view";
-import { ContactsController } from "./contacts-controller";
-import { MapsView } from "../views/maps-view";
-import { MapsController } from "./maps-controller";
-import { Button } from "../models/button";
+import { WrapperView } from "./wrapper-view";
+import { MainView } from "../main-page/main-view";
+import { MainController } from "../main-page/main-controller";
+import { Application } from "../../models/application";
+import { View } from "../../models/view";
+import { Panel } from "../../controls/panel";
+import { ContactsView } from "../contacts-page/contacts-view";
+import { ContactsController } from "../contacts-page/contacts-controller";
+import { MapsView } from "../maps-page/maps-view";
+import { MapsController } from "../maps-page/maps-controller";
+import { Button } from "../../controls/button";
 
 export class WrapperController {
     public otherView: View;

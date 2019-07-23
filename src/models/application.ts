@@ -1,4 +1,4 @@
-import { View } from "../views/view";
+import { View } from "./view";
 import { Context } from "./context";
 import { Subject } from "rxjs";
 
@@ -40,6 +40,6 @@ export class Application {
 
     public run(view: View){
         view.setSubject(this.subject);
-        view.draw(this.ctx);
+        view.draw(view.controls, this.ctx);
     }
 }

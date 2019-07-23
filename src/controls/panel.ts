@@ -1,5 +1,5 @@
 import { Control } from "./control";
-import { Rgb } from "./rgb";
+import { Rgb } from "../models/rgb";
 import { InputText } from "./inputText";
 
 export class Panel extends Control {
@@ -38,7 +38,7 @@ export class Panel extends Control {
             let oldAlight = this.ctx.textAlign;
             this.ctx.textAlign = <CanvasTextAlign>this.innerText.align;
             this.ctx.textBaseline = "middle";
-            this.ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.height/2 + this.pY, this.width);
+            this.ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
             this.ctx.textAlign = oldAlight;
         }
     }
