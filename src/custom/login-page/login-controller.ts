@@ -82,14 +82,8 @@ export class LoginController{
     }
 
     public checkedMaleOrFemale(controller: LoginController): void{
-        let radio: RadioButton = <any>this;
         if(this instanceof RadioButton){
-            if(radio.checked) {
-                this.checked = false;
-            } else {
-                this.checked = true;
-                controller.gender = this.name;
-            }
+            this.setChecked(this, <RadioButton[]>controller.view.genderPanel.controls);
         }
     }
 }

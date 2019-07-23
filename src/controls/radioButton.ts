@@ -45,9 +45,8 @@ export class RadioButton extends Control {
     set checked(isCheck: boolean) {
         if(!this.disabled){
             this._checked = isCheck;
-            /*
             if(isCheck){
-                this.setOtherRadioNotCheck(this);
+                //this.setOtherRadioNotCheck(this);
                 this.ctx.fillStyle = this.fillStyle.getColor();
                 this.ctx.beginPath();
                 this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius/2, 0, 2 * Math.PI);
@@ -63,19 +62,16 @@ export class RadioButton extends Control {
                 this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius, 0, 2 * Math.PI);
                 this.ctx.stroke();
             }
-
-            */
-
-            console.log(this.name);
-            console.log(this._checked);
         }
     }
 
-    private setOtherRadioNotCheck(radio: RadioButton): void{
-        if(this.parent){
-            let otherRadio = radio.parent.controls.filter(r => r instanceof RadioButton && r.name !== radio.name && !r.disabled);
-            otherRadio.forEach(radio => (<RadioButton>radio).checked = false );
-        }
+    public setChecked(radio: RadioButton, radios: RadioButton[]){
+        radios.forEach(r => {
+            if(radio !== r && !r.disabled){
+                r.checked = false;
+            } else if (radio === r && radio.checked === false && !r.disabled){
+                radio.checked = true;
+            }
+        });
     }
-
 }
