@@ -100,7 +100,7 @@ export class View {
     }
 
     private runAfterClickWithSlowerReaction(view: View, trueControl: Control){
-        view.controls.map(c => { if(c instanceof Input){c.unfocus() }});
+        view.allInputUnFocus(view.controls)
         if (trueControl instanceof Input) {
             trueControl.focusOnMe();
             view.inputFocus = <Input>trueControl;
@@ -109,6 +109,17 @@ export class View {
             view.inputFocus = null;
         }
         trueControl.click(trueControl);
+    }
+
+    private allInputUnFocus(controls: Control[]){
+        controls.forEach(control => {
+            if(control instanceof Input){
+                control.unfocus();
+            }
+            if(control.controls.length !== 0){
+                this.allInputUnFocus(control.controls);
+            }
+        });
     }
 
     private reactionOnKeyBoardEvent(event: KeyboardEvent): void {
@@ -151,12 +162,10 @@ export class View {
     public draw(controls: Control[], ctx: Context): void {
         this.ctx = ctx.ctx;
         controls.forEach(control => {
-            if(control.controls.length === 0){
-                control.draw(this.ctx);
-            } else {
+            control.draw(this.ctx);
+            if(control.controls.length !== 0){
                 this.draw(control.controls, ctx);
             }
         });
     }
-
 }

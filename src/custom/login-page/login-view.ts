@@ -32,8 +32,10 @@ export class LoginView extends View {
         this.loginForm.height = 600;
         this.loginForm.border = null;
         let img = new Image();
-        img.src = require("../../assets/infoPanel.svg");
-        this.loginForm.backgroundImage = img;
+        img.src = require("../../assets/panel.svg");
+        img.onload = () => {
+            this.loginForm.backgroundImage = img;
+        }
         this.loginForm.backgroundColor = null;
         this.registerControl(this.loginForm);
 

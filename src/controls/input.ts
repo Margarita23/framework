@@ -73,7 +73,7 @@ export class Input extends Panel {
     public redrawBackOfInput(){
         this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         if(this.backgroundImage){
-            this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.pW, this.pH);
+            this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
         }else if(this.backgroundColor){
             this.ctx.fillStyle = this.backgroundColor.getColor();
             this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.pW, this.pH);

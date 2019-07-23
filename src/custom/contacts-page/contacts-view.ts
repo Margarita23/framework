@@ -5,15 +5,13 @@ import { Rgb } from "../../models/rgb";
 export class ContactsView extends View {
 
     public contactsInfo: Panel = new Panel();
-
+    
     constructor(){
         super();
         this.contactsInfoProperties();
     }
 
     private contactsInfoProperties(){
-        let image = new Image();
-        image.src = require("../../assets/infoPanel.svg");
         this.contactsInfo.x = 200;
         this.contactsInfo.y = 200;
         this.contactsInfo.width = 500;
@@ -21,7 +19,10 @@ export class ContactsView extends View {
         this.contactsInfo.fillStyle = new Rgb(0, 0, 0);
         this.contactsInfo.border = null;
         this.contactsInfo.backgroundColor = null;
-        this.contactsInfo.backgroundImage = image;
+
+        let img = new Image();
+            img.src = require('../../assets/panel.svg');
+        this.contactsInfo.backgroundImage = img;
 
         this.registerControl(this.contactsInfo);
 

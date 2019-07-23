@@ -50,7 +50,6 @@ export class Control {
         }
         this.pW = (this.x + this.width) > newParent.width ? (newParent.width - this.x) : this.width;
         this.pH = (this.y + this.height) > newParent.height ? (newParent.height - this.y) : this.height;
-        //this._parent.controls.push(this);
     }
 
     public getControlType(): string{
