@@ -34,7 +34,7 @@ export class Application {
     }
 
     public unsubsrc(oldView: View){
-        oldView.cleanView(this.ctx);
+        oldView.ctx.clearRect(0, 0, this.ctx.width, this.ctx.height);
         this.subject.observers.shift();
     }
 

@@ -46,7 +46,6 @@ export class RadioButton extends Control {
         if(!this.disabled){
             this._checked = isCheck;
             if(isCheck){
-                //this.setOtherRadioNotCheck(this);
                 this.ctx.fillStyle = this.fillStyle.getColor();
                 this.ctx.beginPath();
                 this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius/2, 0, 2 * Math.PI);

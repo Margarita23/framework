@@ -12,10 +12,6 @@ export class View {
 
     constructor(){}
 
-    public cleanView(context: Context){
-        context.ctx.clearRect(0, 0, context.width, context.height);
-    }
-
     public registerControl(control: Control): void{
         if(control.parent){
             control.parent.controls.push(control);
