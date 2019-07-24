@@ -45,6 +45,11 @@ export class LoginController{
 
         let submitColor = submit.backgroundColor;
         submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); (<Control>submit).draw(this.view.ctx) };
+        
+        
+        
+        let over = (<LoginView>this.view).loginForm.controls.find(c => c.name === "over");
+        over.click = ()=> {console.log("I`m HERE!")};
     }
 
     public submitRegister(controller: LoginController): void{

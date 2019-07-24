@@ -5,6 +5,8 @@ import { Checkbox } from "../../controls/checkbox";
 import { Panel } from "../../controls/panel";
 import { RadioButton } from "../../controls/radioButton";
 import { Rgb } from "../../models/rgb";
+import { Control } from "../../controls/control";
+import { Context } from "../../models/context";
 
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
@@ -30,14 +32,22 @@ export class LoginView extends View {
         this.loginForm.y = 200;
         this.loginForm.width = 600;
         this.loginForm.height = 600;
-        this.loginForm.border = null;
-        let img = new Image();
-        img.src = require("../../assets/panel.svg");
-        img.onload = () => {
-            this.loginForm.backgroundImage = img;
-        }
+        this.loginForm.backgroundImage = null;
         this.loginForm.backgroundColor = null;
+        this.loginForm.border = null;
         this.registerControl(this.loginForm);
+
+        let over = new Button();
+        over.name = "over";
+        over.x = 500;
+        over.y = 500;
+        over.width = 150;
+        over.height = 150;
+        over.backgroundColor = new Rgb(255, 0, 0);
+        over.parent = this.loginForm;
+        this.registerControl(over);
+
+
 
         let checkBoxShowPassword = new Checkbox();
 
@@ -145,7 +155,7 @@ export class LoginView extends View {
     }
 
     public whenSubmitHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.pW, control.pH);
+        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
         let subImage = new Image();
         subImage.src = require('../../assets/button-hover.svg');
         control.backgroundImage = subImage;
@@ -153,7 +163,7 @@ export class LoginView extends View {
     }
 
     public whenSubmitNotHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.pW, control.pH);
+        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
         let subImage = new Image();
         subImage.src = require('../../assets/button.svg');
         control.backgroundImage = subImage;

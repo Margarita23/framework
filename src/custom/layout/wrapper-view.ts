@@ -4,10 +4,10 @@ import { Button } from "../../controls/button";
 import { Rgb } from "../../models/rgb";
 
 export class WrapperView extends View {
-    public mainButtonPage = new Button();
-    public contactsButtonPage = new Button();
-    public playButtonPage = new Button();
-    public footer = new Panel();
+    public mainButtonPage: Button = new Button();
+    public contactsButtonPage: Button = new Button();
+    public playButtonPage: Button = new Button();
+    public footer: Panel = new Panel();
     public mainImage: HTMLImageElement = new Image();
     public contactImage: HTMLImageElement = new Image();
     public goToPlayImage: HTMLImageElement = new Image();

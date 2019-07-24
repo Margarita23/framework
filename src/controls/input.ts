@@ -76,25 +76,25 @@ export class Input extends Panel {
             this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
         }else if(this.backgroundColor){
             this.ctx.fillStyle = this.backgroundColor.getColor();
-            this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.pW, this.pH);
+            this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         }
         if(this.border){
             this.ctx.strokeStyle = this.border.getColor();
-            this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.pW, this.pH);
+            this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         };
     }
 
     public redrawBackOfInputFocus(){
         this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         if(this.backgroundImageFocus){
-            this.ctx.drawImage(this.backgroundImageFocus, this.x + this.pX, this.y + this.pY, this.pW, this.pH);
+            this.ctx.drawImage(this.backgroundImageFocus, this.x + this.pX, this.y + this.pY, this.width, this.height);
         }else if(this.backgroundColorFocus){
             this.ctx.fillStyle = this.backgroundColorFocus.getColor();
-            this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.pW, this.pH);
+            this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         }
         if(this.borderFocus){
             this.ctx.strokeStyle = this.borderFocus.getColor();
-            this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.pW, this.pH);
+            this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
         };
     }
 

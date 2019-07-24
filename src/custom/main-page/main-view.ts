@@ -1,8 +1,10 @@
 import { View } from "../../models/view";
 import { Panel } from "../../controls/panel";
+import { Control } from "../../controls/control";
+import { Context } from "../../models/context";
 
 export class MainView extends View {
-    public helloPanel = new Panel;
+    public helloPanel: Panel = new Panel();
 
     constructor(){
         super();

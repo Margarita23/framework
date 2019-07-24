@@ -1,12 +1,13 @@
 import { Rgb } from "../models/rgb";
+import { Panel } from "./panel";
 
 export class Control {
     protected controlType: string = "Control";
     public controls: Control[] = [];
     private _x: number = 0;
     private _y: number = 0;
-    public width: number = 150;
-    public height: number = 75;
+    private _width: number = 150;
+    private _height: number = 75;
     private _parent: Control = null;
     protected ctx: CanvasRenderingContext2D;
     public backgroundImage: HTMLImageElement = null;
@@ -18,8 +19,10 @@ export class Control {
 
     public pX: number = 0;
     public pY: number = 0;
-    public pW: number = this.width;
-    public pH: number = this.height;
+
+    public newW: number = this.width;
+    public newH: number = this.height;
+
     public click: (control: Control) => void;
     public mouseup: (constrol: Control) => void;
     public mousedown: (control: Control) => void;
@@ -31,11 +34,23 @@ export class Control {
         this.ctx = ctx;
     }
 
-    get x():number { return this._x }
-    set x(newX: number) { this._x = newX < 0 ? 0 : newX; }
+    get x():number { return this._x; }
+    set x(newX: number) { this._x = newX; }
 
-    get y():number { return this._y }
-    set y(newY: number) { this._y = newY < 0 ? 0 : newY; }
+    get y():number { return this._y; }
+    set y(newY: number) { this._y = newY; }
+
+    get width():number { return this._width; }
+    set width(newWidth: number) {
+        this._width = newWidth;
+        this.newW = newWidth;
+    }
+
+    get height():number { return this._height }
+    set height(newHeight: number) {
+        this._height = newHeight;
+        this.newH = newHeight;
+    }
 
     get parent(): Control { return this._parent; }
     set parent(newParent) {
@@ -48,8 +63,22 @@ export class Control {
             this.pY += parent.y;
             parent = parent.parent;
         }
-        this.pW = (this.x + this.width) > newParent.width ? (newParent.width - this.x) : this.width;
-        this.pH = (this.y + this.height) > newParent.height ? (newParent.height - this.y) : this.height;
+        
+        if(this.x >= newParent.newW) {
+            this.newW = 0;
+        } else if(this.x + this.width > newParent.newW){
+            this.newW = newParent.newW - this.x;
+        } else {
+            this.newW = this.width;
+        }
+  
+        if(this.y >= newParent.newH) {
+            this.newH = 0;
+        } else if(this.y + this.height > newParent.newH){
+            this.newH = newParent.newH - this.y;
+        } else {
+            this.newH = this.height;
+        }
     }
 
     public getControlType(): string{

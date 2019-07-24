@@ -3,7 +3,7 @@ import { Subject } from "rxjs";
 import { Input } from "../controls/input";
 import { Context } from "./context";
 
-export class View {
+export abstract class View {
     public controls: Control[] = [];
     public inputFocus: Input = null;
     public ctx: CanvasRenderingContext2D;
@@ -148,8 +148,8 @@ export class View {
     private onControl(control: Control, clickX: number, clickY: number): boolean{
         let res = false;
         if((control.x + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
-            (control.x + control.pX + control.width) >= clickX &&
-            (control.y + control.pY + control.height) >= clickY){
+            (control.x + control.pX + control.newW) >= clickX &&
+            (control.y + control.pY + control.newH) >= clickY){
             res = true;
         }
         return res;
