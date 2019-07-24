@@ -5,8 +5,6 @@ import { Checkbox } from "../../controls/checkbox";
 import { Panel } from "../../controls/panel";
 import { RadioButton } from "../../controls/radioButton";
 import { Rgb } from "../../models/rgb";
-import { Control } from "../../controls/control";
-import { Context } from "../../models/context";
 
 export class LoginView extends View {
     public loginForm: Panel = new Panel();

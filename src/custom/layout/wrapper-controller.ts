@@ -6,8 +6,8 @@ import { View } from "../../models/view";
 import { Panel } from "../../controls/panel";
 import { ContactsView } from "../contacts-page/contacts-view";
 import { ContactsController } from "../contacts-page/contacts-controller";
-import { MapsView } from "../maps-page/maps-view";
-import { MapsController } from "../maps-page/maps-controller";
+import { ProfilePhotoView } from "../profile-photo-page/profile-photo-view";
+import { ProfilePhotoController } from "../profile-photo-page/profile-photo-controller";
 import { Button } from "../../controls/button";
 
 export class WrapperController {
@@ -58,12 +58,12 @@ export class WrapperController {
     }
 
     private goToMapsPage(layoutView: WrapperView, oldView: View): void{
-        const mapsView = new MapsView();
-        const mapsContr = new MapsController(mapsView);
+        const profilePhotosView = new ProfilePhotoView();
+        const profilePhotosContr = new ProfilePhotoController(profilePhotosView);
         (Application.getInstance()).unsubsrc(layoutView);
 
         (Application.getInstance()).unsubsrc(oldView);
-        (Application.getInstance()).run(mapsView);
+        (Application.getInstance()).run(profilePhotosView);
         (Application.getInstance()).run(layoutView);
     }
 

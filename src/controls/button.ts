@@ -19,8 +19,8 @@ export class Button extends Control{
 
     private createNewHOLST(){
         this.canvas1.setAttribute("class", "bufferCanvas");
-        this.canvas1.width = this.width;
-        this.canvas1.height = this.height;
+        this.canvas1.width = this.newW;
+        this.canvas1.height = this.newH;
         this.ctx1 = this.canvas1.getContext("2d");
 
         //перед отрисовкой попробовать манипуляции с альфа-каналом (globalAlpha).
@@ -37,15 +37,15 @@ export class Button extends Control{
             this.ctx1.strokeStyle = this.border.getColor();
             this.ctx1.strokeRect(0, 0, this.width, this.height);
         };
+        this.ctx1.save();
         this.ctx1.font = this.font;
-        let oldFillStyle = this.ctx.fillStyle;
         this.ctx1.fillStyle = this.fillStyle.getColor();
         this.ctx1.textBaseline = "middle";
         this.ctx1.textAlign = "center";
         if(this.text){
             this.ctx1.fillText(this.text, this.width/2, this.height/2, this.width - this.getPaddingInPx()*2);
         }
-        this.ctx1.fillStyle = oldFillStyle;
+        this.ctx1.restore();
         this.cutImage = this.ctx1.getImageData(0, 0, this.newW, this.newH);
 
         this.canvas1.remove();
@@ -67,14 +67,17 @@ export class Button extends Control{
             this.createNewHOLST();
             this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             this.ctx.putImageData(this.cutImage, this.x + this.pX, this.y + this.pY);
+            return
         }
 
         if(this.newW === this.width || this.newH === this.height){
+
             this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             if(this.backgroundImage){
                 this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
             }
-            else if(this.backgroundColor)
+            
+            if(this.backgroundColor)
             {
                 this.ctx.fillStyle = this.backgroundColor.getColor();
                 this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
@@ -84,15 +87,15 @@ export class Button extends Control{
                 this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
             };
 
+            this.ctx.save();
             this.ctx.font = this.font;
-            let oldFillStyle = this.ctx.fillStyle;
             this.ctx.fillStyle = this.fillStyle.getColor();
             this.ctx.textBaseline = "middle";
             this.ctx.textAlign = "center";
             if(this.text){
                 this.ctx.fillText(this.text, this.x + this.pX + this.width/2, this.y + this.height/2 + this.pY, this.width - this.getPaddingInPx()*2);
             }
-            this.ctx.fillStyle = oldFillStyle;
+            this.ctx.restore();
         }
     }
 }

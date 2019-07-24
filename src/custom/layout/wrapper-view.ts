@@ -24,6 +24,7 @@ export class WrapperView extends View {
         this.mainButtonPage.text = "Main page";
         this.mainImage.src = require('../../assets/button.svg');
         this.mainButtonPage.backgroundImage = this.mainImage;
+        this.mainButtonPage.backgroundColor = null;
         this.mainButtonPage.border = null;
         this.mainButtonPage.fillStyle = new Rgb(140, 205, 166);
         this.registerControl(this.mainButtonPage);
@@ -36,6 +37,7 @@ export class WrapperView extends View {
         this.contactsButtonPage.fillStyle = new Rgb(140, 205, 166);
         this.contactsButtonPage.border = null;
         this.contactImage.src = require('../../assets/button.svg');
+        this.contactsButtonPage.backgroundColor = null;
         this.contactsButtonPage.backgroundImage = this.contactImage;
         this.registerControl(this.contactsButtonPage);
     }
@@ -47,6 +49,8 @@ export class WrapperView extends View {
         this.playButtonPage.fillStyle = new Rgb(140, 205, 166);
         this.playButtonPage.border = null;
         this.goToPlayImage.src = require('../../assets/button.svg');
+        this.playButtonPage.backgroundColor = null;
+
         this.playButtonPage.backgroundImage = this.goToPlayImage;
         this.registerControl(this.playButtonPage);
     }

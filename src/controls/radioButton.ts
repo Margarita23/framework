@@ -28,12 +28,12 @@ export class RadioButton extends Control {
         this.ctx.beginPath();
         this.ctx.arc(this.x + this.radius + this.pX, this.y + this.radius + this.pY, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
+        this.ctx.save();
         this.ctx.textBaseline = "bottom";
         this.ctx.textAlign = "start";
-        let oldFont = this.ctx.font;
         this.ctx.font = this.font;
         this.ctx.fillText(this.name, this.x + this.radius*2 + this.pX, this.y + this.radius*2 + this.pY);
-        this.ctx.font = oldFont;
+        this.ctx.restore();
     }
 
     get disabled(): boolean { return this._disabled; }

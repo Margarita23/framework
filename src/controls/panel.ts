@@ -1,6 +1,7 @@
 import { Control } from "./control";
 import { Rgb } from "../models/rgb";
 import { InputText } from "./inputText";
+import { Button } from "./button";
 
 export class Panel extends Control {
 
@@ -12,6 +13,11 @@ export class Panel extends Control {
     public cutImage: ImageData;
     public ctx1: CanvasRenderingContext2D;
     public canvas1 = document.createElement("canvas");
+    private _isScroll: boolean = false;
+    public fix: boolean = true;
+    public widgetVertical: Button = new Button();
+    public hiddenWidth: number = this.width;
+    public hiddenHeight: number = this.height;
 
     constructor(){ super(); }
 
@@ -32,7 +38,7 @@ export class Panel extends Control {
             if(this.backgroundImage){
                 this.backgroundImage.onload = () => {
                     this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-                };
+                }
             } else if(this.backgroundColor !== null){
                 this.ctx.fillStyle = this.backgroundColor.getColor();
                 this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
@@ -43,6 +49,16 @@ export class Panel extends Control {
                 this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             };
             this.getText();
+        }
+    }
+
+    get isScroll(){ return this._isScroll; }
+    set isScroll(scroll: boolean){
+        this._isScroll = scroll;
+        if(this._isScroll){
+            this.drawWidgetVertical(this.newW - 30, 0, 30, 30, "|");
+        } else {
+            this.drawWidgetVertical(0, 0, 0, 0, "");
         }
     }
 
@@ -66,13 +82,13 @@ export class Panel extends Control {
         };
         
         if(this.innerText && this.innerText.getText()){
+            this.ctx.save();
             this.ctx1.font = this.font;
             this.ctx1.fillStyle = this.fillStyle.getColor();
-            let oldAlight = this.ctx.textAlign;
             this.ctx1.textAlign = <CanvasTextAlign>this.innerText.align;
             this.ctx1.textBaseline = "middle";
             this.ctx1.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
-            this.ctx1.textAlign = oldAlight;
+            this.ctx.restore();
         }
         this.cutImage = this.ctx1.getImageData(0, 0, this.newW, this.newH);
         this.canvas1.remove();
@@ -80,13 +96,23 @@ export class Panel extends Control {
 
     public getText(): void{
         if(this.innerText && this.innerText.getText()){
+            this.ctx.save();
             this.ctx.font = this.font;
             this.ctx.fillStyle = this.fillStyle.getColor();
-            let oldAlight = this.ctx.textAlign;
             this.ctx.textAlign = <CanvasTextAlign>this.innerText.align;
             this.ctx.textBaseline = "middle";
             this.ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
-            this.ctx.textAlign = oldAlight;
+            this.ctx.restore();
         }
+    }
+
+    public drawWidgetVertical(x: number, y: number, width: number, height: number, text: string): void{
+            this.widgetVertical.x = x;
+            this.widgetVertical.y = y;
+            this.widgetVertical.width = width;
+            this.widgetVertical.height = height;
+            this.widgetVertical.parent = this;
+            this.widgetVertical.text = text;
+            this.widgetVertical.name = "widgetVertical";
     }
 }

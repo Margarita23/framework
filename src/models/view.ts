@@ -2,6 +2,7 @@ import { Control } from "../controls/control";
 import { Subject } from "rxjs";
 import { Input } from "../controls/input";
 import { Context } from "./context";
+import { Panel } from "../controls/panel";
 
 export abstract class View {
     public controls: Control[] = [];
@@ -9,6 +10,8 @@ export abstract class View {
     public ctx: CanvasRenderingContext2D;
     public hoverControl: Control;
     public bufferForHoverControl: Control;
+    public scrollPanel: Control;
+    public scrollWidget: Control;
 
     constructor(){}
 
@@ -50,6 +53,15 @@ export abstract class View {
                 if(trueControl && trueControl.click){
                     setTimeout(this.runAfterClickWithSlowerReaction, 300, this, trueControl);
                 }
+                if(trueControl && trueControl.parent instanceof Panel
+                    && trueControl.parent.widgetVertical === trueControl
+                    && trueControl.parent.isScroll){
+                        this.scrollWidget = trueControl;
+                        this.scrollPanel = trueControl.parent;
+                } else {
+                    this.scrollWidget = null;
+                    this.scrollPanel = null;
+                }
                 return;
             case 'mousemove' :
                 if(trueControl){
@@ -59,8 +71,10 @@ export abstract class View {
                                 this.hoverControl.mouseover(this.hoverControl);
                             }
                             this.hoverControl = trueControl;
+                            trueControl.mousemove(trueControl);
                         }
-                        trueControl.mousemove(trueControl);
+
+                        //trueControl.mousemove(trueControl); она была тут, вместо той что выше после скобки фигурной
                     } else {
                         if(this.hoverControl && this.hoverControl.mouseover){
                             this.hoverControl.mouseover(this.hoverControl);
@@ -73,6 +87,20 @@ export abstract class View {
                     }
                     this.hoverControl = null;
                 }
+
+
+
+                if(this.scrollWidget && this.scrollPanel){
+                    //trueControl.mousemove(trueControl);
+
+                    this.moveVerticalScroll(this.scrollWidget, event.y);
+
+                }
+
+
+
+
+
                 return;
         }
     }
@@ -93,6 +121,22 @@ export abstract class View {
 
     private runAfterUpWithSlowerReaction(trueControl: Control){
         trueControl.mouseup(trueControl);
+    }
+
+    private moveVerticalScroll(widget: Control, y: number): void{
+        
+        if(y <= widget.pY){
+            widget.y = 0;
+        } else if(y >= widget.pY + widget.parent.newH){
+            widget.y = widget.parent.newH - widget.newH;
+        } else if(y >= widget.pY + widget.newH && y <= widget.pY + widget.parent.newH){
+            widget.y = y - widget.pY - widget.newH;
+            
+        }
+        
+        widget.draw(this.ctx);
+            console.log( "widget.y - " + widget.y);
+            console.log( "event y - " + y);
     }
 
     private runAfterClickWithSlowerReaction(view: View, trueControl: Control){
