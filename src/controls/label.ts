@@ -8,6 +8,4 @@ export class Label extends Control{
     public startY: number = 0;
 
     constructor() { super(); }
-
-    
 }

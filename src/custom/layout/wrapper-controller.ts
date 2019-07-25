@@ -8,7 +8,6 @@ import { ContactsView } from "../contacts-page/contacts-view";
 import { ContactsController } from "../contacts-page/contacts-controller";
 import { ProfilePhotoView } from "../profile-photo-page/profile-photo-view";
 import { ProfilePhotoController } from "../profile-photo-page/profile-photo-controller";
-import { Button } from "../../controls/button";
 
 export class WrapperController {
     public otherView: View;
@@ -23,9 +22,6 @@ export class WrapperController {
         this.view.mainButtonPage.click = this.goToMainPage.bind(this.view.contactsButtonPage, this.view, this.otherView, this);
         this.view.contactsButtonPage.click = this.goToContactPage.bind(this.view.contactsButtonPage, this.view, this.otherView);
         this.view.playButtonPage.click = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.otherView);
-
-        this.view.footer.mousemove = this.changeSizeOrPosition.bind(this.view.footer, 0, 850, this.view.footer.width, 150, this);
-        this.view.footer.mouseleave = this.changeSizeOrPosition.bind(this.view.footer, 0, 950, this.view.footer.width, 50, this);
 
         this.view.mainButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.mainButtonPage);
         this.view.mainButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.mainButtonPage);
@@ -65,15 +61,5 @@ export class WrapperController {
         (Application.getInstance()).unsubsrc(oldView);
         (Application.getInstance()).run(profilePhotosView);
         (Application.getInstance()).run(layoutView);
-    }
-
-    public changeSizeOrPosition(x: number, y: number, width?: number, height?: number, controller?: WrapperController){
-        if(this instanceof Panel){
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.draw(controller.view.ctx);
-        }
     }
 }

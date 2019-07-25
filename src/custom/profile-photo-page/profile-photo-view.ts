@@ -9,11 +9,11 @@ export class ProfilePhotoView extends View{
     constructor(){
         super();
         let profilePageTitle = new Panel();
-        this.setPropertiesMapsTitle(profilePageTitle);
-        this.setMapsContainerProperties();
+        this.setPropertiesTitle(profilePageTitle);
+        this.setContainerProperties();
     }
 
-    setPropertiesMapsTitle(profilePageTitle: Panel) {
+    setPropertiesTitle(profilePageTitle: Panel) {
         profilePageTitle.innerText.text = "Choose maps";
         profilePageTitle.x = 400;
         profilePageTitle.y = 75;
@@ -24,7 +24,7 @@ export class ProfilePhotoView extends View{
         this.registerControl(profilePageTitle);
     }
 
-    private setMapsContainerProperties(){
+    public setContainerProperties(){
         this.photosContainer.x = 25;
         this.photosContainer.y = 200;
         this.photosContainer.width = 950;
@@ -32,6 +32,7 @@ export class ProfilePhotoView extends View{
         this.photosContainer.name = "mapsContainer";
         this.photosContainer.backgroundColor = new Rgb(255,255,0, 0.5);
         this.photosContainer.isScroll = true;
+        this.photosContainer.wholeHeight = 1500;
         this.registerControl(this.photosContainer.widgetVertical);
         this.registerControl(this.photosContainer);
 
@@ -62,8 +63,21 @@ export class ProfilePhotoView extends View{
                 photo.backgroundImage = im;
             }
         }
-        photo.name = "i = " + i + "; j = " + j;
+        photo.name = "photo" + i + j;
+        photo.text = photo.name;
         photo.parent = this.photosContainer;
         this.registerControl(photo);
+    }
+
+    public whenPhotoHover(control: Button){
+        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
+        let subImage = new Image();
+        subImage.src = require('../../assets/' + control.name + '.svg');
+        control.backgroundImage = subImage;
+        control.backgroundColor = new Rgb(255, 200, 200);
+        subImage.onload = () =>{
+            control.backgroundImage = control.backgroundImage;
+        }
+        control.draw(this.ctx);
     }
 }

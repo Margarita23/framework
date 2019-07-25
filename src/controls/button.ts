@@ -74,9 +74,10 @@ export class Button extends Control{
 
             this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             if(this.backgroundImage){
-                this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
+                this.backgroundImage.onload = () => {
+                    this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
+                }
             }
-            
             if(this.backgroundColor)
             {
                 this.ctx.fillStyle = this.backgroundColor.getColor();

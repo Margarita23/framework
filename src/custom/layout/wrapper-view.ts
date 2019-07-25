@@ -70,10 +70,14 @@ export class WrapperView extends View {
         let req = require('../../assets/'+ control.getControlType().toLowerCase() + '-hover.svg');
         if(control.text=== "Main page"){
             this.mainImage.src = req;
-            control.backgroundImage = this.mainImage;
+            this.mainImage.onload = () => {
+                control.backgroundImage = this.mainImage;
+            }
         } else if(control.text=== "Contacts"){
             this.contactImage.src = req;
-            control.backgroundImage = this.contactImage;
+            this.contactImage.onload = () => {
+                control.backgroundImage = this.contactImage;
+            }
         }
         else if(control.text=== "Go to play"){
             this.goToPlayImage.src = req;
@@ -86,7 +90,10 @@ export class WrapperView extends View {
         let req = require('../../assets/'+ control.getControlType().toLowerCase() + '.svg');
         if(control.text === "Main page"){
             this.mainImage.src = req;
-            control.backgroundImage = this.mainImage;
+            this.mainImage.onload = () => {
+                control.backgroundImage = this.mainImage;
+
+            }
         } else if(control.text === "Contacts"){
             this.contactImage.src = req;
             control.backgroundImage = this.contactImage;

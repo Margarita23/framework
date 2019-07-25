@@ -80,16 +80,7 @@ export class Control {
             this.newH = this.height;
         }
     }
-/*
-    get backgroundImage():HTMLImageElement { return this._backgroundImage; }
-    set backgroundImage(newGroundImage: HTMLImageElement) {
-        if(newGroundImage !== null) {
-            newGroundImage.onload = () => {
-                this._backgroundImage = newGroundImage;
-            }
-        }
-    }
-*/
+
     public getControlType(): string{
         return this.controlType;
     }

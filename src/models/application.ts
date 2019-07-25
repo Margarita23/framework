@@ -40,6 +40,6 @@ export class Application {
 
     public run(view: View){
         view.setSubject(this.subject);
-        view.draw(view.controls, this.ctx);
+        view.draw(view.controls, this.ctx.ctx);
     }
 }

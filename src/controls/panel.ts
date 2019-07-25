@@ -16,13 +16,21 @@ export class Panel extends Control {
     private _isScroll: boolean = false;
     public fix: boolean = true;
     public widgetVertical: Button = new Button();
-    public hiddenWidth: number = this.width;
-    public hiddenHeight: number = this.height;
+    public wholeWidth: number = this.width;
+    public wholeHeight: number = this.height;
 
     constructor(){ super(); }
 
     public draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
+
+        if(this.isScroll){
+            this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
+            this.ctx.fillRect(this.newW - this.widgetVertical.newW + this.widgetVertical.pX, this.y + this.pY , this.widgetVertical.newW, this.newH);
+            this.ctx.strokeStyle = (new Rgb(0,0,0)).getColor();
+            this.ctx.strokeRect(this.newW - this.widgetVertical.newW + this.widgetVertical.pX, this.y + this.pY , this.widgetVertical.newW, this.newH);
+        }
+        
 
         if(this.newW === 0 || this.newH === 0){
             return
@@ -68,13 +76,13 @@ export class Panel extends Control {
         this.ctx1 = this.canvas1.getContext("2d");
 
         //перед отрисовкой попробовать манипуляции с альфа-каналом (globalAlpha).
-        if(this.backgroundImage){
-            this.ctx1.drawImage(this.backgroundImage, 0, 0, this.width, this.height);
-        }
-        else if(this.backgroundColor)
+        if(this.backgroundColor)
         {
             this.ctx1.fillStyle = this.backgroundColor.getColor();
             this.ctx1.fillRect(0, 0, this.width, this.height);
+        }
+        if(this.backgroundImage){
+            this.ctx1.drawImage(this.backgroundImage, 0, 0, this.width, this.height);
         }
         if(this.border){
             this.ctx1.strokeStyle = this.border.getColor();
@@ -107,12 +115,12 @@ export class Panel extends Control {
     }
 
     public drawWidgetVertical(x: number, y: number, width: number, height: number, text: string): void{
-            this.widgetVertical.x = x;
-            this.widgetVertical.y = y;
-            this.widgetVertical.width = width;
-            this.widgetVertical.height = height;
-            this.widgetVertical.parent = this;
-            this.widgetVertical.text = text;
-            this.widgetVertical.name = "widgetVertical";
+        this.widgetVertical.x = x;
+        this.widgetVertical.y = y;
+        this.widgetVertical.width = width;
+        this.widgetVertical.height = height;
+        this.widgetVertical.parent = this;
+        this.widgetVertical.text = text;
+        this.widgetVertical.name = "widgetVertical";
     }
 }
