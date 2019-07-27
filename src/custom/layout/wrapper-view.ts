@@ -8,9 +8,7 @@ export class WrapperView extends View {
     public contactsButtonPage: Button = new Button();
     public playButtonPage: Button = new Button();
     public footer: Panel = new Panel();
-    public mainImage: HTMLImageElement = new Image();
-    public contactImage: HTMLImageElement = new Image();
-    public goToPlayImage: HTMLImageElement = new Image();
+    public images: Map<string, HTMLImageElement> = new Map();
 
     constructor(){
         super();
@@ -22,8 +20,7 @@ export class WrapperView extends View {
 
     public goToMainPage(){
         this.mainButtonPage.text = "Main page";
-        this.mainImage.src = require('../../assets/button.svg');
-        this.mainButtonPage.backgroundImage = this.mainImage;
+        this.mainButtonPage.backgroundImage = this.images.get("main");
         this.mainButtonPage.backgroundColor = null;
         this.mainButtonPage.border = null;
         this.mainButtonPage.fillStyle = new Rgb(140, 205, 166);
@@ -36,22 +33,19 @@ export class WrapperView extends View {
         this.contactsButtonPage.y = 0;
         this.contactsButtonPage.fillStyle = new Rgb(140, 205, 166);
         this.contactsButtonPage.border = null;
-        this.contactImage.src = require('../../assets/button.svg');
         this.contactsButtonPage.backgroundColor = null;
-        this.contactsButtonPage.backgroundImage = this.contactImage;
+        this.contactsButtonPage.backgroundImage = this.images.get("contact");
         this.registerControl(this.contactsButtonPage);
     }
 
     public goPlay(){
-        this.playButtonPage.text = "Go to play";
+        this.playButtonPage.text = "Photo";
         this.playButtonPage.x = this.mainButtonPage.width*2;
         this.playButtonPage.y = 0;
         this.playButtonPage.fillStyle = new Rgb(140, 205, 166);
         this.playButtonPage.border = null;
-        this.goToPlayImage.src = require('../../assets/button.svg');
         this.playButtonPage.backgroundColor = null;
-
-        this.playButtonPage.backgroundImage = this.goToPlayImage;
+        this.playButtonPage.backgroundImage = this.images.get("photo");
         this.registerControl(this.playButtonPage);
     }
 
@@ -67,41 +61,31 @@ export class WrapperView extends View {
     }
 
     public controlHover(control: Button){
-        let req = require('../../assets/'+ control.getControlType().toLowerCase() + '-hover.svg');
+        control.fillStyle = new Rgb(0, 55, 26);
         if(control.text=== "Main page"){
-            this.mainImage.src = req;
-            this.mainImage.onload = () => {
-                control.backgroundImage = this.mainImage;
-            }
+            control.backgroundImage = this.images.get("main-hover");
         } else if(control.text=== "Contacts"){
-            this.contactImage.src = req;
-            this.contactImage.onload = () => {
-                control.backgroundImage = this.contactImage;
-            }
+            control.backgroundImage = this.images.get("contact-hover");
         }
-        else if(control.text=== "Go to play"){
-            this.goToPlayImage.src = req;
-            control.backgroundImage = this.goToPlayImage;
+        else if(control.text=== "Photo"){
+            control.backgroundImage = this.images.get("photo-hover");
         }
+        console.log(control.backgroundImage);
+
         control.draw(this.ctx);
     }
 
     public controlNotHover(control: Button){
-        let req = require('../../assets/'+ control.getControlType().toLowerCase() + '.svg');
+        this.playButtonPage.fillStyle = new Rgb(140, 205, 166);
         if(control.text === "Main page"){
-            this.mainImage.src = req;
-            this.mainImage.onload = () => {
-                control.backgroundImage = this.mainImage;
-
-            }
+            control.backgroundImage = this.images.get("main");
         } else if(control.text === "Contacts"){
-            this.contactImage.src = req;
-            control.backgroundImage = this.contactImage;
+            control.backgroundImage = this.images.get("contact");
         }
-        else if(control.text === "Go to play"){
-            this.goToPlayImage.src = req;
-            control.backgroundImage = this.goToPlayImage;
+        else if(control.text === "Photo"){
+            control.backgroundImage = this.images.get("photo");
         }
+        console.log(control.backgroundImage);
         control.draw(this.ctx);
     }
 }

@@ -3,7 +3,7 @@ import { Rgb } from "../models/rgb";
 
 export class Checkbox extends Control {
 
-    protected controlType: string = "Checkbox";
+    readonly controlType: string = "Checkbox";
     public autofocus: boolean = false;
     private _checked: boolean = false;
     public disabled: boolean = false;

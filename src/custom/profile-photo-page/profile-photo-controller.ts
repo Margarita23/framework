@@ -1,12 +1,21 @@
 import { ProfilePhotoView } from "./profile-photo-view";
 import { Button } from "../../controls/button";
 import { Panel } from "../../controls/panel";
+import { WrapperController } from "../layout/wrapper-controller";
+
 export class ProfilePhotoController {
     public view: ProfilePhotoView;
     public gamer: GamerProfile;
 
-    constructor(view: ProfilePhotoView){
+    constructor(view: ProfilePhotoView, layoutController: WrapperController){
         this.view = view;
+        //this.view.draw(this.view.photosContainer.controls, this.view.ctx);
+
+        let gamer = layoutController.gamer;
+        if(gamer){
+            this.gamer = gamer;
+        }
+
         this.view.photosContainer.widgetVertical.click = this.scrollVerticalWidget.bind(this.view.photosContainer.widgetVertical);
         for(let i = 0; i < this.view.photosContainer.controls.length; i++){
             if(this.view.photosContainer.controls[i].name.includes("photo")){
@@ -14,9 +23,9 @@ export class ProfilePhotoController {
                 this.view.photosContainer.controls[i].mousemove = this.view.whenPhotoHover.bind(this.view, this.view.photosContainer.controls[i]);
             }
         }
-        //this.view.photosContainer.controls.forEach((c, index) => {
-        //    c.click = this.showPhotos.bind(c, index, this);
-        //});
+        this.view.photosContainer.controls.forEach((c, index) => {
+            c.click = this.showPhotos.bind(c, index, this);
+        });
     }
 
     private scrollVerticalWidget(): void{
@@ -25,7 +34,7 @@ export class ProfilePhotoController {
         }
     }
 
-    private showPhotos(photo: Panel, index: number, controller: ProfilePhotoController){
+    private showPhotos(index: number, controller: ProfilePhotoController){
         let buffPanel = new Panel();
 
         buffPanel.x = 175;
@@ -33,12 +42,10 @@ export class ProfilePhotoController {
         buffPanel.width = 750;
         buffPanel.height = 600;
 
-        console.log(photo);
-        //buffPanel.parent = photo.parent;
-        console.log(controller);
-
-        //controller.view.registerControl(buffPanel);
-        console.log(photo.name);
+        if(this instanceof Button){
+            controller.gamer.photo = this.name;
+            controller.view.profilePageTitle.innerText.text = this.name;
+        }
+        let p = controller.view.profilePageTitle;
     }
-
 }

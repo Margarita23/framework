@@ -93,7 +93,6 @@ export abstract class View {
                 if(this.scrollWidget && this.scrollPanel){
                     this.moveVerticalScroll(this.scrollWidget, event.y);
                 }
-
                 return;
         }
     }
@@ -142,7 +141,7 @@ export abstract class View {
         this.createNewHOLST(parent, newPanelY);
         this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
         this.ctx.putImageData(this.cutImage, parent.x + parent.pX, parent.y + parent.pY);
-        
+
         this.ctx.save();
         this.ctx.lineWidth = 5;
         this.ctx.strokeStyle = new Rgb(0,0,0).getColor();
@@ -164,7 +163,7 @@ export abstract class View {
         if(control.backgroundImage){
             this.ctx1.drawImage(control.backgroundImage, 0, 0, control.width, (<Panel>control).wholeHeight);
         }
-        
+
         if(control.border){
             this.ctx1.strokeStyle = control.border.getColor();
             this.ctx1.strokeRect(0, 0, control.width, (<Panel>control).wholeHeight);
@@ -177,9 +176,9 @@ export abstract class View {
         control.newH = cH;
 
         this.cutImage = this.ctx1.getImageData(0, newPanelY, control.newW, (<Panel>control).newH);
-        console.log("newPanelY");
-        console.log(newPanelY);
-        console.log(this.cutImage);
+        //console.log("newPanelY");
+        //console.log(newPanelY);
+        //console.log(this.cutImage);
         this.canvas1.remove();
     }
 
@@ -217,7 +216,9 @@ export abstract class View {
         let res = false;
         if(e.key !== "Tab" && e.key !== "Shift" && e.key !== "CapsLock" &&
             e.key !== "Control" && e.key !== "Alt" && e.key !== "Meta" &&
-            e.key !== "Enter" && e.key !== "Escape" && e.key !== "Unidentified"){
+            e.key !== "Enter" && e.key !== "Escape" && e.key !== "Unidentified" &&
+            e.key !== "ArrowLeft" && e.key !== "ArrowRight" && e.key !== "ArrowUp" &&
+            e.key !== "ArrowDown"){
             res =true;
         }
         return res;

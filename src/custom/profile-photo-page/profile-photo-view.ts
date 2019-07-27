@@ -5,30 +5,30 @@ import { Button } from "../../controls/button";
 
 export class ProfilePhotoView extends View{
     public photosContainer: Panel = new Panel();
+    public profilePageTitle: Panel = new Panel();
 
     constructor(){
         super();
-        let profilePageTitle = new Panel();
-        this.setPropertiesTitle(profilePageTitle);
+        this.setPropertiesTitle();
         this.setContainerProperties();
     }
 
-    setPropertiesTitle(profilePageTitle: Panel) {
-        profilePageTitle.innerText.text = "Choose maps";
-        profilePageTitle.x = 400;
-        profilePageTitle.y = 75;
-        profilePageTitle.width = 300;
-        profilePageTitle.height = 100;
-        profilePageTitle.backgroundColor = null;
-        profilePageTitle.border = null;
-        this.registerControl(profilePageTitle);
+    setPropertiesTitle() {
+        this.profilePageTitle.innerText.text = "Choose photo";
+        this.profilePageTitle.x = 400;
+        this.profilePageTitle.y = 75;
+        this.profilePageTitle.width = 300;
+        this.profilePageTitle.height = 100;
+        this.profilePageTitle.backgroundColor = null;
+        this.profilePageTitle.border = null;
+        this.registerControl(this.profilePageTitle);
     }
 
     public setContainerProperties(){
         this.photosContainer.x = 25;
         this.photosContainer.y = 200;
         this.photosContainer.width = 950;
-        this.photosContainer.height = 600;
+        this.photosContainer.height = 800;
         this.photosContainer.name = "mapsContainer";
         this.photosContainer.backgroundColor = new Rgb(255,255,0, 0.5);
         this.photosContainer.isScroll = true;
@@ -49,19 +49,13 @@ export class ProfilePhotoView extends View{
         photo.y = 300*j + 50;
         photo.width = 250;
         photo.height = 250;
+        let im = new Image();
         try {
-            let im = new Image();
             im.src = require("../../assets/photo"+ i + j + ".svg");
-            im.onload = () => {
-                photo.backgroundImage = im;
-            }
-        } catch (error) {
-            let im = new Image();
-            im.src = require("../../assets/no-photo.svg");
             photo.backgroundImage = im;
-            im.onload = () => {
+        } catch (error) {
+            im.src  = require("../../assets/no-photo.svg");
                 photo.backgroundImage = im;
-            }
         }
         photo.name = "photo" + i + j;
         photo.text = photo.name;
@@ -70,14 +64,10 @@ export class ProfilePhotoView extends View{
     }
 
     public whenPhotoHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
         let subImage = new Image();
         subImage.src = require('../../assets/' + control.name + '.svg');
         control.backgroundImage = subImage;
         control.backgroundColor = new Rgb(255, 200, 200);
-        subImage.onload = () =>{
-            control.backgroundImage = control.backgroundImage;
-        }
         control.draw(this.ctx);
     }
 }

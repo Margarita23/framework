@@ -5,7 +5,8 @@ import { Rgb } from "../../models/rgb";
 export class ContactsView extends View {
 
     public contactsInfo: Panel = new Panel();
-    
+    public images: Map<string, HTMLImageElement> = new Map();
+
     constructor(){
         super();
         this.contactsInfoProperties();
@@ -20,9 +21,7 @@ export class ContactsView extends View {
         this.contactsInfo.border = null;
         this.contactsInfo.backgroundColor = null;
 
-        let img = new Image();
-            img.src = require('../../assets/panel.svg');
-        this.contactsInfo.backgroundImage = img;
+        this.contactsInfo.backgroundImage = this.images.get("contacts-panel");
 
         this.registerControl(this.contactsInfo);
 

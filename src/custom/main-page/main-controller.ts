@@ -15,12 +15,23 @@ export class MainController{
         this.layoutView = layoutController.view;
 
         let gamer = this.layoutController.gamer;
-
         if(gamer){
             this.gamer = gamer;
             this.view.helloPanel.innerText.text = "Hello, " + this.gamer.login + " !";
+        
+        
         } else {
             this.view.helloPanel.innerText.text = "Hello!";
         }
+            let photo = new Image();
+        try {
+            
+            photo.src = require("../../assets/" + gamer.photo + ".svg");
+            this.view.images.set(gamer.photo, photo);
+        } catch (error) {
+            photo.src = require("../../assets/no-photo.svg");
+            this.view.images.set("no-photo", photo);
+        }
+        this.view.photo.backgroundImage = photo;
     }
 }

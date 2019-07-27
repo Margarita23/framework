@@ -3,7 +3,6 @@ import { MainView } from "../main-page/main-view";
 import { MainController } from "../main-page/main-controller";
 import { Application } from "../../models/application";
 import { View } from "../../models/view";
-import { Panel } from "../../controls/panel";
 import { ContactsView } from "../contacts-page/contacts-view";
 import { ContactsController } from "../contacts-page/contacts-controller";
 import { ProfilePhotoView } from "../profile-photo-page/profile-photo-view";
@@ -21,7 +20,7 @@ export class WrapperController {
 
         this.view.mainButtonPage.click = this.goToMainPage.bind(this.view.contactsButtonPage, this.view, this.otherView, this);
         this.view.contactsButtonPage.click = this.goToContactPage.bind(this.view.contactsButtonPage, this.view, this.otherView);
-        this.view.playButtonPage.click = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.otherView);
+        this.view.playButtonPage.click = this.goToMapsPage.bind(this.view.contactsButtonPage, this.view, this.otherView, this);
 
         this.view.mainButtonPage.mousemove = this.view.controlHover.bind(this.view, this.view.mainButtonPage);
         this.view.mainButtonPage.mouseover = this.view.controlNotHover.bind(this.view, this.view.mainButtonPage);
@@ -53,9 +52,9 @@ export class WrapperController {
         (Application.getInstance()).run(layoutView);
     }
 
-    private goToMapsPage(layoutView: WrapperView, oldView: View): void{
+    private goToMapsPage(layoutView: WrapperView, oldView: View, controller: WrapperController): void{
         const profilePhotosView = new ProfilePhotoView();
-        const profilePhotosContr = new ProfilePhotoController(profilePhotosView);
+        const profilePhotosContr = new ProfilePhotoController(profilePhotosView, controller);
         (Application.getInstance()).unsubsrc(layoutView);
 
         (Application.getInstance()).unsubsrc(oldView);

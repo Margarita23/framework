@@ -3,7 +3,7 @@ import { Control } from "./control";
 
 export class RadioButton extends Control {
 
-    protected controlType: string = "RadioButton";
+    readonly controlType: string = "RadioButton";
     public autofocus: boolean = false;
     public _checked: boolean = false;
     private _disabled: boolean = false;

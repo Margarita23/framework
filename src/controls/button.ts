@@ -3,27 +3,18 @@ import { Rgb } from "../models/rgb";
 
 export class Button extends Control{
 
-    protected controlType: string = "Button";
+    readonly controlType: string = "Button";
     public text: string = "Button";
     public padding: number = 10;
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
 
-    public cutImage: ImageData;
-    public ctx1: CanvasRenderingContext2D;
-    public canvas1 = document.createElement("canvas");
-
-    constructor(){
-        super();
-    }
+    constructor(){ super(); }
 
     private createNewHOLST(){
-        this.canvas1.setAttribute("class", "bufferCanvas");
         this.canvas1.width = this.newW;
         this.canvas1.height = this.newH;
         this.ctx1 = this.canvas1.getContext("2d");
-
-        //перед отрисовкой попробовать манипуляции с альфа-каналом (globalAlpha).
 
         if(this.backgroundImage){
             this.ctx1.drawImage(this.backgroundImage, 0, 0, this.width, this.height);
@@ -71,15 +62,11 @@ export class Button extends Control{
         }
 
         if(this.newW === this.width || this.newH === this.height){
-
             this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             if(this.backgroundImage){
-                this.backgroundImage.onload = () => {
-                    this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
-                }
+                this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
             }
-            if(this.backgroundColor)
-            {
+            if(this.backgroundColor){
                 this.ctx.fillStyle = this.backgroundColor.getColor();
                 this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.width, this.height);
             }
@@ -93,9 +80,12 @@ export class Button extends Control{
             this.ctx.fillStyle = this.fillStyle.getColor();
             this.ctx.textBaseline = "middle";
             this.ctx.textAlign = "center";
+            console.log(this.ctx.fillStyle);
+            console.log(this.backgroundImage);
             if(this.text){
                 this.ctx.fillText(this.text, this.x + this.pX + this.width/2, this.y + this.height/2 + this.pY, this.width - this.getPaddingInPx()*2);
             }
+
             this.ctx.restore();
         }
     }

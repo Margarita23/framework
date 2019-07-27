@@ -5,9 +5,9 @@ import { LoginView } from "./login-view";
 import { Application } from "../../models/application";
 import { Button } from "../../controls/button";
 import { Control } from "../../controls/control";
-import { Rgb } from "../../models/rgb";
 import { WrapperController } from "../layout/wrapper-controller";
 import { WrapperView } from "../layout/wrapper-view";
+import { Rgb } from "../../models/rgb";
 
 export class LoginController{
 
@@ -17,6 +17,7 @@ export class LoginController{
     public login: string = "";
     public password: string = "";
     public gender: string = "no gender";
+    public photo: string = "no-photo";
     public gamer: GamerProfile;
     public hoverControl: Control;
 
@@ -40,14 +41,9 @@ export class LoginController{
         let submit = (<LoginView>this.view).loginForm.controls.find(c => c.name === "submit");
 
         submit.click = this.submitRegister.bind(submit, this);
-        submit.mousemove = this.view.whenSubmitHover.bind(this.view, submit);
-        submit.mouseover = this.view.whenSubmitNotHover.bind(this.view, submit);
+        submit.mousemove = this.whenSubmitHover.bind(submit, this.view);
+        submit.mouseover = this.whenSubmitNotHover.bind(submit, this.view);
 
-        let submitColor = submit.backgroundColor;
-        submit.mousedown = (submit) => {(<Control>submit).backgroundColor = new Rgb(230,230,230); (<Control>submit).draw(this.view.ctx) };
-        
-        
-        
         let over = (<LoginView>this.view).loginForm.controls.find(c => c.name === "over");
         over.click = ()=> {console.log("I`m HERE!")};
     }
@@ -60,7 +56,8 @@ export class LoginController{
             let loginForm: GamerProfile = {
                 login: controller.login,
                 password: controller.password,
-                gender: controller.gender
+                gender: controller.gender,
+                photo: controller.photo
             };
             controller.gamer = loginForm;
 
@@ -89,6 +86,22 @@ export class LoginController{
     public checkedMaleOrFemale(controller: LoginController): void{
         if(this instanceof RadioButton){
             this.setChecked(this, <RadioButton[]>controller.view.genderPanel.controls);
+        }
+    }
+
+    public whenSubmitHover(view: LoginView): void{
+        if(this instanceof Button){
+            this.backgroundImage = view.images.get("submit-hover");
+            this.fillStyle = new Rgb(0, 55, 26);
+            this.draw(view.ctx);
+        }
+    }
+
+    public whenSubmitNotHover(view: LoginView): void{
+        if(this instanceof Button){
+            this.backgroundImage = view.images.get("submit");
+            this.fillStyle = new Rgb(96,160,122);
+            this.draw(view.ctx);
         }
     }
 }

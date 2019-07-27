@@ -5,12 +5,14 @@ import { Checkbox } from "../../controls/checkbox";
 import { Panel } from "../../controls/panel";
 import { RadioButton } from "../../controls/radioButton";
 import { Rgb } from "../../models/rgb";
+import { LoginImagesStock } from "./loginImagesStock";
 
 export class LoginView extends View {
     public loginForm: Panel = new Panel();
     public login: Input = new Input();
     public pass: Input = new Input();
     public genderPanel: Panel = new Panel();
+    public images: Map<string, HTMLImageElement> = (new LoginImagesStock()).images;
 
     constructor(){
         super();
@@ -18,13 +20,6 @@ export class LoginView extends View {
     }
 
     private createLoginForm(){
-        let submitImage = new Image();
-        let submitImageFocus = new Image();
-        let loginImage = new Image();
-        let passImage = new Image();
-        let loginImageFocus = new Image();
-        let passImageFocus = new Image();
-
         this.loginForm.name = "loginForm";
         this.loginForm.x = 200;
         this.loginForm.y = 200;
@@ -34,6 +29,7 @@ export class LoginView extends View {
         this.loginForm.backgroundColor = null;
         this.loginForm.border = null;
         this.registerControl(this.loginForm);
+
 
         let over = new Button();
         over.name = "over";
@@ -46,30 +42,25 @@ export class LoginView extends View {
         this.registerControl(over);
 
 
-
         let checkBoxShowPassword = new Checkbox();
 
         this.login.x = 0; this.login.y = 0;
         this.pass.x = 0; this.pass.y = 150;
         this.login.width = this.loginForm.width - 200;
         this.login.height = 100;
-        loginImageFocus.src = require("../../assets/input-hover.svg");
-        this.login.backgroundImageFocus = loginImageFocus;
+        this.login.backgroundImageFocus = this.images.get("login-input-focus");
         this.login.backgroundColorFocus = null;
         this.login.borderFocus = null;
 
         this.pass.width = this.loginForm.width - 200;
         this.pass.height = 100;
-        passImageFocus.src = require("../../assets/input-hover.svg");
-        this.pass.backgroundImageFocus = passImageFocus;
+        this.pass.backgroundImageFocus = this.images.get("pass-input-focus");
         this.pass.backgroundColorFocus = null;
         this.pass.borderFocus = null;
 
         this.login.border = null;
         this.login.backgroundColor = null;
-        loginImage.src = require("../../assets/input.svg");
-        this.login.backgroundImage = loginImage;
-
+        this.login.backgroundImage = this.images.get("login-input");;
         this.login.border = null;
         this.login.fillStyle = new Rgb(96,160,122);
 
@@ -81,8 +72,7 @@ export class LoginView extends View {
 
         this.pass.border = null;
         this.pass.backgroundColor = null;
-        passImage.src = require("../../assets/input.svg")
-        this.pass.backgroundImage = passImage;
+        this.pass.backgroundImage = this.images.get("pass-input");
         this.pass.parent = this.loginForm;
         this.pass.inputText.secret = true;
         this.pass.fillStyle = new Rgb(96,160,122);
@@ -108,15 +98,12 @@ export class LoginView extends View {
         submit.border = null;
         submit.fillStyle = new Rgb(96,160,122);
         submit.text = "Submit";
-        submitImage.src = require('../../assets/button.svg');
-        submit.backgroundImage = submitImage;
-
+        submit.backgroundImage = this.images.get("submit");
         this.registerControl(submit);
         this.radiosGender();
     }
 
     private radiosGender(){
-        
         this.genderPanel.backgroundColor = null;
         this.genderPanel.x = 0;
         this.genderPanel.y = 300;
@@ -150,21 +137,5 @@ export class LoginView extends View {
         radioDog.disabled = true;
         radioDog.parent = this.genderPanel;
         this.registerControl(radioDog);
-    }
-
-    public whenSubmitHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
-        let subImage = new Image();
-        subImage.src = require('../../assets/button-hover.svg');
-        control.backgroundImage = subImage;
-        control.draw(this.ctx);
-    }
-
-    public whenSubmitNotHover(control: Button){
-        this.ctx.clearRect(control.x + control.pX, control.y + control.pY, control.width, control.height);
-        let subImage = new Image();
-        subImage.src = require('../../assets/button.svg');
-        control.backgroundImage = subImage;
-        control.draw(this.ctx);
     }
 }

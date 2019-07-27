@@ -4,7 +4,7 @@ import { Rgb } from "../models/rgb";
 
 export class Input extends Panel {
 
-    protected controlType: string = "Input";
+    readonly controlType: string = "Input";
     public focus: boolean = false;
     public inputText: InputText = new InputText();
     private showText: string = "";

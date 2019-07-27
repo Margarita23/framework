@@ -1,6 +1,7 @@
 import { Control } from "./control";
 
 export class Label extends Control{
+    readonly controlType: string = "Lablel";
     public text: string = null;
     public maxLength: number = 50;
     public align: string = "left";

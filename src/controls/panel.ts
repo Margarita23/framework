@@ -5,7 +5,7 @@ import { Button } from "./button";
 
 export class Panel extends Control {
 
-    protected controlType: string = "Panel";
+    readonly controlType: string = "Panel";
     public innerText: InputText = new InputText();
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
@@ -30,7 +30,6 @@ export class Panel extends Control {
             this.ctx.strokeStyle = (new Rgb(0,0,0)).getColor();
             this.ctx.strokeRect(this.newW - this.widgetVertical.newW + this.widgetVertical.pX, this.y + this.pY , this.widgetVertical.newW, this.newH);
         }
-        
 
         if(this.newW === 0 || this.newH === 0){
             return
@@ -44,9 +43,9 @@ export class Panel extends Control {
 
         if(this.newW === this.width || this.newH === this.height){
             if(this.backgroundImage){
-                this.backgroundImage.onload = () => {
+                //this.backgroundImage.onload = () => {
                     this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-                }
+                //}
             } else if(this.backgroundColor !== null){
                 this.ctx.fillStyle = this.backgroundColor.getColor();
                 this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
