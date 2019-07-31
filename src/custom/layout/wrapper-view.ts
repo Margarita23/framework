@@ -2,13 +2,14 @@ import { View } from "../../models/view";
 import { Panel } from "../../controls/panel";
 import { Button } from "../../controls/button";
 import { Rgb } from "../../models/rgb";
+import { WrapperImagesStock } from "./wrapperImagesStock";
 
 export class WrapperView extends View {
     public mainButtonPage: Button = new Button();
     public contactsButtonPage: Button = new Button();
     public playButtonPage: Button = new Button();
     public footer: Panel = new Panel();
-    public images: Map<string, HTMLImageElement> = new Map();
+    public images: Map<string, HTMLImageElement> = (new WrapperImagesStock).images;
 
     constructor(){
         super();
@@ -70,8 +71,6 @@ export class WrapperView extends View {
         else if(control.text=== "Photo"){
             control.backgroundImage = this.images.get("photo-hover");
         }
-        console.log(control.backgroundImage);
-
         control.draw(this.ctx);
     }
 
@@ -85,7 +84,6 @@ export class WrapperView extends View {
         else if(control.text === "Photo"){
             control.backgroundImage = this.images.get("photo");
         }
-        console.log(control.backgroundImage);
         control.draw(this.ctx);
     }
 }

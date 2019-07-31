@@ -2,10 +2,12 @@ import { Panel } from "../../controls/panel";
 import { Rgb } from "../../models/rgb";
 import { View } from "../../models/view";
 import { Button } from "../../controls/button";
+import { PhotoImagesStock } from "./photoImagesStock";
 
 export class ProfilePhotoView extends View{
     public photosContainer: Panel = new Panel();
     public profilePageTitle: Panel = new Panel();
+    public images: Map<string, HTMLImageElement> = (new PhotoImagesStock()).images;
 
     constructor(){
         super();
@@ -49,25 +51,16 @@ export class ProfilePhotoView extends View{
         photo.y = 300*j + 50;
         photo.width = 250;
         photo.height = 250;
-        let im = new Image();
-        try {
-            im.src = require("../../assets/photo"+ i + j + ".svg");
-            photo.backgroundImage = im;
-        } catch (error) {
-            im.src  = require("../../assets/no-photo.svg");
-                photo.backgroundImage = im;
-        }
         photo.name = "photo" + i + j;
-        photo.text = photo.name;
+        photo.backgroundImage = this.images.get(photo.name);
+        photo.text = null;
         photo.parent = this.photosContainer;
         this.registerControl(photo);
     }
 
     public whenPhotoHover(control: Button){
-        let subImage = new Image();
-        subImage.src = require('../../assets/' + control.name + '.svg');
-        control.backgroundImage = subImage;
         control.backgroundColor = new Rgb(255, 200, 200);
+        control.backgroundImage = this.images.get(control.name);
         control.draw(this.ctx);
     }
 }

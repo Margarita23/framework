@@ -18,14 +18,11 @@ export class MainController{
         if(gamer){
             this.gamer = gamer;
             this.view.helloPanel.innerText.text = "Hello, " + this.gamer.login + " !";
-        
-        
         } else {
             this.view.helloPanel.innerText.text = "Hello!";
         }
             let photo = new Image();
         try {
-            
             photo.src = require("../../assets/" + gamer.photo + ".svg");
             this.view.images.set(gamer.photo, photo);
         } catch (error) {

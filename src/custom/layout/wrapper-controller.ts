@@ -35,30 +35,30 @@ export class WrapperController {
     public goToMainPage(layoutView: WrapperView, oldView: View, controller?: WrapperController): void{
         const mainView = new MainView();
         const mainContr = new MainController(mainView, controller ? controller : this);
-        (Application.getInstance()).unsubsrc(layoutView);
+        (Application.instance).unsubsrc(layoutView);
 
-        (Application.getInstance()).unsubsrc(oldView);
-        (Application.getInstance()).run(mainView);
-        (Application.getInstance()).run(layoutView);
+        (Application.instance).unsubsrc(oldView);
+        (Application.instance).run(mainView);
+        (Application.instance).run(layoutView);
     }
 
     private goToContactPage(layoutView: WrapperView, oldView: View): void{
         const contactsView = new ContactsView();
         const contactsContr = new ContactsController(contactsView);
-        (Application.getInstance()).unsubsrc(layoutView);
+        (Application.instance).unsubsrc(layoutView);
 
-        (Application.getInstance()).unsubsrc(oldView);
-        (Application.getInstance()).run(contactsView);
-        (Application.getInstance()).run(layoutView);
+        (Application.instance).unsubsrc(oldView);
+        (Application.instance).run(contactsView);
+        (Application.instance).run(layoutView);
     }
 
     private goToMapsPage(layoutView: WrapperView, oldView: View, controller: WrapperController): void{
         const profilePhotosView = new ProfilePhotoView();
         const profilePhotosContr = new ProfilePhotoController(profilePhotosView, controller);
-        (Application.getInstance()).unsubsrc(layoutView);
+        (Application.instance).unsubsrc(layoutView);
 
-        (Application.getInstance()).unsubsrc(oldView);
-        (Application.getInstance()).run(profilePhotosView);
-        (Application.getInstance()).run(layoutView);
+        (Application.instance).unsubsrc(oldView);
+        (Application.instance).run(profilePhotosView);
+        (Application.instance).run(layoutView);
     }
 }

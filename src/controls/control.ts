@@ -1,5 +1,4 @@
 import { Rgb } from "../models/rgb";
-import { Panel } from "./panel";
 
 export class Control {
     readonly controlType: string = "Control";
@@ -20,6 +19,9 @@ export class Control {
     public pX: number = 0;
     public pY: number = 0;
 
+    //newX и newY - это по сути sourseX/Y для правильного отображения;
+    public newX: number = 0;
+    public newY: number = 0;
     public newW: number = this.width;
     public newH: number = this.height;
 
@@ -38,16 +40,22 @@ export class Control {
         this.ctx = ctx;
         if(this.backgroundImage){
             this.backgroundImage.onload = () => {
-                this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.width, this.height);
+                this.ctx.drawImage(this.backgroundImage, this.newX + this.pX, this.newY + this.pY, this.width, this.height);
             }
         }
     }
 
     get x():number { return this._x; }
-    set x(newX: number) { this._x = newX; }
+    set x(nX: number) {
+        this._x = nX;
+        this.newX = this.x < 0 ? -this.x : this.x;
+    }
 
     get y():number { return this._y; }
-    set y(newY: number) { this._y = newY; }
+    set y(nY: number) {
+        this._y = nY;
+        this.newY = this.y < 0 ? -this.y : this.y;
+    }
 
     get width():number { return this._width; }
     set width(newWidth: number) {
@@ -99,39 +107,5 @@ export class Control {
         return this.controlType;
     }
 
-    public cutChildControl(): void{
-
-    }
-/*
-    public createNewHOLST(): void{
-        this.canvas1.width = this.newW;
-        this.canvas1.height = this.newH;
-        this.ctx1 = this.canvas1.getContext("2d");
-
-        if(this.backgroundImage){
-            this.ctx1.drawImage(this.backgroundImage, 0, 0, this.width, this.height);
-        }
-        else if(this.backgroundColor)
-        {
-            this.ctx1.fillStyle = this.backgroundColor.getColor();
-            this.ctx1.fillRect(0, 0, this.width, this.height);
-        }
-        if(this.border){
-            this.ctx1.strokeStyle = this.border.getColor();
-            this.ctx1.strokeRect(0, 0, this.width, this.height);
-        };
-        this.ctx1.save();
-        this.ctx1.font = this.font;
-        this.ctx1.fillStyle = this.fillStyle.getColor();
-        this.ctx1.textBaseline = "middle";
-        this.ctx1.textAlign = "center";
-        if(this.text){
-            this.ctx1.fillText(this.text, this.width/2, this.height/2, this.width - this.getPaddingInPx()*2);
-        }
-        this.ctx1.restore();
-        this.cutImage = this.ctx1.getImageData(0, 0, this.newW, this.newH);
-
-        this.canvas1.remove();
-    }
-    */
+    public cutChildControl(): void {}
 }

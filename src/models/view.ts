@@ -66,6 +66,24 @@ export abstract class View {
                     this.scrollWidget = null;
                     this.scrollPanel = null;
                 }
+
+/*
+                if(trueControl && trueControl.controlType !== 'Panel'){
+                    console.log(trueControl);
+                    console.log("trueControl.x" + trueControl.x);
+                    console.log("trueControl.newX" + trueControl.newX);
+                    console.log("trueControl.pX" + trueControl.pX);
+                    console.log(trueControl.x + trueControl.newX + trueControl.pX)
+                    console.log(event.x);
+                    //console.log((trueControl.y + trueControl.newY + trueControl.pY) <= event.y);
+                    //console.log((trueControl.x + trueControl.pX + trueControl.newW) >= event.x);
+                    //console.log((trueControl.y + trueControl.pY + trueControl.newH) >= event.y);
+                } else {
+                    console.log("not here");
+                }
+*/
+
+
                 return;
             case 'mousemove' :
                 if(trueControl){
@@ -91,13 +109,16 @@ export abstract class View {
                 }
 
                 if(this.scrollWidget && this.scrollPanel){
-                    this.moveVerticalScroll(this.scrollWidget, event.y);
+                    this.createNewHOLST(this.scrollWidget, this.scrollWidget.parent);
+                    
+                    
+                    //this.moveVerticalScroll(this.scrollWidget, event.y);
                 }
                 return;
         }
     }
 
-    private searchNeededControl(ret: Control[], controls: Control[], eX: number, eY: number): void{
+    private searchNeededControl(ret: Control[], controls: Control[], eX: number, eY: number): void {
         controls.forEach(control => {
             if(this.onControl(control, eX, eY)){
                 if(control.controls.length === 0){
@@ -116,6 +137,13 @@ export abstract class View {
     }
 
     private moveVerticalScroll(widget: Control, y: number): void{
+        this.calculateShowYPos(<Button>widget, <Panel>widget.parent);
+
+
+        this.redrawWidget(widget, y);
+    }
+
+    redrawWidget(widget: Control, y: number): void{
         if(y <= widget.pY){
             widget.y = 0;
         } else if(y >= widget.pY + widget.parent.newH){
@@ -123,13 +151,11 @@ export abstract class View {
         } else if(y >= widget.pY + widget.newH && y <= widget.pY + widget.parent.newH){
             widget.y = y - widget.pY - widget.newH;
         }
-        this.calculateShowYPos(<Button>widget, <Panel>widget.parent);
 
         this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
         this.ctx.fillRect(widget.parent.newW - widget.newW + widget.pX, widget.parent.y + widget.parent.pY , widget.newW, widget.parent.newH);
         this.ctx.strokeStyle = (new Rgb(0,0,0)).getColor();
         this.ctx.strokeRect(widget.parent.newW - widget.newW + widget.pX, widget.parent.y + widget.parent.pY , widget.newW, widget.parent.newH);
-
         this.draw([widget], this.ctx);
     }
 
@@ -138,24 +164,28 @@ export abstract class View {
         let moveOnY = parent.wholeHeight - parent.newH;
         let newPanelY = (moveOnY*persentOfRoad) / 100;
 
-        this.createNewHOLST(parent, newPanelY);
-        this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
-        this.ctx.putImageData(this.cutImage, parent.x + parent.pX, parent.y + parent.pY);
+        let littleRoadPercent = (widget.y * 100) / parent.newH;
 
-        this.ctx.save();
-        this.ctx.lineWidth = 5;
-        this.ctx.strokeStyle = new Rgb(0,0,0).getColor();
-            this.ctx.strokeRect(parent.x + parent.pX, parent.y + parent.pY, this.cutImage.width, this.cutImage.height);
-        this.ctx.restore();
+        let shiftAtAll = ((parent.wholeHeight - parent.newH) * littleRoadPercent) / 100;
+
+
+        // console.log(shiftAtAll); // на сколько сдвинуть контент вниз или вверх.
+
+
+        // this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
+        
+        //this.createNewHOLST(widget, parent);
+        //this.ctx.drawImage(this.canvas1, 0, shiftAtAll, parent.newW, parent.newH, parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
+        //this.canvas1.remove();
     }
 
 //---------------------------------
-    private createNewHOLST(control: Control, newPanelY: number ){
+    private createNewHOLST(widget: Control, control: Control){
+
         this.canvas1.width = control.width;
         this.canvas1.height = (<Panel>control).wholeHeight;
         this.ctx1 = this.canvas1.getContext("2d");
-        if(control.backgroundColor)
-        {
+        if(control.backgroundColor){
             this.ctx1.fillStyle = control.backgroundColor.getColor();
             this.ctx1.fillRect(0, 0, control.width, (<Panel>control).wholeHeight);
         }
@@ -168,18 +198,18 @@ export abstract class View {
             this.ctx1.strokeStyle = control.border.getColor();
             this.ctx1.strokeRect(0, 0, control.width, (<Panel>control).wholeHeight);
         };
+        
 
-        let cH = (<Panel>control).newH;
-        control.newH = (<Panel>control).wholeHeight;
-        this.drawPhotoContainerProperties(<Panel>control);
-        //this.draw(control.controls, this.ctx1);
-        control.newH = cH;
 
-        this.cutImage = this.ctx1.getImageData(0, newPanelY, control.newW, (<Panel>control).newH);
-        //console.log("newPanelY");
-        //console.log(newPanelY);
-        //console.log(this.cutImage);
-        this.canvas1.remove();
+        this.ctx1.fillStyle =( new Rgb(200,10,10)).getColor();
+        this.ctx1.fillRect(700,700,200,200);
+
+        
+        //let f = widget.parent.controls.filter(c => c != widget);
+        //this.draw(f, this.ctx1);
+
+        //console.log(f);
+        
     }
 
     private runAfterClickWithSlowerReaction(view: View, trueControl: Control){
@@ -236,9 +266,34 @@ export abstract class View {
 
     private onControl(control: Control, clickX: number, clickY: number): boolean{
         let res = false;
-        if((control.x + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
+        //-------- checking for over control --------
+        if(control.x < 0 && control.y < 0) {
+            if( (control.x + control.newX + control.pX) <= clickX && (control.y + control.newY + control.pY) <= clickY &&
             (control.x + control.pX + control.newW) >= clickX &&
-            (control.y + control.pY + control.newH) >= clickY){
+            (control.y + control.pY + control.newH) >= clickY) {
+                res = true;
+            }
+            return res;
+        } else if (control.x < 0) {
+            if( (control.x + control.newX + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
+            (control.x + control.pX + control.newW) >= clickX &&
+            (control.y + control.pY + control.newH) >= clickY) {
+                res = true;
+            }
+            return res;
+        } else if (control.y < 0) {
+            if( (control.x + control.pX) <= clickX && (control.y + control.newY + control.pY) <= clickY &&
+            (control.x + control.pX + control.newW) >= clickX &&
+            (control.y + control.pY + control.newH) >= clickY) {
+                res = true;
+            }
+            return res;
+        }
+        //----------------
+
+        if( (control.x + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
+            (control.x + control.pX + control.newW) >= clickX &&
+            (control.y + control.pY + control.newH) >= clickY) {
             res = true;
         }
         return res;
@@ -256,16 +311,16 @@ export abstract class View {
 
 
 
+    /*
     //-------------------------
-    public drawPhotoContainerProperties(control: Panel){
+    public drawPhotoContainerProperties(control: Panel) {
         let buffCtx = this.ctx;
         this.draw([control], this.ctx1);
-        for(let i=0; i < 3; i ++){
-            for(let j=0; j < 5; j ++){
+        for(let i=0; i < 3; i ++) {
+            for(let j=0; j < 5; j ++) {
                 this.createPhotos(i, j, control);
             }
         }
-
         this.ctx = buffCtx;
     }
 
@@ -290,10 +345,12 @@ export abstract class View {
                 photo.backgroundImage = im;
             }
         }
+        
+
         photo.name = "photo" + i + j;
         photo.text = photo.name;
         photo.parent = control;
         this.registerControl(photo);
-        */
     }
+    */
 }

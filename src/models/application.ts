@@ -3,7 +3,7 @@ import { Context } from "./context";
 import { Subject } from "rxjs";
 
 export class Application {
-    protected static instance = new Application();
+    public static instance = new Application();
     public ctx: Context = new Context();
     public subject: Subject<Event> = new Subject<Event>();
 
@@ -27,10 +27,6 @@ export class Application {
         document.addEventListener("keydown", (evt)=>{
             subject.next(evt);
         });
-    }
-
-    public static getInstance(): Application {
-        return Application.instance;
     }
 
     public unsubsrc(oldView: View){

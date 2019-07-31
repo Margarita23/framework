@@ -4,7 +4,6 @@ import { InputText } from "./inputText";
 import { Button } from "./button";
 
 export class Panel extends Control {
-
     readonly controlType: string = "Panel";
     public innerText: InputText = new InputText();
     public font: string = "30px Arial";
@@ -35,17 +34,31 @@ export class Panel extends Control {
             return
         }
 
+        if((this.x < 0) || this.y < 0){
+            this.createNewHOLST();
+            this.ctx.drawImage(this.canvas1, this.newX, this.newY, this.newW - this.newX, this.newH - this.newY, this.pX, this.pY, this.newW - this.newX, this.newH - this.newY);
+            this.canvas1.remove();
+            return
+        }
+
+        if((this.newW < this.width) || (this.newH < this.height)){
+            this.createNewHOLST();
+            this.ctx.drawImage(this.canvas1, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+            this.canvas1.remove();
+            return
+        }
+
+        /*
         if(this.parent && (this.newW < this.width || this.newH < this.height)){
             this.createNewHOLST();
             this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-            this.ctx.putImageData(this.cutImage, this.x + this.pX, this.y + this.pY);
+            this.ctx.drawImage(this.canvas1, this.x + this.pX, this.y + this.pY);
+            this.canvas1.remove();
         }
-
+        */
         if(this.newW === this.width || this.newH === this.height){
             if(this.backgroundImage){
-                //this.backgroundImage.onload = () => {
-                    this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-                //}
+                this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             } else if(this.backgroundColor !== null){
                 this.ctx.fillStyle = this.backgroundColor.getColor();
                 this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
@@ -74,9 +87,7 @@ export class Panel extends Control {
         this.canvas1.height = this.height;
         this.ctx1 = this.canvas1.getContext("2d");
 
-        //перед отрисовкой попробовать манипуляции с альфа-каналом (globalAlpha).
-        if(this.backgroundColor)
-        {
+        if(this.backgroundColor){
             this.ctx1.fillStyle = this.backgroundColor.getColor();
             this.ctx1.fillRect(0, 0, this.width, this.height);
         }
@@ -87,7 +98,7 @@ export class Panel extends Control {
             this.ctx1.strokeStyle = this.border.getColor();
             this.ctx1.strokeRect(0, 0, this.width, this.height);
         };
-        
+
         if(this.innerText && this.innerText.getText()){
             this.ctx.save();
             this.ctx1.font = this.font;
@@ -97,8 +108,6 @@ export class Panel extends Control {
             this.ctx1.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
             this.ctx.restore();
         }
-        this.cutImage = this.ctx1.getImageData(0, 0, this.newW, this.newH);
-        this.canvas1.remove();
     }
 
     public getText(): void{

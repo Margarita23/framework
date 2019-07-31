@@ -46,6 +46,9 @@ export class LoginController{
 
         let over = (<LoginView>this.view).loginForm.controls.find(c => c.name === "over");
         over.click = ()=> {console.log("I`m HERE!")};
+
+        let overZero = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overZero");
+        overZero.click = ()=> { console.log("I`m HERE overZERO!") };
     }
 
     public submitRegister(controller: LoginController): void{
@@ -63,7 +66,7 @@ export class LoginController{
 
             controller.layoutView = new WrapperView();
             controller.layoutController = new WrapperController(controller.layoutView, controller.view, loginForm);
-            (Application.getInstance()).run(controller.layoutView);
+            (Application.instance).run(controller.layoutView);
 
             controller.layoutController.goToMainPage(controller.layoutView, controller.view);
         }
