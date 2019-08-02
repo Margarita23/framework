@@ -17,6 +17,9 @@ export abstract class View {
     public ctx1: CanvasRenderingContext2D;
     public canvas1 = document.createElement("canvas");
 
+    public shiftAtAll: number = 0;
+    public isDown: boolean = false;
+
     constructor(){}
 
     public registerControl(control: Control): void{
@@ -66,24 +69,6 @@ export abstract class View {
                     this.scrollWidget = null;
                     this.scrollPanel = null;
                 }
-
-/*
-                if(trueControl && trueControl.controlType !== 'Panel'){
-                    console.log(trueControl);
-                    console.log("trueControl.x" + trueControl.x);
-                    console.log("trueControl.newX" + trueControl.newX);
-                    console.log("trueControl.pX" + trueControl.pX);
-                    console.log(trueControl.x + trueControl.newX + trueControl.pX)
-                    console.log(event.x);
-                    //console.log((trueControl.y + trueControl.newY + trueControl.pY) <= event.y);
-                    //console.log((trueControl.x + trueControl.pX + trueControl.newW) >= event.x);
-                    //console.log((trueControl.y + trueControl.pY + trueControl.newH) >= event.y);
-                } else {
-                    console.log("not here");
-                }
-*/
-
-
                 return;
             case 'mousemove' :
                 if(trueControl){
@@ -109,13 +94,50 @@ export abstract class View {
                 }
 
                 if(this.scrollWidget && this.scrollPanel){
-                    this.createNewHOLST(this.scrollWidget, this.scrollWidget.parent);
+
+                    this.canvas1.width = this.scrollPanel.x + this.scrollPanel.width;
+                    this.canvas1.height = this.scrollPanel.y + (<Panel>this.scrollWidget.parent).wholeHeight;
+                    this.ctx1 = this.canvas1.getContext("2d");
                     
                     
-                    //this.moveVerticalScroll(this.scrollWidget, event.y);
+
+
+
+                    this.createNewHOLST(this.scrollWidget, this.scrollWidget.parent, this.ctx1);
+                    this.moveVerticalScroll(this.scrollWidget, event.y);
                 }
                 return;
         }
+    }
+
+    //---------------------------------
+    private createNewHOLST(widget: Control, control: Control, ctx: CanvasRenderingContext2D){
+
+        if(control.backgroundColor){
+            this.ctx1.fillStyle = control.backgroundColor.getColor();
+            this.ctx1.fillRect(control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
+        }
+
+        if(control.backgroundImage){
+            this.ctx1.drawImage(control.backgroundImage, control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
+        }
+        if(control.border){
+            this.ctx1.strokeStyle = control.border.getColor();
+            this.ctx1.strokeRect(control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
+        };
+
+        let f = this.scrollWidget.parent.controls.filter(c => c ! = this.scrollWidget);
+            this.reDraw(f, this.ctx1);
+    }
+
+    public reDraw(controls: Control[], ctx: CanvasRenderingContext2D): void {
+        controls.forEach(control => {
+            control.ctx1 = ctx;
+            control.draw(ctx);
+            if(control.controls.length !== 0){
+                this.reDraw(control.controls, ctx);
+            }
+        });
     }
 
     private searchNeededControl(ret: Control[], controls: Control[], eX: number, eY: number): void {
@@ -165,51 +187,37 @@ export abstract class View {
         let newPanelY = (moveOnY*persentOfRoad) / 100;
 
         let littleRoadPercent = (widget.y * 100) / parent.newH;
-
         let shiftAtAll = ((parent.wholeHeight - parent.newH) * littleRoadPercent) / 100;
+        //shiftAtAll - на сколько сдвинуть контент вниз или вверх.
+        console.log("y - " + Number(parent.controls[1].y - shiftAtAll)); // на сколько сдвинуть контент вниз или вверх.
+        console.log("newY - " + Number(parent.controls[1].newY - shiftAtAll)); // на сколько сдвинуть контент вниз или вверх.
+
+        this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
+
+        this.scrollPanel.draw(this.ctx);
 
 
-        // console.log(shiftAtAll); // на сколько сдвинуть контент вниз или вверх.
-
-
-        // this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
-        
-        //this.createNewHOLST(widget, parent);
-        //this.ctx.drawImage(this.canvas1, 0, shiftAtAll, parent.newW, parent.newH, parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
-        //this.canvas1.remove();
-    }
-
-//---------------------------------
-    private createNewHOLST(widget: Control, control: Control){
-
-        this.canvas1.width = control.width;
-        this.canvas1.height = (<Panel>control).wholeHeight;
-        this.ctx1 = this.canvas1.getContext("2d");
-        if(control.backgroundColor){
-            this.ctx1.fillStyle = control.backgroundColor.getColor();
-            this.ctx1.fillRect(0, 0, control.width, (<Panel>control).wholeHeight);
+        let f = this.scrollPanel.controls.filter(c => c ! = this.scrollWidget);
+        if(this.shiftAtAll < shiftAtAll){
+            this.isDown = true;
+        } else if (this.shiftAtAll > shiftAtAll){
+            this.isDown = false;
         }
 
-        if(control.backgroundImage){
-            this.ctx1.drawImage(control.backgroundImage, 0, 0, control.width, (<Panel>control).wholeHeight);
+        try{
+            if(this.isDown){
+                f.map(c => {c.y = c.y - shiftAtAll});
+            } else {
+                f.map(c => {c.y = c.y + shiftAtAll});
+            }
+        } catch(error){
+            console.log(f);
         }
 
-        if(control.border){
-            this.ctx1.strokeStyle = control.border.getColor();
-            this.ctx1.strokeRect(0, 0, control.width, (<Panel>control).wholeHeight);
-        };
-        
+        this.shiftAtAll = shiftAtAll;
 
-
-        this.ctx1.fillStyle =( new Rgb(200,10,10)).getColor();
-        this.ctx1.fillRect(700,700,200,200);
-
-        
-        //let f = widget.parent.controls.filter(c => c != widget);
-        //this.draw(f, this.ctx1);
-
-        //console.log(f);
-        
+        this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
+        this.draw(f, this.ctx);
     }
 
     private runAfterClickWithSlowerReaction(view: View, trueControl: Control){
@@ -308,49 +316,4 @@ export abstract class View {
             }
         });
     }
-
-
-
-    /*
-    //-------------------------
-    public drawPhotoContainerProperties(control: Panel) {
-        let buffCtx = this.ctx;
-        this.draw([control], this.ctx1);
-        for(let i=0; i < 3; i ++) {
-            for(let j=0; j < 5; j ++) {
-                this.createPhotos(i, j, control);
-            }
-        }
-        this.ctx = buffCtx;
-    }
-
-    private createPhotos(i: number, j: number, control: Panel){
-        let photo = new Button;
-        photo.x = 300*i + 50;
-        photo.y = 300*j + 50;
-        photo.width = 250;
-        photo.height = 250;
-        /*
-        try {
-            let im = new Image();
-            im.src = require("../assets/photo"+ i + j + ".svg");
-            im.onload = () => {
-                photo.backgroundImage = im;
-            }
-        } catch (error) {
-            let im = new Image();
-            im.src = require("../assets/no-photo.svg");
-            photo.backgroundImage = im;
-            im.onload = () => {
-                photo.backgroundImage = im;
-            }
-        }
-        
-
-        photo.name = "photo" + i + j;
-        photo.text = photo.name;
-        photo.parent = control;
-        this.registerControl(photo);
-    }
-    */
 }

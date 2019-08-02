@@ -48,14 +48,6 @@ export class Panel extends Control {
             return
         }
 
-        /*
-        if(this.parent && (this.newW < this.width || this.newH < this.height)){
-            this.createNewHOLST();
-            this.ctx.clearRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-            this.ctx.drawImage(this.canvas1, this.x + this.pX, this.y + this.pY);
-            this.canvas1.remove();
-        }
-        */
         if(this.newW === this.width || this.newH === this.height){
             if(this.backgroundImage){
                 this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
@@ -71,6 +63,38 @@ export class Panel extends Control {
             this.getText();
         }
     }
+
+
+
+    
+    public redrawOnBufferHolst(ctx: CanvasRenderingContext2D): void{
+        if(this.backgroundImage){
+            ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+        } else if(this.backgroundColor !== null){
+            ctx.fillStyle = this.backgroundColor.getColor();
+            ctx.fillRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+        }
+
+        if(this.border !== null){
+            ctx.strokeStyle = this.border.getColor();
+            ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+        };
+
+        if(this.innerText && this.innerText.getText()){
+            ctx.save();
+            ctx.font = this.font;
+            ctx.fillStyle = this.fillStyle.getColor();
+            ctx.textAlign = <CanvasTextAlign>this.innerText.align;
+            ctx.textBaseline = "middle";
+            ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
+            ctx.restore();
+        }
+    }
+
+
+
+
+
 
     get isScroll(){ return this._isScroll; }
     set isScroll(scroll: boolean){

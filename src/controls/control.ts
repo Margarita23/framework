@@ -45,6 +45,8 @@ export class Control {
         }
     }
 
+    public redrawOnBufferHolst(ctx: CanvasRenderingContext2D): void{}
+
     get x():number { return this._x; }
     set x(nX: number) {
         this._x = nX;

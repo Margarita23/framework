@@ -47,7 +47,7 @@ export class Button extends Control{
 
     public draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
-        console.log("IN DRAW METHOD");
+
         if(this.newW === 0 || this.newH === 0){
             return
         }
