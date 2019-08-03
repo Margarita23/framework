@@ -40,6 +40,12 @@ export class LoginView extends View {
         this.registerControl(over);
 
 
+
+        
+
+
+
+
         let checkBoxShowPassword = new Checkbox();
 
         this.login.x = 0; this.login.y = 0;
@@ -87,15 +93,29 @@ export class LoginView extends View {
         this.registerControl(checkBoxShowPassword);
 
 
+
         let overZero = new Button();
         overZero.name = "overZero";
         overZero.x = -50;
         overZero.y = -50;
-        overZero.width = 150;
-        overZero.height = 150;
+        overZero.width = 200;
+        overZero.height = 200;
         overZero.backgroundColor = new Rgb(25, 200, 0);
         overZero.parent = this.loginForm;
         this.registerControl(overZero);
+
+
+        let overO = new Button();
+        overO.name = "overO";
+        overO.x = -50;
+        overO.y = 500;
+        overO.width = 200;
+        overO.height = 200;
+        overO.backgroundColor = new Rgb(255, 255, 0);
+        overO.parent = this.loginForm;
+        this.registerControl(overO);
+
+
 
 
 

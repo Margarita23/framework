@@ -49,6 +49,9 @@ export class LoginController{
 
         let overZero = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overZero");
         overZero.click = ()=> { console.log("I`m HERE overZERO!") };
+        
+        let overO = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overO");
+        overO.click = ()=> { console.log("I`m HERE overOOOOOO!") };
     }
 
     public submitRegister(controller: LoginController): void{

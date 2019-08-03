@@ -83,10 +83,17 @@ export class Control {
             parent = parent.parent;
         }
 
+
         if(this.x >= newParent.newW) {
             this.newW = 0;
-        } else if(this.x + this.width > newParent.newW){
+        } else if(this.width > newParent.newW && this.x > 0){
+            this.newW = newParent.newW;
+        } else if(this.x >= 0 && (this.x + this.width) > newParent.newW){
             this.newW = newParent.newW - this.x;
+        } else if(this.x < 0 && (this.x + this.width) > newParent.newW){
+            this.newW = newParent.newW - this.x;
+        } else if(this.x < 0){
+            this.newW = this.newW + this.x;
         } else {
             this.newW = this.width;
         }

@@ -189,32 +189,27 @@ export abstract class View {
         let littleRoadPercent = (widget.y * 100) / parent.newH;
         let shiftAtAll = ((parent.wholeHeight - parent.newH) * littleRoadPercent) / 100;
         //shiftAtAll - на сколько сдвинуть контент вниз или вверх.
-        console.log("y - " + Number(parent.controls[1].y - shiftAtAll)); // на сколько сдвинуть контент вниз или вверх.
-        console.log("newY - " + Number(parent.controls[1].newY - shiftAtAll)); // на сколько сдвинуть контент вниз или вверх.
-
         this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
-
         this.scrollPanel.draw(this.ctx);
-
-
         let f = this.scrollPanel.controls.filter(c => c ! = this.scrollWidget);
+
         if(this.shiftAtAll < shiftAtAll){
             this.isDown = true;
         } else if (this.shiftAtAll > shiftAtAll){
             this.isDown = false;
+        } else{
+            this.isDown = null;
         }
 
-        try{
-            if(this.isDown){
-                f.map(c => {c.y = c.y - shiftAtAll});
-            } else {
-                f.map(c => {c.y = c.y + shiftAtAll});
-            }
-        } catch(error){
-            console.log(f);
+        console.log("button.x before = " + f[2].newX);
+        if(this.isDown !== null){
+            let shift = this.shiftAtAll - shiftAtAll;
+            f.map(c => {c.y = c.y + shift});
+            this.shiftAtAll = shiftAtAll;
         }
+        console.log("button.x after = " + f[2].newX);
 
-        this.shiftAtAll = shiftAtAll;
+        
 
         this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
         this.draw(f, this.ctx);

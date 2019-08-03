@@ -1,8 +1,7 @@
 import { Control } from "./control";
 import { Rgb } from "../models/rgb";
 
-export class Button extends Control{
-
+export class Button extends Control {
     readonly controlType: string = "Button";
     public text: string = "Button";
     public padding: number = 10;
@@ -15,7 +14,7 @@ export class Button extends Control{
         this.canvas1.width = this.width;
         this.canvas1.height = this.height;
         this.ctx1 = this.canvas1.getContext("2d");
-        this.ctx1.clearRect(0,0, this.canvas1.width, this.canvas1.height);
+        this.ctx1.clearRect(0, 0, this.canvas1.width, this.canvas1.height);
 
         if(this.backgroundImage){
             this.ctx1.drawImage(this.backgroundImage, 0, 0, this.width, this.height);
@@ -52,16 +51,18 @@ export class Button extends Control{
             return
         }
 
-        if((this.x < 0) || this.y < 0){
+        if(this.x < 0 || this.y < 0 || (this.newW < this.width) || (this.newH < this.height)){
             this.createNewHOLST();
-            this.ctx.drawImage(this.canvas1, this.newX, this.newY, this.newW - this.newX, this.newH - this.newY, this.pX, this.pY, this.newW - this.newX, this.newH - this.newY);
-            this.canvas1.remove();
-            return
-        }
-
-        if((this.newW < this.width) || (this.newH < this.height)){
-            this.createNewHOLST();
-            this.ctx.drawImage(this.canvas1, 0, 0, this.newW, this.newH, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+            if(this.x < 0 && this.y >= 0 ){
+                this.ctx.drawImage(this.canvas1, 0, 0, this.newW, this.newH, this.pX, this.pY + this.y, this.newW, this.newH);
+            } else if(this.x >= 0 && this.y < 0){
+                this.ctx.drawImage(this.canvas1, this.newX, this.newY, this.newW - this.newX, this.newH - this.newY, this.pX + this.x, this.pY, this.newW, this.newH);
+            } else if((this.x < 0) || this.y < 0){
+                this.ctx.drawImage(this.canvas1, this.newX, this.newY, this.newW - this.newX, this.newH - this.newY, this.pX, this.pY, this.newW - this.newX, this.newH - this.newY);
+            }
+            if((this.newW < this.width) || (this.newH < this.height)){
+                this.ctx.drawImage(this.canvas1, 0, 0, this.newW, this.newH, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+            }
             this.canvas1.remove();
             return
         }
