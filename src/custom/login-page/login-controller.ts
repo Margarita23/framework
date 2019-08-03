@@ -44,14 +44,14 @@ export class LoginController{
         submit.mousemove = this.whenSubmitHover.bind(submit, this.view);
         submit.mouseover = this.whenSubmitNotHover.bind(submit, this.view);
 
-        let over = (<LoginView>this.view).loginForm.controls.find(c => c.name === "over");
-        over.click = ()=> {console.log("I`m HERE!")};
+        // let over = (<LoginView>this.view).loginForm.controls.find(c => c.name === "over");
+        // over.click = ()=> {console.log("I`m HERE!")};
 
-        let overZero = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overZero");
-        overZero.click = ()=> { console.log("I`m HERE overZERO!") };
+        // let overZero = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overZero");
+        // overZero.click = ()=> { console.log("I`m HERE overZERO!") };
         
-        let overO = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overO");
-        overO.click = ()=> { console.log("I`m HERE overOOOOOO!") };
+        // let overO = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overO");
+        // overO.click = ()=> { console.log("I`m HERE overOOOOOO!") };
     }
 
     public submitRegister(controller: LoginController): void{

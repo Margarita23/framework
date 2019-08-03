@@ -1,5 +1,6 @@
 import { Control } from "./control";
 import { Rgb } from "../models/rgb";
+import { runInThisContext } from "vm";
 
 export class Button extends Control {
     readonly controlType: string = "Button";
@@ -51,20 +52,39 @@ export class Button extends Control {
             return
         }
 
-        if(this.x < 0 || this.y < 0 || (this.newW < this.width) || (this.newH < this.height)){
+        if(this.x < 0 || this.y < 0 || (this.parent && (this.x + this.width > this.parent.width)) || (this.parent && (this.y + this.height > this.parent.height))){
             this.createNewHOLST();
-            if(this.x < 0 && this.y >= 0 ){
-                this.ctx.drawImage(this.canvas1, 0, 0, this.newW, this.newH, this.pX, this.pY + this.y, this.newW, this.newH);
-            } else if(this.x >= 0 && this.y < 0){
-                this.ctx.drawImage(this.canvas1, this.newX, this.newY, this.newW - this.newX, this.newH - this.newY, this.pX + this.x, this.pY, this.newW, this.newH);
-            } else if((this.x < 0) || this.y < 0){
-                this.ctx.drawImage(this.canvas1, this.newX, this.newY, this.newW - this.newX, this.newH - this.newY, this.pX, this.pY, this.newW - this.newX, this.newH - this.newY);
+
+            if(this.x < 0 && this.y >= 0){
+                this.ctx.drawImage(this.canvas1, this.sourceX, 0, this.newW, this.newH, this.pX, this.pY + this.y, this.newW, this.newH);
+                this.canvas1.remove();
+                return
             }
-            if((this.newW < this.width) || (this.newH < this.height)){
-                this.ctx.drawImage(this.canvas1, 0, 0, this.newW, this.newH, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+
+            if(this.y < 0 && this.x >= 0){
+                this.ctx.drawImage(this.canvas1, 0, this.sourceY, this.newW, this.newH, this.pX + this.x, this.pY, this.newW, this.newH);
+                this.canvas1.remove();
+                return
             }
-            this.canvas1.remove();
-            return
+
+            if(this.x < 0 && this.y < 0){
+                this.ctx.drawImage(this.canvas1, this.sourceX, this.sourceY, this.newW, this.newH, this.pX, this.pY, this.newW, this.newH);
+                this.canvas1.remove();
+                return
+            }
+
+            if(this.x + this.width > this.parent.width){
+                this.ctx.drawImage(this.canvas1, 0, 0, this.newW, this.newH, this.pX + this.x, this.pY + this.y, this.newW, this.newH);
+                this.canvas1.remove();
+                return
+            }
+
+            if(this.y + this.height > this.parent.height){
+                this.ctx.drawImage(this.canvas1, 0, 0, this.newW, this.newH, this.pX + this.x, this.pY + this.y, this.newW, this.newH);
+                this.canvas1.remove();
+                return
+            }
+
         }
 
         if(this.newW === this.width || this.newH === this.height){

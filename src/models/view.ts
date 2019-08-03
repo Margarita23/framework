@@ -201,17 +201,18 @@ export abstract class View {
             this.isDown = null;
         }
 
-        console.log("button.x before = " + f[2].newX);
+        // console.log("button.x before = " + f[2].sourceX);
         if(this.isDown !== null){
             let shift = this.shiftAtAll - shiftAtAll;
             f.map(c => {c.y = c.y + shift});
             this.shiftAtAll = shiftAtAll;
         }
-        console.log("button.x after = " + f[2].newX);
+        // console.log("button.x after = " + f[2].sourceX);
 
         
 
         this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
+        parent.draw(this.ctx);
         this.draw(f, this.ctx);
     }
 
@@ -271,23 +272,23 @@ export abstract class View {
         let res = false;
         //-------- checking for over control --------
         if(control.x < 0 && control.y < 0) {
-            if( (control.x + control.newX + control.pX) <= clickX && (control.y + control.newY + control.pY) <= clickY &&
-            (control.x + control.pX + control.newW) >= clickX &&
-            (control.y + control.pY + control.newH) >= clickY) {
+            if(control.pX <= clickX && control.pY <= clickY &&
+            (control.pX + control.newW) >= clickX &&
+            (control.pY + control.newH) >= clickY) {
                 res = true;
             }
             return res;
         } else if (control.x < 0) {
-            if( (control.x + control.newX + control.pX) <= clickX && (control.y + control.pY) <= clickY &&
-            (control.x + control.pX + control.newW) >= clickX &&
+            if(control.pX <= clickX && (control.y + control.pY) <= clickY &&
+            (control.pX + control.newW) >= clickX &&
             (control.y + control.pY + control.newH) >= clickY) {
                 res = true;
             }
             return res;
         } else if (control.y < 0) {
-            if( (control.x + control.pX) <= clickX && (control.y + control.newY + control.pY) <= clickY &&
+            if((control.x + control.pX) <= clickX && control.pY <= clickY &&
             (control.x + control.pX + control.newW) >= clickX &&
-            (control.y + control.pY + control.newH) >= clickY) {
+            (control.pY + control.newH) >= clickY) {
                 res = true;
             }
             return res;

@@ -20,8 +20,8 @@ export class Control {
     public pY: number = 0;
 
     //newX и newY - это по сути sourseX/Y для правильного отображения;
-    public newX: number = 0;
-    public newY: number = 0;
+    public sourceX: number = 0;
+    public sourceY: number = 0;
     public newW: number = this.width;
     public newH: number = this.height;
 
@@ -40,7 +40,7 @@ export class Control {
         this.ctx = ctx;
         if(this.backgroundImage){
             this.backgroundImage.onload = () => {
-                this.ctx.drawImage(this.backgroundImage, this.newX + this.pX, this.newY + this.pY, this.width, this.height);
+                this.ctx.drawImage(this.backgroundImage, this.sourceX + this.pX, this.sourceY + this.pY, this.width, this.height);
             }
         }
     }
@@ -50,13 +50,19 @@ export class Control {
     get x():number { return this._x; }
     set x(nX: number) {
         this._x = nX;
-        this.newX = this.x < 0 ? -this.x : this.x;
+        this.sourceX = this.x < 0 ? -this.x : this.x;
+        if(this.x < 0){
+            this.newW = this.width - this.sourceX;
+        }
     }
 
     get y():number { return this._y; }
     set y(nY: number) {
         this._y = nY;
-        this.newY = this.y < 0 ? -this.y : this.y;
+        this.sourceY = this.y < 0 ? -this.y : this.y;
+        if(this.y < 0){
+            this.newH = this.height - this.sourceY;
+        }
     }
 
     get width():number { return this._width; }
@@ -83,27 +89,27 @@ export class Control {
             parent = parent.parent;
         }
 
-
-        if(this.x >= newParent.newW) {
-            this.newW = 0;
-        } else if(this.width > newParent.newW && this.x > 0){
-            this.newW = newParent.newW;
-        } else if(this.x >= 0 && (this.x + this.width) > newParent.newW){
-            this.newW = newParent.newW - this.x;
-        } else if(this.x < 0 && (this.x + this.width) > newParent.newW){
-            this.newW = newParent.newW - this.x;
-        } else if(this.x < 0){
-            this.newW = this.newW + this.x;
-        } else {
-            this.newW = this.width;
+        if(this.x < 0){
+            this.newW = this.width - this.sourceX;
+        }
+        if(this.y < 0){
+            this.newH = this.height - this.sourceY;
         }
 
-        if(this.y >= newParent.newH) {
-            this.newH = 0;
-        } else if(this.y + this.height > newParent.newH){
-            this.newH = newParent.newH - this.y;
-        } else {
-            this.newH = this.height;
+        if(this.x >= 0 && (this.x + this.newW) > this.parent.width){
+            this.newW = this.parent.width - this.x;
+        }
+
+        if(this.y >= 0 && (this.y + this.newH) > this.parent.height){
+            this.newH = this.parent.height - this.y;
+        }
+
+        if(this.x < 0 && this.newW > this.parent.width){
+            this.newW = this.parent.width;
+        }
+
+        if(this.y < 0 && this.newH > this.parent.height){
+            this.newH = this.parent.height;
         }
     }
 
