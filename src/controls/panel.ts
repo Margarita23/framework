@@ -34,7 +34,9 @@ export class Panel extends Control {
             return
         }
 
-        if(this.x < 0 || this.y < 0 || (this.parent && (this.x + this.width > this.parent.width)) || (this.parent && (this.y + this.height > this.parent.height))){
+        if(this.x < 0 || this.y < 0 ||
+            (this.parent && (this.x + this.width > this.parent.width)) ||
+            (this.parent && (this.y + this.height > this.parent.height))){
             this.createNewHOLST();
 
             if(this.x < 0 && this.y >= 0){
@@ -66,6 +68,18 @@ export class Panel extends Control {
                 this.canvas1.remove();
                 return
             }
+
+            if(this.name == "telephone"){
+                console.log(" AAAAAAA this.name = " + this.name);
+                console.log("this.x = " + this.x);
+                console.log("this.y = " + this.y);
+                console.log("this.width = " + this.width);
+                console.log("this.height = " + this.height);
+                console.log("this.sourceX = " + this.sourceX);
+                console.log("this.sourceY = " + this.sourceY);
+                console.log("this.newW = " + this.newW);
+                console.log("this.newH = " + this.newH);
+            }
         }
 
         if(this.newW === this.width || this.newH === this.height){
@@ -75,7 +89,6 @@ export class Panel extends Control {
                 this.ctx.fillStyle = this.backgroundColor.getColor();
                 this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             }
-
             if(this.border !== null){
                 this.ctx.strokeStyle = this.border.getColor();
                 this.ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
@@ -83,36 +96,6 @@ export class Panel extends Control {
             this.getText();
         }
     }
-
-
-
-
-    public redrawOnBufferHolst(ctx: CanvasRenderingContext2D): void{
-        if(this.backgroundImage){
-            ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-        } else if(this.backgroundColor !== null){
-            ctx.fillStyle = this.backgroundColor.getColor();
-            ctx.fillRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-        }
-
-        if(this.border !== null){
-            ctx.strokeStyle = this.border.getColor();
-            ctx.strokeRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-        };
-
-        if(this.innerText && this.innerText.getText()){
-            ctx.save();
-            ctx.font = this.font;
-            ctx.fillStyle = this.fillStyle.getColor();
-            ctx.textAlign = <CanvasTextAlign>this.innerText.align;
-            ctx.textBaseline = "middle";
-            ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
-            ctx.restore();
-        }
-    }
-
-
-
 
     get isScroll(){ return this._isScroll; }
     set isScroll(scroll: boolean){
@@ -128,6 +111,7 @@ export class Panel extends Control {
         this.canvas1.width = this.width;
         this.canvas1.height = this.height;
         this.ctx1 = this.canvas1.getContext("2d");
+        this.ctx1.clearRect(0, 0, this.canvas1.width, this.canvas1.height);
 
         if(this.backgroundColor){
             this.ctx1.fillStyle = this.backgroundColor.getColor();
@@ -140,19 +124,18 @@ export class Panel extends Control {
             this.ctx1.strokeStyle = this.border.getColor();
             this.ctx1.strokeRect(0, 0, this.width, this.height);
         };
-
         if(this.innerText && this.innerText.getText()){
-            this.ctx.save();
+            this.ctx1.save();
             this.ctx1.font = this.font;
             this.ctx1.fillStyle = this.fillStyle.getColor();
             this.ctx1.textAlign = <CanvasTextAlign>this.innerText.align;
             this.ctx1.textBaseline = "middle";
-            this.ctx1.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
-            this.ctx.restore();
+            this.ctx1.fillText(this.innerText.getText(), 0, this.height/2, this.width);
+            this.ctx1.restore();
         }
     }
 
-    public getText(): void{
+    public getText(): void {
         if(this.innerText && this.innerText.getText()){
             this.ctx.save();
             this.ctx.font = this.font;

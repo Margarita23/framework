@@ -92,32 +92,26 @@ export abstract class View {
                     }
                     this.hoverControl = null;
                 }
+            if(this.scrollWidget && this.scrollPanel){
+                this.canvas1.width = this.scrollPanel.x + this.scrollPanel.width;
+                this.canvas1.height = this.scrollPanel.y + (<Panel>this.scrollWidget.parent).wholeHeight;
+                this.ctx1 = this.canvas1.getContext("2d");
 
-                if(this.scrollWidget && this.scrollPanel){
+                this.createNewHOLST(this.scrollPanel);
 
-                    this.canvas1.width = this.scrollPanel.x + this.scrollPanel.width;
-                    this.canvas1.height = this.scrollPanel.y + (<Panel>this.scrollWidget.parent).wholeHeight;
-                    this.ctx1 = this.canvas1.getContext("2d");
-                    
-                    
-
-
-
-                    this.createNewHOLST(this.scrollWidget, this.scrollWidget.parent, this.ctx1);
-                    this.moveVerticalScroll(this.scrollWidget, event.y);
-                }
-                return;
+                this.calculateShowYPos(<Button>this.scrollWidget, <Panel>this.scrollPanel);
+                this.redrawWidget(<Button>this.scrollWidget, event.y);
+            }
+            return;
         }
     }
 
     //---------------------------------
-    private createNewHOLST(widget: Control, control: Control, ctx: CanvasRenderingContext2D){
-
+    private createNewHOLST(control: Control){
         if(control.backgroundColor){
             this.ctx1.fillStyle = control.backgroundColor.getColor();
             this.ctx1.fillRect(control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
         }
-
         if(control.backgroundImage){
             this.ctx1.drawImage(control.backgroundImage, control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
         }
@@ -126,16 +120,15 @@ export abstract class View {
             this.ctx1.strokeRect(control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
         };
 
-        let f = this.scrollWidget.parent.controls.filter(c => c ! = this.scrollWidget);
-            this.reDraw(f, this.ctx1);
+        let f = this.scrollPanel.controls.filter(c => c != this.scrollWidget);
+        this.reDraw(f);
     }
 
-    public reDraw(controls: Control[], ctx: CanvasRenderingContext2D): void {
+    public reDraw(controls: Control[]): void {
         controls.forEach(control => {
-            control.ctx1 = ctx;
-            control.draw(ctx);
+            control.draw(this.ctx1);
             if(control.controls.length !== 0){
-                this.reDraw(control.controls, ctx);
+                this.reDraw(control.controls);
             }
         });
     }
@@ -154,23 +147,16 @@ export abstract class View {
         });
     }
 
-    private runAfterUpWithSlowerReaction(trueControl: Control){
+    private runAfterUpWithSlowerReaction(trueControl: Control) {
         trueControl.mouseup(trueControl);
     }
 
-    private moveVerticalScroll(widget: Control, y: number): void{
-        this.calculateShowYPos(<Button>widget, <Panel>widget.parent);
-
-
-        this.redrawWidget(widget, y);
-    }
-
-    redrawWidget(widget: Control, y: number): void{
+    redrawWidget(widget: Control, y: number): void {
         if(y <= widget.pY){
             widget.y = 0;
         } else if(y >= widget.pY + widget.parent.newH){
-            widget.y = widget.parent.newH - widget.newH;
-        } else if(y >= widget.pY + widget.newH && y <= widget.pY + widget.parent.newH){
+            widget.y = widget.parent.newH - widget.newH - widget.borderLineWidth;
+        } else if(y >= widget.pY + widget.newH && y <= widget.pY + widget.parent.newH - widget.borderLineWidth){
             widget.y = y - widget.pY - widget.newH;
         }
 
@@ -181,7 +167,7 @@ export abstract class View {
         this.draw([widget], this.ctx);
     }
 
-    private calculateShowYPos(widget: Button, parent: Panel){
+    private calculateShowYPos(widget: Button, parent: Panel): void {
         let persentOfRoad = widget.y * 100 / parent.newH;
         let moveOnY = parent.wholeHeight - parent.newH;
         let newPanelY = (moveOnY*persentOfRoad) / 100;
@@ -201,22 +187,18 @@ export abstract class View {
             this.isDown = null;
         }
 
-        // console.log("button.x before = " + f[2].sourceX);
         if(this.isDown !== null){
             let shift = this.shiftAtAll - shiftAtAll;
             f.map(c => {c.y = c.y + shift});
             this.shiftAtAll = shiftAtAll;
         }
-        // console.log("button.x after = " + f[2].sourceX);
-
-        
 
         this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
         parent.draw(this.ctx);
         this.draw(f, this.ctx);
     }
 
-    private runAfterClickWithSlowerReaction(view: View, trueControl: Control){
+    private runAfterClickWithSlowerReaction(view: View, trueControl: Control): void {
         view.allInputUnFocus(view.controls)
         if (trueControl instanceof Input) {
             trueControl.focusOnMe();
@@ -228,7 +210,7 @@ export abstract class View {
         trueControl.click(trueControl);
     }
 
-    private allInputUnFocus(controls: Control[]){
+    private allInputUnFocus(controls: Control[]): void {
         controls.forEach(control => {
             if(control instanceof Input){
                 control.unfocus();
@@ -246,7 +228,7 @@ export abstract class View {
         }
     }
 
-    private checkInputKye(e: KeyboardEvent): boolean{
+    private checkInputKye(e: KeyboardEvent): boolean {
         let res = false;
         if(e.key !== "Tab" && e.key !== "Shift" && e.key !== "CapsLock" &&
             e.key !== "Control" && e.key !== "Alt" && e.key !== "Meta" &&
@@ -258,7 +240,7 @@ export abstract class View {
         return res;
     }
 
-    private whichEvent(ev: string): string{
+    private whichEvent(ev: string): string {
         let res = '';
         if(ev === 'click' || ev === 'mousedown' || ev === 'mouseup' || ev === 'mousemove'){
             res = 'MouseEvent';
@@ -268,7 +250,7 @@ export abstract class View {
         return res;
     }
 
-    private onControl(control: Control, clickX: number, clickY: number): boolean{
+    private onControl(control: Control, clickX: number, clickY: number): boolean {
         let res = false;
         //-------- checking for over control --------
         if(control.x < 0 && control.y < 0) {

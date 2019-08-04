@@ -1,6 +1,5 @@
 import { Control } from "./control";
 import { Rgb } from "../models/rgb";
-import { runInThisContext } from "vm";
 
 export class Button extends Control {
     readonly controlType: string = "Button";
@@ -29,15 +28,15 @@ export class Button extends Control {
             this.ctx1.strokeStyle = this.border.getColor();
             this.ctx1.strokeRect(0, 0, this.width, this.height);
         };
-        this.ctx1.save();
-        this.ctx1.font = this.font;
-        this.ctx1.fillStyle = this.fillStyle.getColor();
-        this.ctx1.textBaseline = "middle";
-        this.ctx1.textAlign = "center";
         if(this.text){
+            this.ctx1.save();
+            this.ctx1.font = this.font;
+            this.ctx1.fillStyle = this.fillStyle.getColor();
+            this.ctx1.textBaseline = "middle";
+            this.ctx1.textAlign = "center";
             this.ctx1.fillText(this.text, this.width/2, this.height/2, this.width - this.getPaddingInPx()*2);
+            this.ctx1.restore();
         }
-        this.ctx1.restore();
     }
 
     private getPaddingInPx(): number{

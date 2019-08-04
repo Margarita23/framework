@@ -121,6 +121,4 @@ export class Control {
     public getControlType(): string{
         return this.controlType;
     }
-
-    public cutChildControl(): void {}
 }
