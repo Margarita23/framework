@@ -19,7 +19,7 @@ export class Control {
     public pX: number = 0;
     public pY: number = 0;
 
-    //newX и newY - это по сути sourseX/Y для правильного отображения;
+    //newX и newY - это sourseX/Y для правильного отображения;
     public sourceX: number = 0;
     public sourceY: number = 0;
     public newW: number = this.width;

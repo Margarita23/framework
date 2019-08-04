@@ -68,18 +68,6 @@ export class Panel extends Control {
                 this.canvas1.remove();
                 return
             }
-
-            if(this.name == "telephone"){
-                console.log(" AAAAAAA this.name = " + this.name);
-                console.log("this.x = " + this.x);
-                console.log("this.y = " + this.y);
-                console.log("this.width = " + this.width);
-                console.log("this.height = " + this.height);
-                console.log("this.sourceX = " + this.sourceX);
-                console.log("this.sourceY = " + this.sourceY);
-                console.log("this.newW = " + this.newW);
-                console.log("this.newH = " + this.newH);
-            }
         }
 
         if(this.newW === this.width || this.newH === this.height){
