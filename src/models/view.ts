@@ -195,7 +195,6 @@ export abstract class View {
             });
             this.shiftAtAll = shiftAtAll;
         }
-
         parent.draw(this.ctx);
         this.draw(f, this.ctx);
     }

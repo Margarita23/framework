@@ -1,5 +1,4 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-//const CopyPlugin = require('copy-webpack-plugin');
 var path = require('path');
 
 const config = {
@@ -35,9 +34,6 @@ const config = {
         extensions: ['.ts', '.tsx', ".js", ".jsx", ".json"]
     },
     plugins: [
-        //new CopyPlugin([
-        //    { from: 'src/assets', to: 'assets' },
-        //]),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html',

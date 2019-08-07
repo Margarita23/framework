@@ -14,7 +14,6 @@ export class Button extends Control {
         this.canvas1.width = this.width;
         this.canvas1.height = this.height;
         this.ctx1 = this.canvas1.getContext("2d");
-        this.ctx1.clearRect(0, 0, this.canvas1.width, this.canvas1.height);
 
         if(this.backgroundColor) {
             this.ctx1.fillStyle = this.backgroundColor.getColor();
