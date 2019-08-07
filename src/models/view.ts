@@ -92,7 +92,7 @@ export abstract class View {
                     }
                     this.hoverControl = null;
                 }
-                
+
             if(this.scrollWidget && this.scrollPanel){
                 this.canvas1.width = this.scrollPanel.x + this.scrollPanel.width;
                 this.canvas1.height = this.scrollPanel.y + (<Panel>this.scrollWidget.parent).newH;
