@@ -19,8 +19,9 @@ export class ContactsView extends View {
         this.contactsInfo.y = 200;
         this.contactsInfo.width = 500;
         this.contactsInfo.height = 500;
-        this.contactsInfo.fillStyle = new Rgb(0, 0, 0);
-        this.contactsInfo.backgroundColor = new Rgb(200, 0, 100, 0.3);
+        this.contactsInfo.border = null;
+        this.contactsInfo.fillStyle = new Rgb(50, 50, 50);
+        this.contactsInfo.backgroundColor = new Rgb(200, 200, 200);
         this.contactsInfo.backgroundImage = this.images.get("contacts-panel");
 
         this.contactsInfo.isScroll = true;
@@ -38,7 +39,7 @@ export class ContactsView extends View {
         tel.innerText.text = "tel: 000-000-000";
         tel.border = null;
         tel.backgroundColor = null;
-        tel.fillStyle = new Rgb(0, 0, 0);
+        tel.fillStyle = new Rgb(50, 50, 50);
         tel.parent = this.contactsInfo;
         this.registerControl(tel);
 
@@ -49,7 +50,7 @@ export class ContactsView extends View {
         mail.innerText.text = "e-mail: tanks@gmail.com";
         mail.border = null;
         mail.backgroundColor = null;
-        mail.fillStyle = new Rgb(0, 0, 0);
+        mail.fillStyle = new Rgb(50, 50, 50);
         mail.parent = this.contactsInfo;
         this.registerControl(mail);
 
@@ -60,7 +61,7 @@ export class ContactsView extends View {
         instagram.innerText.text = "instagram: instatanks";
         instagram.border = null;
         instagram.backgroundColor = null;
-        instagram.fillStyle = new Rgb(0, 0, 0);
+        instagram.fillStyle = new Rgb(50, 50, 50);
         instagram.parent = this.contactsInfo;
         this.registerControl(instagram);
 

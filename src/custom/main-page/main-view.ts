@@ -22,7 +22,7 @@ export class MainView extends View {
         this.helloPanel.backgroundColor = null;
         this.helloPanel.innerText.startX = this.helloPanel.width/2;
         this.helloPanel.innerText.align = "center";
-        this.helloPanel.fillStyle = new Rgb(140, 205, 166);
+        this.helloPanel.fillStyle = new Rgb(50, 50, 50);
         this.helloPanel.border = null;
         this.registerControl(this.helloPanel);
     }

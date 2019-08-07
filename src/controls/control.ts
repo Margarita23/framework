@@ -26,8 +26,8 @@ export class Control {
     public newH: number = this.height;
 
     public cutImage: ImageData;
-    public ctx1: CanvasRenderingContext2D;
     public canvas1 = document.createElement("canvas");
+    public ctx1: CanvasRenderingContext2D;
 
     public click: (control: Control) => void;
     public mouseup: (constrol: Control) => void;
@@ -38,16 +38,11 @@ export class Control {
 
     public draw(ctx: CanvasRenderingContext2D): void {
         this.ctx = ctx;
-        if(this.backgroundImage){
-            this.backgroundImage.onload = () => {
-                this.ctx.drawImage(this.backgroundImage, this.sourceX + this.pX, this.sourceY + this.pY, this.width, this.height);
-            }
-        }
     }
 
     public redrawOnBufferHolst(ctx: CanvasRenderingContext2D): void{}
 
-    get x():number { return this._x; }
+    get x(): number{ return this._x; }
     set x(nX: number) {
         this._x = nX;
         this.sourceX = this.x < 0 ? -this.x : this.x;
@@ -77,7 +72,7 @@ export class Control {
         this.newH = newHeight;
     }
 
-    get parent(): Control { return this._parent; }
+    get parent(): Control{ return this._parent; }
     set parent(newParent) {
         this._parent = newParent;
         this.zOrder = newParent.zOrder + 1;
@@ -113,8 +108,8 @@ export class Control {
         }
     }
 
-    get backgroundImage(): HTMLImageElement { return this._backgroundImage }
-    set backgroundImage(newBackIm: HTMLImageElement) {
+    get backgroundImage(): HTMLImageElement{ return this._backgroundImage }
+    set backgroundImage(newBackIm: HTMLImageElement){
         this._backgroundImage = newBackIm;
     }
 

@@ -27,14 +27,14 @@ export class ProfilePhotoView extends View{
     }
 
     public setContainerProperties(){
-        this.photosContainer.x = 25;
+        this.photosContainer.x = 50;
         this.photosContainer.y = 200;
-        this.photosContainer.width = 950;
-        this.photosContainer.height = 800;
+        this.photosContainer.width = 800;
+        this.photosContainer.height = 600;
         this.photosContainer.name = "mapsContainer";
-        this.photosContainer.backgroundColor = new Rgb(255,255,0, 0.5);
+        this.photosContainer.backgroundColor = new Rgb(50, 50, 50);
         this.photosContainer.isScroll = true;
-        this.photosContainer.wholeHeight = 1500;
+        this.photosContainer.wholeHeight = 1200;
         this.registerControl(this.photosContainer.widgetVertical);
         this.registerControl(this.photosContainer);
 
@@ -47,20 +47,16 @@ export class ProfilePhotoView extends View{
 
     private createShowingLittleMaps(i: number, j: number){
         let photo = new Button;
-        photo.x = 300*i + 50;
-        photo.y = 300*j + 50;
-        photo.width = 250;
-        photo.height = 250;
+        photo.x = 250*i + 50;
+        photo.y = 250*j + 50;
+        photo.width = 200;
+        photo.height = 200;
         photo.name = "photo" + i + j;
         photo.backgroundImage = this.images.get(photo.name);
+        photo.backgroundColor = new Rgb(50, 50, 50);
+        photo.border = new Rgb(200, 200, 200);
         photo.text = null;
         photo.parent = this.photosContainer;
         this.registerControl(photo);
-    }
-
-    public whenPhotoHover(control: Button){
-        control.backgroundColor = new Rgb(255, 200, 200);
-        control.backgroundImage = this.images.get(control.name);
-        control.draw(this.ctx);
     }
 }

@@ -12,10 +12,12 @@ export class LoginView extends View {
     public login: Input = new Input();
     public pass: Input = new Input();
     public genderPanel: Panel = new Panel();
+    public loginViewPanel: Panel = new Panel();
     public images: Map<string, HTMLImageElement> = (new LoginImagesStock()).images;
 
     constructor(){
         super();
+        this.showBorder();
         this.createLoginForm();
     }
 
@@ -25,43 +27,31 @@ export class LoginView extends View {
         this.loginForm.y = 200;
         this.loginForm.width = 600;
         this.loginForm.height = 600;
-        this.loginForm.backgroundImage = null;
-        this.loginForm.backgroundColor = null
+        this.loginForm.backgroundColor = null;
+        this.loginForm.border = null;
         this.registerControl(this.loginForm);
 
-        /*
-        let over = new Button();
-        over.name = "over";
-        over.x = 500;
-        over.y = 500;
-        over.width = 150;
-        over.height = 150;
-        over.backgroundColor = new Rgb(255, 0, 0);
-        over.parent = this.loginForm;
-        this.registerControl(over);
-*/
         let checkBoxShowPassword = new Checkbox();
 
         this.login.x = 0; this.login.y = 0;
         this.pass.x = 0; this.pass.y = 150;
         this.login.width = this.loginForm.width - 200;
         this.login.height = 100;
-        this.login.backgroundImageFocus = this.images.get("login-input-focus");
-        this.login.backgroundColorFocus = null;
+        this.login.backgroundColor = new Rgb(200, 200, 200);
+        this.login.backgroundColorFocus = new Rgb(50, 50, 50);
         this.login.borderFocus = null;
 
         this.pass.width = this.loginForm.width - 200;
         this.pass.height = 100;
-        this.pass.backgroundImageFocus = this.images.get("pass-input-focus");
-        this.pass.backgroundColorFocus = null;
+        this.pass.backgroundColor = new Rgb(200, 200, 200);
+        this.pass.backgroundColorFocus = new Rgb(50, 50, 50);
         this.pass.borderFocus = null;
 
         this.login.border = null;
-        this.login.backgroundColor = null;
-        this.login.backgroundImage = this.images.get("login-input");;
-        this.login.border = null;
-        this.login.fillStyle = new Rgb(96,160,122);
-
+        this.login.backgroundColor = new Rgb(200, 200, 200);
+        this.login.backgroundColorFocus = new Rgb(50, 50, 50);
+        this.login.fillStyle = new Rgb(50, 50, 50);
+        this.login.fillStyleFocus =new Rgb(200, 200, 200);
         this.login.parent = this.loginForm;
         this.login.inputText.maxLength = 50;
         this.login.name = "login";
@@ -69,11 +59,12 @@ export class LoginView extends View {
         this.registerControl(this.login);
 
         this.pass.border = null;
-        this.pass.backgroundColor = null;
-        this.pass.backgroundImage = this.images.get("pass-input");
-        this.pass.parent = this.loginForm;
+        this.pass.backgroundColor = new Rgb(200, 200, 200);
+        this.pass.backgroundColorFocus = new Rgb(50, 50, 50);
+        this.pass.fillStyle = new Rgb(50, 50, 50);
+        this.pass.fillStyleFocus =new Rgb(200, 200, 200);
         this.pass.inputText.secret = true;
-        this.pass.fillStyle = new Rgb(96,160,122);
+        this.pass.parent = this.loginForm;
         this.pass.name = "password";
         this.pass.inputText.setText("Print password...");
         this.registerControl(this.pass);
@@ -81,37 +72,10 @@ export class LoginView extends View {
         checkBoxShowPassword.parent = this.loginForm;
         checkBoxShowPassword.x = this.loginForm.width - 190;
         checkBoxShowPassword.y = this.pass.y;
-        checkBoxShowPassword. fillStyle = new Rgb(96,160,122);
+        checkBoxShowPassword.fillStyle = new Rgb(0, 0, 0);
         checkBoxShowPassword.name = "show";
 
         this.registerControl(checkBoxShowPassword);
-
-
-/*
-        let overZero = new Button();
-        overZero.name = "overZero";
-        overZero.x = -50;
-        overZero.y = -50;
-        overZero.width = 200;
-        overZero.height = 200;
-        overZero.backgroundColor = new Rgb(25, 200, 0);
-        overZero.parent = this.loginForm;
-        this.registerControl(overZero);
-
-
-        let overO = new Button();
-        overO.name = "overO";
-        overO.x = -50;
-        overO.y = 500;
-        overO.width = 200;
-        overO.height = 200;
-        overO.backgroundColor = new Rgb(255, 255, 0);
-        overO.parent = this.loginForm;
-        this.registerControl(overO);
-
-*/
-
-
 
         let submit = new Button();
         submit.name = "submit";
@@ -119,11 +83,10 @@ export class LoginView extends View {
         submit.height = 100;
         submit.width = this.loginForm.width - 300;
         submit.parent = this.loginForm;
-        submit.backgroundColor = null;
+        submit.backgroundColor = new Rgb(50, 50, 50);
         submit.border = null;
-        submit.fillStyle = new Rgb(96,160,122);
+        submit.fillStyle = new Rgb(200, 200, 200);
         submit.text = "Submit";
-        submit.backgroundImage = this.images.get("submit");
         this.registerControl(submit);
         this.radiosGender();
     }
@@ -162,5 +125,16 @@ export class LoginView extends View {
         radioDog.disabled = true;
         radioDog.parent = this.genderPanel;
         this.registerControl(radioDog);
+    }
+
+    public showBorder() {
+        this.loginViewPanel.name = "loginViewPanel";
+        this.loginViewPanel.x = 0;
+        this.loginViewPanel.y = 0;
+        this.loginViewPanel.width = 1000;
+        this.loginViewPanel.height = 1000;
+        this.loginViewPanel.backgroundColor = null;
+        this.loginViewPanel.border = new Rgb(50, 50, 50);
+        this.registerControl(this.loginViewPanel);
     }
 }

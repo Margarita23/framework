@@ -43,15 +43,6 @@ export class LoginController{
         submit.click = this.submitRegister.bind(submit, this);
         submit.mousemove = this.whenSubmitHover.bind(submit, this.view);
         submit.mouseover = this.whenSubmitNotHover.bind(submit, this.view);
-
-        // let over = (<LoginView>this.view).loginForm.controls.find(c => c.name === "over");
-        // over.click = ()=> {console.log("I`m HERE!")};
-
-        // let overZero = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overZero");
-        // overZero.click = ()=> { console.log("I`m HERE overZERO!") };
-        
-        // let overO = (<LoginView>this.view).loginForm.controls.find(c => c.name === "overO");
-        // overO.click = ()=> { console.log("I`m HERE overOOOOOO!") };
     }
 
     public submitRegister(controller: LoginController): void{
@@ -97,16 +88,16 @@ export class LoginController{
 
     public whenSubmitHover(view: LoginView): void{
         if(this instanceof Button){
-            this.backgroundImage = view.images.get("submit-hover");
-            this.fillStyle = new Rgb(0, 55, 26);
+            this.backgroundColor = new Rgb(200, 200, 200);
+            this.fillStyle = new Rgb(0, 0, 0);
             this.draw(view.ctx);
         }
     }
 
     public whenSubmitNotHover(view: LoginView): void{
         if(this instanceof Button){
-            this.backgroundImage = view.images.get("submit");
-            this.fillStyle = new Rgb(96,160,122);
+            this.backgroundColor = new Rgb(50, 50, 50);
+            this.fillStyle = new Rgb(250, 250, 250);
             this.draw(view.ctx);
         }
     }

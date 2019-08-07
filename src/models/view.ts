@@ -20,7 +20,7 @@ export abstract class View {
     public shiftAtAll: number = 0;
     public isDown: boolean = false;
 
-    constructor(){}
+    constructor() {}
 
     public registerControl(control: Control): void{
         if(control.parent){
@@ -30,7 +30,7 @@ export abstract class View {
         }
     }
 
-    public setSubject(globalEvent: Subject<any>){
+    public setSubject(globalEvent: Subject<any>): void{
         globalEvent.subscribe(event => {
             switch(this.whichEvent(event.type)){
                 case 'MouseEvent': this.reactionOnMouseEvent(event); break;
@@ -92,13 +92,13 @@ export abstract class View {
                     }
                     this.hoverControl = null;
                 }
+                
             if(this.scrollWidget && this.scrollPanel){
                 this.canvas1.width = this.scrollPanel.x + this.scrollPanel.width;
-                this.canvas1.height = this.scrollPanel.y + (<Panel>this.scrollWidget.parent).wholeHeight;
+                this.canvas1.height = this.scrollPanel.y + (<Panel>this.scrollWidget.parent).newH;
                 this.ctx1 = this.canvas1.getContext("2d");
 
                 this.createNewHOLST(this.scrollPanel);
-
                 this.calculateShowYPos(<Button>this.scrollWidget, <Panel>this.scrollPanel);
                 this.redrawWidget(<Button>this.scrollWidget, event.y);
             }
@@ -107,7 +107,7 @@ export abstract class View {
     }
 
     //---------------------------------
-    private createNewHOLST(control: Control){
+    private createNewHOLST(control: Control): void{
         if(control.backgroundColor){
             this.ctx1.fillStyle = control.backgroundColor.getColor();
             this.ctx1.fillRect(control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
@@ -175,7 +175,6 @@ export abstract class View {
         let littleRoadPercent = (widget.y * 100) / parent.newH;
         let shiftAtAll = ((parent.wholeHeight - parent.newH) * littleRoadPercent) / 100;
         //shiftAtAll - на сколько сдвинуть контент вниз или вверх.
-        this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
         this.scrollPanel.draw(this.ctx);
         let f = this.scrollPanel.controls.filter(c => c ! = this.scrollWidget);
 
@@ -189,11 +188,14 @@ export abstract class View {
 
         if(this.isDown !== null){
             let shift = this.shiftAtAll - shiftAtAll;
-            f.map(c => {c.y = c.y + shift});
+            f.map(c => {c.y = c.y + shift;
+                if(c.y + c.height > c.parent.newH){
+                    c.newH = c.parent.newH - c.y;
+                }
+            });
             this.shiftAtAll = shiftAtAll;
         }
 
-        this.ctx.clearRect(parent.x + parent.pX, parent.y + parent.pY, parent.newW, parent.newH);
         parent.draw(this.ctx);
         this.draw(f, this.ctx);
     }
@@ -203,8 +205,7 @@ export abstract class View {
         if (trueControl instanceof Input) {
             trueControl.focusOnMe();
             view.inputFocus = <Input>trueControl;
-        }
-        else{
+        } else {
             view.inputFocus = null;
         }
         trueControl.click(trueControl);

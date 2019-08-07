@@ -2,12 +2,14 @@ import { Control } from "./control";
 import { Rgb } from "../models/rgb";
 import { InputText } from "./inputText";
 import { Button } from "./button";
+import { TextAlight } from "../models/text-alight";
 
 export class Panel extends Control {
     readonly controlType: string = "Panel";
     public innerText: InputText = new InputText();
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
+    public textAlight: TextAlight = TextAlight.Left;
 
     public cutImage: ImageData;
     public ctx1: CanvasRenderingContext2D;
@@ -22,13 +24,6 @@ export class Panel extends Control {
 
     public draw(ctx: CanvasRenderingContext2D){
         super.draw(ctx);
-
-        if(this.isScroll){
-            this.ctx.fillStyle = (new Rgb(255,255,255)).getColor();
-            this.ctx.fillRect(this.newW - this.widgetVertical.newW + this.widgetVertical.pX, this.y + this.pY , this.widgetVertical.newW, this.newH);
-            this.ctx.strokeStyle = (new Rgb(0,0,0)).getColor();
-            this.ctx.strokeRect(this.newW - this.widgetVertical.newW + this.widgetVertical.pX, this.y + this.pY , this.widgetVertical.newW, this.newH);
-        }
 
         if(this.newW === 0 || this.newH === 0){
             return
@@ -71,11 +66,12 @@ export class Panel extends Control {
         }
 
         if(this.newW === this.width || this.newH === this.height){
-            if(this.backgroundImage){
-                this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
-            } else if(this.backgroundColor !== null){
+            if(this.backgroundColor !== null){
                 this.ctx.fillStyle = this.backgroundColor.getColor();
                 this.ctx.fillRect(this.x + this.pX, this.y + this.pY, this.newW, this.newH);
+            }
+            if(this.backgroundImage){
+                this.ctx.drawImage(this.backgroundImage, this.x + this.pX, this.y + this.pY, this.newW, this.newH);
             }
             if(this.border !== null){
                 this.ctx.strokeStyle = this.border.getColor();
@@ -83,9 +79,16 @@ export class Panel extends Control {
             };
             this.getText();
         }
+
+        if(this.isScroll) {
+            this.ctx.fillStyle = (new Rgb(255, 255, 255)).getColor();
+            this.ctx.fillRect(this.pX + this.x + this.newW - this.widgetVertical.newW, this.y + this.pY , this.widgetVertical.newW, this.newH);
+            this.ctx.strokeStyle = (new Rgb(0,0,0)).getColor();
+            this.ctx.strokeRect(this.newW - this.widgetVertical.newW + this.widgetVertical.pX, this.y + this.pY , this.widgetVertical.newW, this.newH);
+        }
     }
 
-    get isScroll(){ return this._isScroll; }
+    get isScroll(){ return this._isScroll;}
     set isScroll(scroll: boolean){
         this._isScroll = scroll;
         if(this._isScroll){
@@ -99,7 +102,7 @@ export class Panel extends Control {
         this.canvas1.width = this.width;
         this.canvas1.height = this.height;
         this.ctx1 = this.canvas1.getContext("2d");
-        this.ctx1.clearRect(0, 0, this.canvas1.width, this.canvas1.height);
+        // this.ctx1.clearRect(0, 0, this.canvas1.width, this.canvas1.height);
 
         if(this.backgroundColor){
             this.ctx1.fillStyle = this.backgroundColor.getColor();
@@ -116,32 +119,57 @@ export class Panel extends Control {
             this.ctx1.save();
             this.ctx1.font = this.font;
             this.ctx1.fillStyle = this.fillStyle.getColor();
-            this.ctx1.textAlign = <CanvasTextAlign>this.innerText.align;
             this.ctx1.textBaseline = "middle";
-            this.ctx1.fillText(this.innerText.getText(), 0, this.height/2, this.width);
+            let startText = 0;
+            switch(this.textAlight){
+                case TextAlight.Left :
+                    startText = 0;
+                    break;
+                case TextAlight.Center :
+                    startText = this.width/2 - this.ctx1.measureText(this.innerText.getText()).width / 2;
+                    break;
+                case TextAlight.Right :
+                    startText = this.width - this.ctx1.measureText(this.innerText.getText()).width;
+                    break;
+            }
+            this.ctx1.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX + startText, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
             this.ctx1.restore();
         }
     }
 
     public getText(): void {
         if(this.innerText && this.innerText.getText()){
+
+            let startText = 0;
+            switch(this.textAlight){
+                case TextAlight.Left :
+                    startText = 0;
+                    break;
+                case TextAlight.Center :
+                    startText = this.width/2 - this.ctx.measureText(this.innerText.getText()).width / 2;
+                    break;
+                case TextAlight.Right :
+                    startText = this.width - this.ctx.measureText(this.innerText.getText()).width;
+                    break;
+            }
+
             this.ctx.save();
             this.ctx.font = this.font;
             this.ctx.fillStyle = this.fillStyle.getColor();
             this.ctx.textAlign = <CanvasTextAlign>this.innerText.align;
             this.ctx.textBaseline = "middle";
-            this.ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
+            this.ctx.fillText(this.innerText.getText(), this.x + this.innerText.startX + this.pX + startText, this.y + this.innerText.startY + this.height/2 + this.pY, this.width);
             this.ctx.restore();
         }
     }
 
     public drawWidgetVertical(x: number, y: number, width: number, height: number, text: string): void{
+        this.widgetVertical.name = "widgetVertical";
         this.widgetVertical.x = x;
         this.widgetVertical.y = y;
         this.widgetVertical.width = width;
         this.widgetVertical.height = height;
-        this.widgetVertical.parent = this;
         this.widgetVertical.text = text;
-        this.widgetVertical.name = "widgetVertical";
+        this.widgetVertical.parent = this;
     }
 }

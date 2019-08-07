@@ -3,22 +3,20 @@ import { InputText } from "./inputText";
 import { Rgb } from "../models/rgb";
 
 export class Input extends Panel {
-
     readonly controlType: string = "Input";
     public focus: boolean = false;
     public inputText: InputText = new InputText();
     private showText: string = "";
     public font: string = "30px Arial";
     public fillStyle: Rgb = new Rgb(0,0,0);
+    public fillStyleFocus: Rgb = new Rgb(250, 250, 250);
     public padding: number = 5;
     public backgroundImageFocus: HTMLImageElement | null = this.backgroundImage;
     public backgroundColorFocus: Rgb | null = new Rgb(250, 250, 250);
     public borderFocus: Rgb | null = this.border;
     public borderLineWidthFocus: number = 0;
 
-    constructor(){
-        super();
-    }
+    constructor(){ super(); }
 
     private getPaddingInPx(): number{
         let padding = (this.padding * this.width / 100) / 2;
@@ -112,7 +110,7 @@ export class Input extends Panel {
         let padding = this.getPaddingInPx();
         this.ctx.font = this.font;
         this.ctx.lineWidth = this.borderLineWidthFocus;
-        if(this.fillStyle){ this.ctx.fillStyle = this.fillStyle.getColor(); }
+        if(this.fillStyle){ this.ctx.fillStyle = this.fillStyleFocus.getColor(); }
         this.ctx.textBaseline = "middle";
         this.ctx.textAlign = "start";
         this.ctx.fillText(this.showText, this.x + padding + this.pX, this.y + this.height/2 + this.pY);

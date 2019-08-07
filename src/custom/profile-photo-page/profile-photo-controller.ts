@@ -1,7 +1,7 @@
 import { ProfilePhotoView } from "./profile-photo-view";
 import { Button } from "../../controls/button";
-import { Panel } from "../../controls/panel";
 import { WrapperController } from "../layout/wrapper-controller";
+import { Rgb } from "../../models/rgb";
 
 export class ProfilePhotoController {
     public view: ProfilePhotoView;
@@ -9,43 +9,37 @@ export class ProfilePhotoController {
 
     constructor(view: ProfilePhotoView, layoutController: WrapperController){
         this.view = view;
-        //this.view.draw(this.view.photosContainer.controls, this.view.ctx);
 
         let gamer = layoutController.gamer;
-        if(gamer){
-            this.gamer = gamer;
-        }
+        if(gamer){ this.gamer = gamer; }
 
-        this.view.photosContainer.widgetVertical.click = this.scrollVerticalWidget.bind(this.view.photosContainer.widgetVertical);
         for(let i = 0; i < this.view.photosContainer.controls.length; i++){
             if(this.view.photosContainer.controls[i].name.includes("photo")){
-                this.view.photosContainer.controls[i].click = this.showPhotos.bind(this.view.photosContainer.controls[i], i, this);
-                this.view.photosContainer.controls[i].mousemove = this.view.whenPhotoHover.bind(this.view, this.view.photosContainer.controls[i]);
+                this.view.photosContainer.controls[i].mousedown = this.whenPhotoDown.bind(this.view.photosContainer.controls[i], this);
+                this.view.photosContainer.controls[i].click = this.setProfilePhoto.bind(this.view.photosContainer.controls[i], this);
             }
         }
-        this.view.photosContainer.controls.forEach((c, index) => {
-            c.click = this.showPhotos.bind(c, index, this);
-        });
     }
 
-    private scrollVerticalWidget(): void{
-        if(this instanceof Button && this.parent instanceof Panel){
-            this.parent.fix = !this.parent.fix;
-        }
-    }
-
-    private showPhotos(index: number, controller: ProfilePhotoController){
-        let buffPanel = new Panel();
-
-        buffPanel.x = 175;
-        buffPanel.y = 0;
-        buffPanel.width = 750;
-        buffPanel.height = 600;
-
+    private setProfilePhoto(controller: ProfilePhotoController){
         if(this instanceof Button){
             controller.gamer.photo = this.name;
             controller.view.profilePageTitle.innerText.text = this.name;
         }
-        let p = controller.view.profilePageTitle;
+    }
+
+    public whenPhotoDown(controller: ProfilePhotoController){
+        if(this instanceof Button){
+            console.log(this.backgroundImage);
+
+            //this.backgroundImage.onload = () => {
+            //    if(this instanceof Button){
+                    this.backgroundImage = controller.view.images.get(this.name);
+                // }
+            //}
+            console.log(controller.view.images.get(this.name));
+            this.backgroundColor = new Rgb(255, 200, 200);
+            this.draw(controller.view.ctx);
+        }
     }
 }
