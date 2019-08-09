@@ -9,7 +9,7 @@
     "watch": "npm-watch"
   },
   "keywords": [],
-  "author": "",
+  "author": "margo",
   "license": "ISC",
   "devDependencies": {
     "file-loader": "^4.1.0",
