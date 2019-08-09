@@ -1,6 +1,6 @@
 {
   "name": "mvc-active-canvas",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MVC framework to activisation canvases elements",
   "main": "index.js",
   "scripts": {
