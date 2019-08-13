@@ -7,11 +7,11 @@ export class Control {
     private _y: number = 0;
     private _width: number = 150;
     private _height: number = 75;
-    private _parent: Control = null;
-    protected ctx: CanvasRenderingContext2D;
-    private _backgroundImage: HTMLImageElement = null;
-    public backgroundColor: Rgb = new Rgb(200,200,200);
-    public border: Rgb = new Rgb(0,0,0);
+    private _parent: Control | any;
+    protected ctx: CanvasRenderingContext2D | any;
+    private _backgroundImage: HTMLImageElement | any;
+    public backgroundColor: Rgb | null = new Rgb(200,200,200);
+    public border: Rgb | null= new Rgb(0,0,0);
     public borderLineWidth: number = 1;
     public zOrder: number = 0;
     public name: string = "no name";
@@ -25,16 +25,16 @@ export class Control {
     public newW: number = this.width;
     public newH: number = this.height;
 
-    public cutImage: ImageData;
+    public cutImage: ImageData | undefined;
     public canvas1 = document.createElement("canvas");
-    public ctx1: CanvasRenderingContext2D;
+    public ctx1: CanvasRenderingContext2D | any;
 
-    public click: (control: Control) => void;
-    public mouseup: (constrol: Control) => void;
-    public mousedown: (control: Control) => void;
-    public mousemove: (control: Control) => void;
-    public mouseleave: (control: Control) => void;
-    public mouseover: (control: Control) => void;
+    public click: ((control: Control) => void) | any;
+    public mouseup: ((constrol: Control) => void) | any;
+    public mousedown: ((control: Control) => void) | any;
+    public mousemove: ((control: Control) => void) | any;
+    public mouseleave: ((control: Control) => void) | any;
+    public mouseover: ((control: Control) => void) | any;
 
     public draw(ctx: CanvasRenderingContext2D): void {
         this.ctx = ctx;
@@ -72,8 +72,8 @@ export class Control {
         this.newH = newHeight;
     }
 
-    get parent(): Control{ return this._parent; }
-    set parent(newParent) {
+    get parent(): Control { return this._parent;}
+    set parent(newParent: Control) {
         this._parent = newParent;
         this.zOrder = newParent.zOrder + 1;
 
@@ -108,7 +108,7 @@ export class Control {
         }
     }
 
-    get backgroundImage(): HTMLImageElement{ return this._backgroundImage }
+    get backgroundImage(): HTMLImageElement{ return this._backgroundImage; }
     set backgroundImage(newBackIm: HTMLImageElement){
         this._backgroundImage = newBackIm;
     }

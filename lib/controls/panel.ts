@@ -11,8 +11,8 @@ export class Panel extends Control {
     public fillStyle: Rgb = new Rgb(0,0,0);
     public textAlight: TextAlight = TextAlight.Left;
 
-    public cutImage: ImageData;
-    public ctx1: CanvasRenderingContext2D;
+    public cutImage: ImageData | any;
+    public ctx1: CanvasRenderingContext2D | any;
     public canvas1 = document.createElement("canvas");
     private _isScroll: boolean = false;
     public fix: boolean = true;

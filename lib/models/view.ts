@@ -7,18 +7,18 @@ import { Rgb } from "./rgb";
 
 export abstract class View {
     public controls: Control[] = [];
-    public inputFocus: Input = null;
-    public ctx: CanvasRenderingContext2D;
-    public hoverControl: Control;
-    public bufferForHoverControl: Control;
-    public scrollPanel: Control;
-    public scrollWidget: Control;
-    public cutImage: ImageData;
-    public ctx1: CanvasRenderingContext2D;
+    public inputFocus: Input | null = new Input();
+    public ctx: CanvasRenderingContext2D | any;
+    public hoverControl: Control | undefined;
+    public bufferForHoverControl: Control | undefined;
+    public scrollPanel: Control | any;
+    public scrollWidget: Control | undefined;
+    public cutImage: ImageData | undefined;
+    public ctx1: CanvasRenderingContext2D | any;
     public canvas1 = document.createElement("canvas");
 
     public shiftAtAll: number = 0;
-    public isDown: boolean = false;
+    public isDown: boolean | null = false;
 
     constructor() {}
 
@@ -66,8 +66,8 @@ export abstract class View {
                         this.scrollWidget = trueControl;
                         this.scrollPanel = trueControl.parent;
                 } else {
-                    this.scrollWidget = null;
-                    this.scrollPanel = null;
+                    this.scrollWidget = undefined;
+                    this.scrollPanel = undefined;
                 }
                 return;
             case 'mousemove' :
@@ -84,13 +84,13 @@ export abstract class View {
                         if(this.hoverControl && this.hoverControl.mouseover){
                             this.hoverControl.mouseover(this.hoverControl);
                         }
-                        this.hoverControl = null;
+                        this.hoverControl = undefined;
                     }
                 } else {
                     if(this.hoverControl && this.hoverControl.mouseover){
                         this.hoverControl.mouseover(this.hoverControl);
                     }
-                    this.hoverControl = null;
+                    this.hoverControl = undefined;
                 }
 
             if(this.scrollWidget && this.scrollPanel){
@@ -120,7 +120,7 @@ export abstract class View {
             this.ctx1.strokeRect(control.x + control.pX, control.y + control.pY, control.width, (<Panel>control).wholeHeight);
         };
 
-        let f = this.scrollPanel.controls.filter(c => c != this.scrollWidget);
+        let f = this.scrollPanel.controls.filter((c: any) => c != this.scrollWidget);
         this.reDraw(f);
     }
 
@@ -176,7 +176,7 @@ export abstract class View {
         let shiftAtAll = ((parent.wholeHeight - parent.newH) * littleRoadPercent) / 100;
         //shiftAtAll - на сколько сдвинуть контент вниз или вверх.
         this.scrollPanel.draw(this.ctx);
-        let f = this.scrollPanel.controls.filter(c => c ! = this.scrollWidget);
+        let f = this.scrollPanel.controls.filter((c: any) => c ! = this.scrollWidget);
 
         if(this.shiftAtAll < shiftAtAll){
             this.isDown = true;
@@ -188,7 +188,7 @@ export abstract class View {
 
         if(this.isDown !== null){
             let shift = this.shiftAtAll - shiftAtAll;
-            f.map(c => {c.y = c.y + shift;
+            f.map((c: any) => {c.y = c.y + shift;
                 if(c.y + c.height > c.parent.newH){
                     c.newH = c.parent.newH - c.y;
                 }

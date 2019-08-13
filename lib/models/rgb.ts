@@ -1,10 +1,10 @@
 export class Rgb {
-    private _red: number;
-    private _green: number;
-    private _blue: number;
-    private alpha: number;
+    private _red: number = 0;
+    private _green: number = 0;
+    private _blue: number = 0;
+    private alpha: number = 1;
 
-    constructor(red: number, green: number, blue: number, alpha?:number){
+    constructor(red: number, green: number, blue: number, alpha?:number | any){
         this.red = this.setColor(red);
         this.green = this.setColor(green);
         this.blue = this.setColor(blue);

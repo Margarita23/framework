@@ -1,6 +1,6 @@
 export class InputText {
 
-    public text: string = null;
+    public text: string | any = null;
     public maxLength: number = 50;
     public secret: boolean = false;
     private secretText: string = "";
