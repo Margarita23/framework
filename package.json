@@ -2,6 +2,7 @@
   "name": "mvc-active-canvas",
   "version": "1.0.2",
   "description": "MVC framework to activisation canvases elements",
+  "files": ["lib/**/*"],
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
